@@ -148,33 +148,64 @@ Belum ada perangkat terhubung
 </div>
 
 </div>
+<script type="module">
 
-<script>
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
-function generateCode(){
+import { 
+getDatabase,
+ref,
+set
+} 
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
-let code="CP-"+Math.floor(
-100000+Math.random()*900000
-);
 
-document.getElementById("pairCode").innerHTML=code;
+const firebaseConfig = {
 
-}
+apiKey: "AIzaSyCnGnqV6fKvO3XDLBucrsIYPjGuafTun7g",
 
-function refreshData(){
+authDomain: "rat-jancok.firebaseapp.com",
 
-alert("Data berhasil diperbarui.");
+databaseURL:
+"https://rat-jancok-default-rtdb.asia-southeast1.firebasedatabase.app",
 
-}
+projectId: "rat-jancok",
 
-function disconnectAll(){
+storageBucket: "rat-jancok.firebasestorage.app",
 
-if(confirm("Putuskan semua perangkat?")){
+messagingSenderId: "832199244613",
 
-document.getElementById("deviceList").innerHTML=
-'<div class="device">Belum ada perangkat terhubung</div>';
+appId: "1:832199244613:web:d40428c4fd6e73d37d1c2c"
 
-}
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+
+
+window.generateCode = function(){
+
+let code =
+"CP-" + Math.floor(100000 + Math.random()*900000);
+
+
+document.getElementById("pairCode").innerHTML = code;
+
+
+// simpan kode ke Firebase
+
+set(ref(db,"sessions/"+code),{
+
+created: Date.now(),
+
+connected:false
+
+});
+
 
 }
 
