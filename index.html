@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>DEVONAX CONNECT</title>
+
+<style>
+body{
+    margin:0;
+    background:#080808;
+    color:white;
+    font-family:Arial;
+}
+
+header{
+    background:#b00000;
+    padding:20px;
+    text-align:center;
+    font-size:25px;
+    font-weight:bold;
+}
+
+.container{
+    padding:15px;
+}
+
+.card{
+    background:#111;
+    border:1px solid red;
+    border-radius:15px;
+    padding:20px;
+    margin-bottom:15px;
+}
+
+.title{
+    color:#ff4444;
+    margin-bottom:10px;
+}
+
+
+.online-dot{
+    width:10px;
+    height:10px;
+    background:#00ff66;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:8px;
+    animation:pulse 1s infinite;
+    box-shadow:0 0 15px #00ff66;
+}
+
+
+@keyframes pulse{
+    50%{
+        transform:scale(1.7);
+        opacity:.4;
+    }
+}
+
+
+.code{
+    text-align:center;
+    color:#00ff99;
+    font-size:25px;
+    letter-spacing:3px;
+}
+
+
+button{
+    width:100%;
+    padding:13px;
+    margin-top:10px;
+    border:0;
+    border-radius:10px;
+    background:red;
+    color:white;
+    font-size:16px;
+}
+
+
+.device{
+    background:#181818;
+    padding:15px;
+    border-radius:10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+DEVONAX CONNECT
+</header>
+
+
+<div class="container">
+
+
+<div class="card">
+
+<div class="title">
+STATUS
+</div>
+
+<span class="online-dot"></span>
+Dashboard Aktif
+
+<br><br>
+
+Perangkat Terhubung:
+<b id="deviceCount">0</b>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="title">
+PAIRING ID
+</div>
+
+
+<div class="code" id="pairID">
+026AF5359DC433B9
+</div>
+
+
+<button onclick="copyID()">
+📋 Salin ID
+</button>
+
+
+</div>
+
+
+
+<div class="card">
+
+<div class="title">
+DEVICE LIST
+</div>
+
+
+<div id="deviceList">
+
+<div class="device">
+Belum ada koneksi
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+<script type="module">
+
+
+import {initializeApp}
+
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+
+import {
+
+getDatabase,
+
+ref,
+
+set,
+
+get,
+
+onValue
+
+}
+
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+
+
+const firebaseConfig={
+
+
+apiKey:"AIzaSyCnGnqV6fKvO3XDLBucrsIYPjGuafTun7g",
+
+authDomain:"rat-jancok.firebaseapp.com",
+
+databaseURL:"https://rat-jancok-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"rat-jancok",
+
+storageBucket:"rat-jancok.firebasestorage.app",
+
+messagingSenderId:"832199244613",
+
+appId:"1:832199244613:web:d40428c4fd6e73d37d1c2c"
+
+};
+
+
+
+const app=initializeApp(firebaseConfig);
+
+const db=getDatabase(app);
+
+
+
+const pairingID="026AF5359DC433B9";
+
+
+
+const sessionRef=ref(db,"sessions/"+pairingID);
+
+
+
+// buat data hanya jika belum ada
+
+get(sessionRef).then((snap)=>{
+
+    if(!snap.exists()){
+
+        set(sessionRef,{
+
+            created:Date.now(),
+
+            connected:false
+
+        });
+
+    }
+
+});
+
+
+
+
+// realtime listener
+
+onValue(sessionRef,(snap)=>{
+
+
+const data=snap.val();
+
+
+if(data && data.connected===true){
+
+
+document.getElementById("deviceCount").innerHTML="1";
+
+
+document.getElementById("deviceList").innerHTML=`
+
+<div class="device">
+
+<span class="online-dot"></span>
+
+Connected
+
+<br>
+
+Status: Online
+
+</div>
+
+`;
+
+
+}else{
+
+
+document.getElementById("deviceCount").innerHTML="0";
+
+
+}
+
+
+
+});
+
+
+
+
+// copy ID
+
+window.copyID=function(){
+
+let id=document.getElementById("pairID").innerText;
+
+
+navigator.clipboard.writeText(id);
+
+
+alert("PAIRING ID DISALIN!");
+
+}
+
+
+</script>
+
+
+</body>
+</html>
