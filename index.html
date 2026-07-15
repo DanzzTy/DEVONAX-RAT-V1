@@ -239,12 +239,15 @@ onValue(ref(db,"sessions"),(snapshot)=>{
 
 let data = snapshot.val();
 
+let count = 0;
+
 let list = document.getElementById("deviceList");
 
 
 if(data){
 
 let html="";
+
 
 Object.keys(data).forEach(code=>{
 
@@ -253,20 +256,45 @@ let session=data[code];
 
 if(session.connected){
 
+count++;
+
+
 html += `
 
-<div class="device">
+<div class="device online-card">
 
-🟢 Connected<br>
+<span class="online-dot"></span>
+
+Connected<br>
 
 Kode: ${code}<br>
 
-Status:
-${session.child?.status || "Online"}
+Status: ${session.child?.status || "Online"}
 
 </div>
 
 `;
+
+}
+
+
+});
+
+
+document.getElementById("deviceCount").innerHTML = count;
+
+
+if(html){
+
+list.innerHTML = html;
+
+}else{
+
+list.innerHTML =
+'<div class="device">Belum ada perangkat terhubung</div>';
+
+}
+
 
 }
 
