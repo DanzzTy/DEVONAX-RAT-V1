@@ -233,45 +233,61 @@ appId: "1:832199244613:web:d40428c4fd6e73d37d1c2c"
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-onValue(ref(db,"sessions"), (snapshot)=>{
+// cek semua sesi yang dibuat parent
 
-    let data = snapshot.val();
+onValue(ref(db,"sessions"),(snapshot)=>{
 
-    let count = 0;
-    let list = document.getElementById("deviceList");
-    let html = "";
+let data = snapshot.val();
 
-    if(data){
+let list = document.getElementById("deviceList");
 
-        Object.keys(data).forEach((code)=>{
 
-            let session = data[code];
+if(data){
 
-            if(session.connected === true){
+let html="";
 
-                count++;
+Object.keys(data).forEach(code=>{
 
-                html += `
-                <div class="device">
-                <span class="online-dot"></span>
-                Connected<br>
-                Kode: ${code}<br>
-                Status: ${session.child?.status || "Online"}
-                </div>`;
-            }
+let session=data[code];
 
-        });
 
-    }
+if(session.connected){
 
-    document.getElementById("deviceCount").innerHTML = count;
+html += `
 
-    list.innerHTML = html || 
-    "<div class='device'>Belum ada perangkat terhubung</div>";
+<div class="device">
+
+🟢 Connected<br>
+
+Kode: ${code}<br>
+
+Status:
+${session.child?.status || "Online"}
+
+</div>
+
+`;
+
+}
 
 });
 
 
+if(html){
+
+list.innerHTML=html;
+
+}else{
+
+list.innerHTML=
+'<div class="device">Belum ada perangkat terhubung</div>';
+
+}
+
+
+}
+
+});
 window.generateCode = function(){
 
 let code = "CP-" + Math.floor(100000 + Math.random()*900000);
