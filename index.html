@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEVONAX RAT PROJECT</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#090909;
+color:#fff;
+}
+
+header{
+background:#b30000;
+padding:18px;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+box-shadow:0 0 20px red;
+}
+
+.container{
+padding:15px;
+}
+
+.card{
+background:#111;
+border:1px solid #ff2d2d;
+border-radius:12px;
+padding:15px;
+margin-bottom:15px;
+box-shadow:0 0 15px rgba(255,0,0,.4);
+}
+
+.title{
+color:#ff3c3c;
+font-size:18px;
+margin-bottom:10px;
+}
+
+.status{
+font-size:18px;
+color:#00ff66;
+}
+
+button{
+width:100%;
+padding:13px;
+margin-top:10px;
+border:none;
+border-radius:10px;
+background:#d10000;
+color:white;
+font-size:16px;
+cursor:pointer;
+transition:.3s;
+}
+
+button:hover{
+background:#ff0000;
+box-shadow:0 0 20px red;
+}
+
+.code{
+margin-top:10px;
+font-size:28px;
+text-align:center;
+letter-spacing:4px;
+color:#00ff99;
+}
+
+.device{
+padding:12px;
+background:#181818;
+border-radius:10px;
+margin-top:10px;
+border-left:5px solid red;
+}
+
+.footer{
+text-align:center;
+margin-top:30px;
+opacity:.7;
+font-size:13px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+DEVONAX RAT
+</header>
+
+<div class="container">
+
+<div class="card">
+<div class="title">Status</div>
+<div class="status">🟢 Dashboard Aktif</div>
+<p>Perangkat Terhubung : <b>0</b></p>
+</div>
+
+<div class="card">
+<div class="title">Pairing</div>
+
+<button onclick="generateCode()">
+Generate Pair Code
+</button>
+
+<div class="code" id="pairCode">
+------
+</div>
+
+</div>
+
+<div class="card">
+<div class="title">Perangkat Terhubung</div>
+
+<div id="deviceList">
+
+<div class="device">
+Belum ada perangkat terhubung
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+<div class="title">Aksi</div>
+
+<button onclick="refreshData()">Refresh</button>
+
+<button onclick="disconnectAll()">Disconnect Semua</button>
+
+</div>
+
+<div class="footer">
+© DEVONAX RAT
+</div>
+
+</div>
+
+<script>
+
+function generateCode(){
+
+let code="CP-"+Math.floor(
+100000+Math.random()*900000
+);
+
+document.getElementById("pairCode").innerHTML=code;
+
+}
+
+function refreshData(){
+
+alert("Data berhasil diperbarui.");
+
+}
+
+function disconnectAll(){
+
+if(confirm("Putuskan semua perangkat?")){
+
+document.getElementById("deviceList").innerHTML=
+'<div class="device">Belum ada perangkat terhubung</div>';
+
+}
+
+}
+
+</script>
+
+</body>
+  </html>
