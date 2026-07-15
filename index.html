@@ -234,48 +234,47 @@ const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
 // cek semua sesi yang dibuat parent
-onValue(ref(db,"sessions"),(snapshot)=>{
+onValue(ref(db,"sessions"), (snapshot) => {
 
-let data = snapshot.val();
+    let data = snapshot.val();
 
-let count = 0;
+    let count = 0;
+    let list = document.getElementById("deviceList");
+    let html = "";
 
-let list = document.getElementById("deviceList");
+    if(data){
 
+        Object.keys(data).forEach((code)=>{
 
-if(data){
+            let session = data[code];
 
-let html="";
+            if(session.connected === true){
 
+                count++;
 
-Object.keys(data).forEach(code=>{
+                html += `
+                <div class="device">
+                    <span class="online-dot"></span>
+                    Connected<br>
+                    Kode: ${code}<br>
+                    Status: ${session.child?.status || "Online"}
+                </div>
+                `;
 
-let session=data[code];
+            }
 
+        });
 
-if(session.connected){
+    }
 
-count++;
+    document.getElementById("deviceCount").innerHTML = count;
 
-
-html += `
-
-<div class="device online-card">
-
-<span class="online-dot"></span>
-
-Connected<br>
-
-Kode: ${code}<br>
-
-Status: ${session.child?.status || "Online"}
-
-</div>
-
-`;
-
-}
-
+    if(html){
+        list.innerHTML = html;
+    }else{
+        list.innerHTML =
+        "<div class='device'>Belum ada perangkat terhubung</div>";
+    }
 
 });
 
