@@ -6,6 +6,53 @@
 <title>DEVONAX RAT PROJECT</title>
 
 <style>
+.online-dot{
+    width:10px;
+    height:10px;
+    background:#00ff66;
+    border-radius:50%;
+    display:inline-block;
+    margin-right:8px;
+
+    animation:
+    pulse 1.2s infinite,
+    blink 1.2s infinite;
+
+    box-shadow:
+    0 0 8px #00ff66,
+    0 0 18px #00ff66;
+}
+
+
+@keyframes pulse{
+
+0%{
+    transform:scale(1);
+}
+
+50%{
+    transform:scale(1.5);
+}
+
+100%{
+    transform:scale(1);
+}
+
+}
+
+
+@keyframes blink{
+
+0%,100%{
+    opacity:1;
+}
+
+50%{
+    opacity:.3;
+}
+
+  }
+  
 *{
 margin:0;
 padding:0;
@@ -104,7 +151,8 @@ DEVONAX RAT
 
 <div class="card">
 <div class="title">Status</div>
-<div class="status">🟢 Dashboard Aktif</div>
+<span class="online-dot"></span>
+  DASHBOARD AKTIF
 <p>Perangkat Terhubung : <b>0</b></p>
 </div>
 
