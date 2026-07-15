@@ -156,7 +156,8 @@ from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { 
 getDatabase,
 ref,
-set
+set,
+onValue
 } 
 from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
@@ -184,7 +185,61 @@ appId: "1:832199244613:web:d40428c4fd6e73d37d1c2c"
 const app = initializeApp(firebaseConfig);
 
 const db = getDatabase(app);
+// cek semua sesi yang dibuat parent
 
+onValue(ref(db,"sessions"),(snapshot)=>{
+
+let data = snapshot.val();
+
+let list = document.getElementById("deviceList");
+
+
+if(data){
+
+let html="";
+
+Object.keys(data).forEach(code=>{
+
+let session=data[code];
+
+
+if(session.connected){
+
+html += `
+
+<div class="device">
+
+🟢 Connected<br>
+
+Kode: ${code}<br>
+
+Status:
+${session.child?.status || "Online"}
+
+</div>
+
+`;
+
+}
+
+});
+
+
+if(html){
+
+list.innerHTML=html;
+
+}else{
+
+list.innerHTML=
+'<div class="device">Belum ada perangkat terhubung</div>';
+
+}
+
+
+}
+
+});
 
 
 window.generateCode = function(){
