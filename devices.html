@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>DARKVERSE DEVICE</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Rajdhani,sans-serif;
+}
+
+body{
+margin:0;
+background:#050505;
+color:white;
+overflow:hidden;
+}
+
+
+body:after{
+
+content:"";
+
+position:fixed;
+inset:0;
+
+background:
+linear-gradient(
+transparent 50%,
+rgba(255,0,80,.06) 50%
+);
+
+background-size:100% 4px;
+
+animation:scan .2s infinite;
+
+pointer-events:none;
+
+}
+
+
+@keyframes scan{
+
+from{opacity:.5}
+to{opacity:1}
+
+}
+
+
+
+.header{
+
+height:70px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+padding:0 18px;
+
+background:#090009;
+
+border-bottom:1px solid #ff1744;
+
+box-shadow:0 0 20px #ff1744;
+
+}
+
+
+
+.logo{
+
+font-family:Orbitron;
+
+font-size:22px;
+
+letter-spacing:4px;
+
+animation:glitch 1s infinite;
+
+}
+
+
+
+@keyframes glitch{
+
+0%{
+text-shadow:3px 0 red;
+}
+
+50%{
+text-shadow:-3px 0 cyan;
+}
+
+100%{
+text-shadow:3px 0 white;
+}
+
+}
+
+
+
+.icon{
+
+background:none;
+
+border:0;
+
+}
+
+
+.icon svg{
+
+width:28px;
+
+height:28px;
+
+fill:#ff1744;
+
+}
+
+
+
+.slider{
+
+display:flex;
+
+width:200%;
+
+height:calc(100vh - 70px);
+
+transition:.4s;
+
+}
+
+
+
+.page{
+
+width:50%;
+
+padding:20px;
+
+overflow:auto;
+
+}
+
+
+
+.card{
+
+background:
+linear-gradient(145deg,#17000b,#090909);
+
+border:1px solid #ff1744;
+
+border-radius:20px;
+
+padding:20px;
+
+margin-bottom:20px;
+
+box-shadow:0 0 20px rgba(255,0,70,.25);
+
+}
+
+
+
+.title{
+
+font-family:Orbitron;
+
+color:#00f3ff;
+
+letter-spacing:2px;
+
+}
+
+
+
+.input-area{
+
+display:flex;
+
+align-items:center;
+
+gap:10px;
+
+margin-top:20px;
+
+background:#050505;
+
+border:1px solid #333;
+
+border-radius:14px;
+
+padding:12px;
+
+}
+
+
+
+.input-area svg{
+
+width:25px;
+
+fill:#00f3ff;
+
+}
+
+
+
+input{
+
+flex:1;
+
+background:none;
+
+border:0;
+
+outline:none;
+
+color:white;
+
+font-size:16px;
+
+}
+
+
+
+.copy{
+
+width:45px;
+
+height:45px;
+
+padding:0;
+
+margin:0;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+
+
+.copy svg{
+
+fill:white;
+
+width:22px;
+
+}
+
+
+
+button{
+
+width:100%;
+
+padding:14px;
+
+border-radius:12px;
+
+border:0;
+
+background:#ff1744;
+
+color:white;
+
+font-weight:bold;
+
+margin-top:15px;
+
+}
+
+
+
+.online{
+
+margin-top:15px;
+
+}
+
+
+.dot{
+
+display:inline-block;
+
+width:12px;
+
+height:12px;
+
+background:#00ff66;
+
+border-radius:50%;
+
+box-shadow:0 0 20px #00ff66;
+
+animation:pulse 1s infinite;
+
+}
+
+
+
+@keyframes pulse{
+
+50%{
+transform:scale(1.5);
+opacity:.4;
+}
+
+}
+
+
+
+.device{
+
+background:#090909;
+
+border:1px solid #333;
+
+padding:15px;
+
+border-radius:15px;
+
+}
+
+
+
+.detail{
+
+display:none;
+
+margin-top:15px;
+
+line-height:1.8;
+
+color:#00f3ff;
+
+}
+
+
+
+.menu{
+
+display:none;
+
+position:absolute;
+
+right:20px;
+
+top:65px;
+
+background:#100010;
+
+border:1px solid red;
+
+padding:15px;
+
+border-radius:15px;
+
+z-index:10;
+
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="header">
+
+
+<button class="icon" onclick="back()">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M20 11H7.8l5.6-5.6L12 4l-8 8 8 8 1.4-1.4L7.8 13H20z"/>
+
+</svg>
+
+</button>
+
+
+
+<div class="logo">
+
+DARKVERSE
+
+</div>
+
+
+
+<button class="icon" onclick="openMenu()">
+
+<svg viewBox="0 0 24 24">
+
+<circle cx="12" cy="5" r="2"/>
+<circle cx="12" cy="12" r="2"/>
+<circle cx="12" cy="19" r="2"/>
+
+</svg>
+
+</button>
+
+
+<div class="menu" id="menu">
+
+Dashboard<br>
+Device<br>
+Settings
+
+</div>
+
+
+</header>
+
+
+
+
+<div class="slider" id="slider">
+
+
+<section class="page">
+
+
+<div class="card">
+
+
+<div class="title">
+PAIRING SYSTEM
+</div>
+
+
+
+<div class="input-area">
+
+
+<svg viewBox="0 0 24 24">
+
+<path d="M3.9 12a5 5 0 0 1 5-5h4v2h-4a3 3 0 0 0 0 6h4v2h-4a5 5 0 0 1-5-5zm6-1h4v2h-4v-2zm5.1-4h-4v2h4a3 3 0 0 1 0 6h-4v2h4a5 5 0 0 0 0-10z"/>
+
+</svg>
+
+
+<input id="pairID" value="026AF5359DC433B9" readonly>
+
+
+<button class="copy" onclick="copyID()">
+
+<svg viewBox="0 0 24 24">
+
+<path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2z"/>
+
+</svg>
+
+</button>
+
+
+</div>
+
+
+<div class="online">
+
+<span class="dot"></span>
+
+REALTIME ONLINE
+
+</div>
+
+
+</div>
+
+
+
+<button onclick="next()">
+
+OPEN DEVICE
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+<section class="page">
+
+
+<div class="card">
+
+<div class="title">
+
+DEVICE MANAGER
+
+</div>
+
+
+<div id="device">
+
+NO DEVICE CONNECTED
+
+</div>
+
+
+</div>
+
+
+
+<div class="card detail" id="detail">
+
+<div class="title">
+
+DEVICE DETAIL
+
+</div>
+
+
+<div id="info">
+
+-
+
+</div>
+
+
+</div>
+
+
+<button onclick="prev()">
+
+BACK
+
+</button>
+
+
+</section>
+
+
+
+</div>
+
+
+
+<script>
+
+
+function next(){
+
+slider.style.transform="translateX(-50%)";
+
+}
+
+
+function prev(){
+
+slider.style.transform="translateX(0)";
+
+}
+
+
+function back(){
+
+location.href="index.html";
+
+}
+
+
+function openMenu(){
+
+menu.style.display=
+menu.style.display=="block"?
+"none":"block";
+
+}
+
+
+function copyID(){
+
+let id=document.getElementById("pairID").value;
+
+navigator.clipboard.writeText(id);
+
+alert("COPIED");
+
+  }
+
+navigator.clipboard.writeText(id);
+
+alert("COPIED");
+
+}
+
+
+</script>
+
+
+</body>
+  </html>
