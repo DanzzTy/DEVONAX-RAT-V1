@@ -750,7 +750,7 @@ if(data && data.connected){
 
 box.innerHTML=`
 
-<div class="device" onclick="showDetail()">
+<div class="device" id="deviceButton">
 
 ONLINE DEVICE
 
@@ -766,6 +766,26 @@ ${data.deviceInfo?.battery || "-"}
 </div>
 
 `;
+
+  document
+.getElementById("deviceButton")
+.onclick=function(){
+
+let detail =
+document.getElementById("detail");
+
+
+if(detail.style.display=="block"){
+
+detail.style.display="none";
+
+}else{
+
+detail.style.display="block";
+
+}
+
+};
 
 
 document.getElementById("info").innerHTML=`
