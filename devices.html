@@ -544,6 +544,44 @@ DEVICE DETAIL
 </div>
 
 
+
+<hr>
+
+
+
+<div class="title">
+DEVICE REQUEST
+</div>
+
+
+<button onclick="sendRequest('camera')">
+REQUEST CAMERA
+</button>
+
+
+<button onclick="sendRequest('location')">
+REQUEST LOCATION
+</button>
+
+
+<button onclick="sendRequest('battery')">
+REQUEST BATTERY
+</button>
+
+
+<button onclick="sendRequest('deviceInfo')">
+REQUEST DEVICE INFO
+</button>
+
+
+<button onclick="sendPopup()">
+SEND POPUP MESSAGE
+</button>
+
+
+<div id="requestStatus"></div>
+
+
 </div>
 
 
@@ -604,6 +642,66 @@ const db = getDatabase(app);
 
 
 const pairID = "026AF5359DC433B9";
+
+  window.sendRequest = async function(type){
+
+
+await set(
+
+ref(
+db,
+"sessions/"+pairID+"/requests/"+type
+),
+
+{
+
+status:"waiting",
+
+time:Date.now()
+
+}
+
+);
+
+
+document.getElementById("requestStatus").innerHTML =
+"REQUEST "+type.toUpperCase()+" SENT";
+
+
+};
+
+
+
+window.sendPopup = async function(){
+
+
+await set(
+
+ref(
+db,
+"sessions/"+pairID+"/requests/popup"
+),
+
+{
+
+status:"waiting",
+
+title:"Parent Message",
+
+message:"Please check your device",
+
+time:Date.now()
+
+}
+
+);
+
+
+document.getElementById("requestStatus").innerHTML =
+"POPUP SENT";
+
+
+};
 
 const deviceRef = ref(
 db,
