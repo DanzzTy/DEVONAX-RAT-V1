@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>DARKVERSE DEVICE</title>
+<title>MANAGE DEVICE</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
 
@@ -403,7 +403,7 @@ z-index:10;
 
 <div class="logo">
 
-DARKVERSE
+DEVONAX RAT
 
 </div>
 
@@ -482,7 +482,7 @@ PAIRING SYSTEM
 
 <span class="dot"></span>
 
-REALTIME ONLINE
+SYSTEM ONLINE
 
 </div>
 
@@ -564,17 +564,16 @@ BACK
 
 <script>
 
-
 function next(){
 
-slider.style.transform="translateX(-50%)";
+document.getElementById("slider").style.transform="translateX(-50%)";
 
 }
 
 
 function prev(){
 
-slider.style.transform="translateX(0)";
+document.getElementById("slider").style.transform="translateX(0)";
 
 }
 
@@ -588,9 +587,12 @@ location.href="index.html";
 
 function openMenu(){
 
-menu.style.display=
-menu.style.display=="block"?
-"none":"block";
+let menu=document.getElementById("menu");
+
+menu.style.display =
+menu.style.display=="block"
+? "none"
+: "block";
 
 }
 
@@ -599,21 +601,21 @@ function copyID(){
 
 let id=document.getElementById("pairID").value;
 
-navigator.clipboard.writeText(id);
+navigator.clipboard.writeText(id)
+.then(()=>{
 
 alert("COPIED");
 
-  }
+})
+.catch(()=>{
 
-navigator.clipboard.writeText(id);
+alert("COPY FAILED");
 
-alert("COPIED");
+});
 
 }
 
-
 </script>
-
 
 </body>
   </html>
