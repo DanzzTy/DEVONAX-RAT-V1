@@ -562,58 +562,211 @@ BACK
 
 
 
-<script>
+<script type="module">
 
-function next(){
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
-document.getElementById("slider").style.transform="translateX(-50%)";
+import {
+getDatabase,
+ref,
+get,
+set,
+onValue,
+remove
+}
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyCnGnqV6fKvO3XDLBucrsIYPjGuafTun7g",
+
+authDomain:"rat-jancok.firebaseapp.com",
+
+databaseURL:"https://rat-jancok-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"rat-jancok",
+
+storageBucket:"rat-jancok.firebasestorage.app",
+
+messagingSenderId:"832199244613",
+
+appId:"1:832199244613:web:d40428c4fd6e73d37d1c2c"
+
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+
+
+const pairID = "026AF5359DC433B9";
+
+const deviceRef = ref(
+db,
+"sessions/" + pairID
+);
+
+
+
+/* CEK SESSION */
+
+get(deviceRef).then((snap)=>{
+
+
+if(!snap.exists()){
+
+set(deviceRef,{
+
+created:Date.now(),
+
+connected:false
+
+});
+
 
 }
 
 
-function prev(){
+});
 
-document.getElementById("slider").style.transform="translateX(0)";
+
+
+
+/* REALTIME DEVICE */
+
+onValue(deviceRef,(snap)=>{
+
+
+const data=snap.val();
+
+
+const box=document.getElementById("device");
+
+
+if(data && data.connected){
+
+
+box.innerHTML=`
+
+<div class="device" onclick="showDetail()">
+
+ONLINE DEVICE
+
+<br>
+
+${data.deviceInfo?.name || "Unknown"}
+
+<br>
+
+Battery:
+${data.deviceInfo?.battery || "-"}
+
+</div>
+
+`;
+
+
+document.getElementById("info").innerHTML=`
+
+Name :
+${data.deviceInfo?.name || "-"}
+
+<br>
+
+Browser :
+${data.deviceInfo?.browser || "-"}
+
+<br>
+
+Battery :
+${data.deviceInfo?.battery || "-"}
+
+<br>
+
+Last Seen :
+${new Date(data.deviceInfo?.lastSeen)
+.toLocaleString()}
+
+`;
+
+
+}else{
+
+
+box.innerHTML="NO DEVICE CONNECTED";
+
 
 }
 
 
-function back(){
+});
+
+
+
+
+
+window.showDetail=function(){
+
+document.getElementById("detail").style.display="block";
+
+}
+
+
+
+
+window.next=function(){
+
+document.getElementById("slider")
+.style.transform="translateX(-50%)";
+
+}
+
+
+
+window.prev=function(){
+
+document.getElementById("slider")
+.style.transform="translateX(0)";
+
+}
+
+
+
+window.back=function(){
 
 location.href="index.html";
 
 }
 
 
-function openMenu(){
+
+window.openMenu=function(){
 
 let menu=document.getElementById("menu");
 
 menu.style.display =
 menu.style.display=="block"
-? "none"
-: "block";
+?"none"
+:"block";
 
 }
 
 
-function copyID(){
 
-let id=document.getElementById("pairID").value;
 
-navigator.clipboard.writeText(id)
-.then(()=>{
+window.copyID=function(){
 
-alert("COPIED");
+navigator.clipboard.writeText(pairID);
 
-})
-.catch(()=>{
-
-alert("COPY FAILED");
-
-});
+alert("PAIRING ID COPIED");
 
 }
+
+
 
 </script>
 
