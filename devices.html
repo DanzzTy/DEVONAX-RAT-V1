@@ -807,11 +807,23 @@ box.innerHTML="NO DEVICE CONNECTED";
 
 
 
-window.showDetail=function(){
+window.toggleDetail=function(){
 
-document.getElementById("detail").style.display="block";
+const detail = document.getElementById("detail");
+
+
+if(detail.style.display === "block"){
+
+detail.style.display = "none";
+
+}else{
+
+detail.style.display = "block";
 
 }
+
+
+};
 
 
 
