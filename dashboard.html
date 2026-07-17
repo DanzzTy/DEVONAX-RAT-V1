@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Orbitron,sans-serif;
+}
+
+:root{
+--bg:#090909;
+--card:#121212;
+--red:#ff1a1a;
+--red2:#8b0000;
+--text:#ffffff;
+--gray:#8d8d8d;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+padding:18px 18px 90px;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,#ff000018,transparent 35%),
+radial-gradient(circle at bottom right,#ff000018,transparent 35%);
+pointer-events:none;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.menu,
+.avatar{
+width:48px;
+height:48px;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#151515;
+border:1px solid #300;
+}
+
+.avatar{
+background:linear-gradient(180deg,#ff2020,#900);
+}
+
+.logo{
+font-size:25px;
+font-weight:800;
+letter-spacing:5px;
+color:var(--red);
+text-shadow:0 0 15px red;
+}
+
+.card{
+background:var(--card);
+border-radius:22px;
+border:1px solid #300;
+padding:18px;
+box-shadow:0 0 18px rgba(255,0,0,.15);
+margin-bottom:18px;
+}
+
+.profile{
+display:flex;
+gap:16px;
+align-items:center;
+}
+
+.userimg{
+width:70px;
+height:70px;
+border-radius:50%;
+background:linear-gradient(180deg,#ff2020,#700);
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:34px;
+}
+
+.username{
+font-size:22px;
+font-weight:700;
+}
+
+.role{
+margin-top:5px;
+display:inline-block;
+padding:4px 12px;
+border-radius:20px;
+background:#220000;
+border:1px solid #500;
+color:#ff5555;
+font-size:12px;
+}
+
+.expired{
+margin-top:10px;
+font-size:12px;
+color:var(--gray);
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-bottom:20px;
+}
+
+.box{
+background:#141414;
+border:1px solid #300;
+border-radius:18px;
+padding:16px;
+text-align:center;
+}
+
+.box span{
+font-size:34px;
+color:var(--red);
+}
+
+.box h2{
+margin-top:8px;
+font-size:20px;
+}
+
+.box p{
+margin-top:4px;
+font-size:11px;
+color:var(--gray);
+}
+
+.title{
+font-size:15px;
+margin-bottom:12px;
+color:#ff5b5b;
+letter-spacing:2px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="menu">
+<span class="material-symbols-outlined">menu</span>
+</div>
+
+<div class="logo">
+DEVONAX
+</div>
+
+<div class="avatar">
+<span class="material-symbols-outlined">person</span>
+</div>
+
+</header>
+
+<div class="card profile">
+
+<div class="userimg">
+<span class="material-symbols-outlined">
+person
+</span>
+</div>
+
+<div>
+
+<div class="username" id="username">
+Loading...
+</div>
+
+<div class="role" id="role">
+Loading...
+</div>
+
+<div class="expired" id="expired">
+Expired : -
+</div>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+devices
+</span>
+
+<h2 id="device">
+0
+</h2>
+
+<p>Device</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+bug_report
+</span>
+
+<h2 id="bug">
+0
+</h2>
+
+<p>Bug</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+newspaper
+</span>
+
+<h2 id="news">
+0
+</h2>
+
+<p>News</p>
+
+</div>
+
+  </div>
+
+  <div class="title">LATEST NEWS</div>
+
+<div class="card" style="padding:0;overflow:hidden">
+
+<img src="img/banner.jpg"
+style="width:100%;height:180px;object-fit:cover;filter:brightness(.45)">
+
+<div style="position:absolute"></div>
+
+<div style="padding:18px">
+
+<h2 style="color:#ff4444">
+DEVONAX PROJECT
+</h2>
+
+<p style="font-size:12px;color:#999;margin-top:8px">
+Welcome to DEVONAX Dashboard
+</p>
+
+</div>
+
+</div>
+
+<div class="title">
+QUICK MENU
+</div>
+
+<div class="stats">
+
+<div class="box" onclick="location='device.html'">
+
+<span class="material-symbols-outlined">
+devices
+</span>
+
+<p>Device</p>
+
+</div>
+
+<div class="box" onclick="location='news.html'">
+
+<span class="material-symbols-outlined">
+newspaper
+</span>
+
+<p>News</p>
+
+</div>
+
+<div class="box" onclick="location='profile.html'">
+
+<span class="material-symbols-outlined">
+person
+</span>
+
+<p>Profile</p>
+
+</div>
+
+</div>
+
+<nav style="position:fixed;left:15px;right:15px;bottom:15px;height:65px;background:#111;border:1px solid #300;border-radius:35px;display:flex;justify-content:space-around;align-items:center;box-shadow:0 0 20px rgba(255,0,0,.15)">
+
+<a href="dashboard.html" style="color:#ff2020;text-decoration:none">
+<span class="material-symbols-outlined">
+home
+</span>
+</a>
+
+<a href="device.html" style="color:#888;text-decoration:none">
+<span class="material-symbols-outlined">
+devices
+</span>
+</a>
+
+<a href="tools.html" style="color:#888;text-decoration:none">
+<span class="material-symbols-outlined">
+terminal
+</span>
+</a>
+
+<a href="settings.html" style="color:#888;text-decoration:none">
+<span class="material-symbols-outlined">
+settings
+</span>
+</a>
+
+</nav>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+import { getAuth,onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+import { getDatabase,ref,onValue } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+authDomain:"project-coding-gabut.firebaseapp.com",
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"project-coding-gabut",
+storageBucket:"project-coding-gabut.firebasestorage.app",
+messagingSenderId:"234910334669",
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+};
+
+const app=initializeApp(firebaseConfig);
+const auth=getAuth(app);
+const db=getDatabase(app);
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+location.href="login.html";
+return;
+}
+
+const userRef=ref(db,"users/"+user.uid);
+
+onValue(userRef,(snap)=>{
+
+if(!snap.exists()){
+
+alert("Akun belum diaktifkan!");
+
+signOut(auth);
+
+location.href="login.html";
+
+return;
+
+}
+
+const d=snap.val();
+
+document.getElementById("username").textContent=d.username||"-";
+document.getElementById("role").textContent=d.role||"-";
+document.getElementById("expired").textContent="Expired : "+(d.expired||"-");
+document.getElementById("device").textContent=d.device||0;
+document.getElementById("bug").textContent=d.bug||0;
+document.getElementById("news").textContent=d.news||0;
+
+});
+
+});
+
+</script>
+
+</body>
+  </html>
