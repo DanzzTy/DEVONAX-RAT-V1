@@ -344,8 +344,17 @@ settings
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-import { getAuth,onAuthStateChanged,signOut } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-import { getDatabase,ref,onValue } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+import {
+    getAuth,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+    getDatabase,
+    ref,
+    get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
 const firebaseConfig={
 apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
@@ -361,37 +370,35 @@ const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getDatabase(app);
 
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth, async (user)=>{
 
-if(!user){
-location.href="login.html";
-return;
-}
+    if(!user){
+        location.href="login.html";
+        return;
+    }
 
-const userRef=ref(db,"users/"+user.uid);
+    const snap = await get(ref(db,"users/"+user.uid));
 
-onValue(userRef,(snap)=>{
+    if(!snap.exists()){
 
-if(!snap.exists()){
+        alert("Akun belum diaktifkan.");
 
-alert("Akun belum diaktifkan!");
+        await signOut(auth);
 
-signOut(auth);
+        location.href="login.html";
 
-location.href="login.html";
+        return;
 
-return;
+    }
 
-}
+    const d = snap.val();
 
-const d=snap.val();
-
-document.getElementById("username").textContent=d.username||"-";
-document.getElementById("role").textContent=d.role||"-";
-document.getElementById("expired").textContent="Expired : "+(d.expired||"-");
-document.getElementById("device").textContent=d.device||0;
-document.getElementById("bug").textContent=d.bug||0;
-document.getElementById("news").textContent=d.news||0;
+    document.getElementById("username").textContent = d.username;
+    document.getElementById("role").textContent = d.role;
+    document.getElementById("expired").textContent = "Expired : " + d.expired;
+    document.getElementById("device").textContent = d.device;
+    document.getElementById("bug").textContent = d.bug;
+    document.getElementById("news").textContent = d.news;
 
 });
 
