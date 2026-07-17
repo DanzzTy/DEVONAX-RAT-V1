@@ -182,7 +182,11 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/fireba
 
 import { getAuth,onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-import { getFirestore,doc,onSnapshot } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import {
+getDatabase,
+ref,
+get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
 const firebaseConfig={
 
@@ -204,9 +208,9 @@ const app=initializeApp(firebaseConfig);
 
 const auth=getAuth(app);
 
-const db=getFirestore(app);
+const db=getDatabase(app);
 
-onAuthStateChanged(auth,(user)=>{
+onAuthStateChanged(auth,async(user)=>{
 
 if(!user){
 
@@ -216,15 +220,53 @@ return;
 
 }
 
-onSnapshot(doc(db,"users",user.uid),(snap)=>{
+const snap=await get(ref(db,"users/"+user.uid));
 
-if(snap.exists()){
+if(!snap.exists()){
 
-document.getElementById("username").innerHTML=snap.data().username;
+alert("Akun belum diaktifkan");
+
+location.href="login.html";
+
+return;
 
 }
 
-});
+const d=snap.val();
+
+document.getElementById("username").textContent=d.username;
+
+function masuk(){
+
+if(Date.now()>d.expired){
+
+alert("Masa aktif telah habis");
+
+location.href="login.html";
+
+return;
+
+}
+
+if(
+d.role=="Developer"||
+d.role=="Owner"||
+d.role=="Reseller"
+){
+
+location.href="admin/dashboard.html";
+
+}else{
+
+location.href="dashboard.html";
+
+}
+
+}
+
+document.getElementById("skip").onclick=masuk;
+
+document.getElementById("video").onended=masuk;
 
 });
 
