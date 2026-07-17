@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DEVONAX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Oxanium,sans-serif}
+body{background:#0b0b0b;color:#fff;padding:15px 15px 90px}
+.card{background:#111;border:1px solid #300;border-radius:18px;padding:15px;margin-bottom:15px}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.logo{font-size:28px;letter-spacing:6px;color:#bbb;animation:flicker 2s infinite}
+@keyframes flicker{50%{opacity:.35}}
+.top,.avatar{width:48px;height:48px;border-radius:50%;display:flex;justify-content:center;align-items:center}
+.top{background:#181818}
+.avatar{background:#d50000}
+span{font-variation-settings:'FILL'1}
+.profile{display:flex;gap:15px;align-items:center}
+.role{color:#ff5555;font-size:12px}
+.exp{color:#888;font-size:11px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:15px}
+.box{text-align:center;background:#181818;border-radius:15px;padding:12px}
+.box span{font-size:34px;color:#ff3333}
+.banner{position:relative;height:170px;border-radius:18px;overflow:hidden;margin-top:15px}
+.banner img{width:100%;height:100%;object-fit:cover;filter:brightness(.45)}
+.txt{position:absolute;left:18px;bottom:18px}
+nav{position:fixed;left:15px;right:15px;bottom:15px;height:60px;background:#111;border:1px solid #300;border-radius:30px;display:flex;justify-content:space-around;align-items:center}
+nav span{color:#888}.on{color:#ff3333}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="top"><span class="material-symbols-outlined">menu</span></div>
+<div class="logo">DEVONAX</div>
+<div class="top" style="background:#d50000"><span class="material-symbols-outlined">person</span></div>
+</header>
+
+<div class="card profile">
+
+<div class="avatar">
+<span class="material-symbols-outlined">person</span>
+</div>
+
+<div>
+<h2 id="username">Loading...</h2>
+<div class="role" id="role">Loading...</div>
+<div class="exp" id="expired">Expired : -</div>
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="box">
+<span class="material-symbols-outlined">devices</span>
+<h3 id="device">0</h3>
+</div>
+
+<div class="box">
+<span class="material-symbols-outlined">bug_report</span>
+<h3 id="bug">0</h3>
+</div>
+
+<div class="box">
+<span class="material-symbols-outlined">newspaper</span>
+<h3 id="news">0</h3>
+</div>
+
+</div>
+
+<div class="banner">
+<img src="assets/img/banner.jpg">
+<div class="txt">
+<h2>NEWS</h2>
+<p>Developer : @DANZZGNTG</p>
+</div>
+</div>
+
+<nav>
+<span class="material-symbols-outlined on">home</span>
+<span class="material-symbols-outlined">devices</span>
+<span class="material-symbols-outlined">terminal</span>
+<span class="material-symbols-outlined">settings</span>
+</nav>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+import{getDatabase,ref,onValue}from"https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const app=initializeApp({
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+authDomain:"project-coding-gabut.firebaseapp.com",
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"project-coding-gabut",
+storageBucket:"project-coding-gabut.firebasestorage.app",
+messagingSenderId:"234910334669",
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+});
+
+const auth=getAuth(app),db=getDatabase(app);
+
+onAuthStateChanged(auth,u=>{
+if(!u)return location="login.html";
+onValue(ref(db,"users/"+u.uid),s=>{
+if(!s.exists())return;
+let d=s.val();
+username.textContent=d.username;
+role.textContent=d.role;
+expired.textContent="Expired : "+d.expired;
+device.textContent=d.device;
+bug.textContent=d.bug;
+news.textContent=d.news;
+});
+});
+</script>
+
+</body>
+</html>
