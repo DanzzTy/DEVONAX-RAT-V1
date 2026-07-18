@@ -285,3 +285,117 @@ LOADING SYSTEM...
 </div>
 
   </div>
+  
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+const username=document.getElementById("username");
+
+const skip=document.getElementById("skip");
+
+const video=document.getElementById("video");
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+location.replace("login.html");
+
+return;
+
+}
+
+username.textContent=user.email.split("@")[0];
+
+try{
+
+const snap=await get(ref(db,"users/"+user.uid));
+
+if(!snap.exists()){
+
+location.replace("setup.html");
+
+return;
+
+}
+
+const data=snap.val();
+
+username.textContent=data.username||user.email.split("@")[0];
+
+function masuk(){
+
+const role=data.role||"User";
+
+if(
+role==="Developer"||
+role==="Owner"||
+role==="Reseller"
+){
+
+location.replace("admin/dashboard.html");
+
+}else{
+
+location.replace("dashboard.html");
+
+}
+
+}
+
+skip.onclick=masuk;
+
+video.onended=masuk;
+
+}catch(err){
+
+console.error(err);
+
+alert("Gagal memuat data akun.");
+
+location.replace("login.html");
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
