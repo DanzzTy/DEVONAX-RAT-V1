@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX - Users</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+
+--bg:#070707;
+--card:#131313;
+--border:#2f2f2f;
+--red:#ff2d2d;
+--text:#ffffff;
+--sub:#9a9a9a;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+padding:18px;
+padding-bottom:110px;
+overflow-x:hidden;
+
+}
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(circle at top left,#ff000018,transparent 35%),
+radial-gradient(circle at bottom right,#ff000015,transparent 35%);
+
+pointer-events:none;
+
+}
+
+.grid{
+
+position:fixed;
+inset:0;
+
+opacity:.04;
+
+background-image:
+
+linear-gradient(#ff0000 1px,transparent 1px),
+linear-gradient(90deg,#ff0000 1px,transparent 1px);
+
+background-size:40px 40px;
+
+pointer-events:none;
+
+}
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:22px;
+
+}
+
+.back,
+.refresh{
+
+width:52px;
+height:52px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+border-radius:18px;
+
+background:#171717;
+
+border:1px solid var(--border);
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.back:hover,
+.refresh:hover{
+
+border-color:var(--red);
+
+box-shadow:0 0 15px rgba(255,0,0,.3);
+
+}
+
+.back span,
+.refresh span{
+
+font-size:28px;
+
+}
+
+.logo{
+
+font-size:26px;
+
+font-weight:800;
+
+letter-spacing:4px;
+
+color:#d8d8d8;
+
+}
+
+.card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:22px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+box-shadow:0 0 18px rgba(255,0,0,.08);
+
+}
+
+.title{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+margin-bottom:16px;
+
+font-size:15px;
+
+letter-spacing:2px;
+
+color:#ff6666;
+
+}
+
+.title span{
+
+font-size:25px;
+
+}
+
+.stats{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.box{
+
+background:#191919;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:18px;
+
+text-align:center;
+
+transition:.25s;
+
+}
+
+.box:hover{
+
+border-color:var(--red);
+
+box-shadow:0 0 18px rgba(255,0,0,.25);
+
+}
+
+.box span{
+
+font-size:34px;
+
+color:var(--red);
+
+}
+
+.box h2{
+
+margin-top:10px;
+
+font-size:24px;
+
+}
+
+.box p{
+
+margin-top:8px;
+
+font-size:11px;
+
+color:#999;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div
+class="back"
+onclick="location.href='dashboard.html'">
+
+<span class="material-symbols-outlined">
+
+arrow_back
+
+</span>
+
+</div>
+
+<div class="logo">
+
+USERS
+
+</div>
+
+<div
+class="refresh"
+id="refreshBtn">
+
+<span class="material-symbols-outlined">
+
+refresh
+
+</span>
+
+</div>
+
+</header>
+
+<div class="card">
+
+<div class="title">
+
+<span class="material-symbols-outlined">
+
+groups
+
+</span>
+
+USER STATISTICS
+
+</div>
+
+<div class="stats">
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+
+groups
+
+</span>
+
+<h2 id="totalUser">
+
+0
+
+</h2>
+
+<p>Total User</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+
+wifi
+
+</span>
+
+<h2 id="onlineUser">
+
+0
+
+</h2>
+
+<p>Online</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+
+verified_user
+
+</span>
+
+<h2 id="activeUser">
+
+0
+
+</h2>
+
+<p>Active</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+
+event_busy
+
+</span>
+
+<h2 id="expiredUser">
+
+0
+
+</h2>
+
+<p>Expired</p>
+
+</div>
+
+</div>
+
+</div>
+
+  <div class="card">
+
+<div class="title">
+
+<span class="material-symbols-outlined">
+
+manage_search
+
+</span>
+
+SEARCH USER
+
+</div>
+
+<div class="searchBox">
+
+<span class="material-symbols-outlined">
+
+search
+
+</span>
+
+<input
+type="text"
+id="search"
+placeholder="Cari username atau email...">
+
+</div>
+
+<div class="filterGrid">
+
+<select id="filterRole">
+
+<option value="All">Semua Role</option>
+
+<option value="Developer">Developer</option>
+
+<option value="Owner">Owner</option>
+
+<option value="Admin">Admin</option>
+
+<option value="Reseller">Reseller</option>
+
+<option value="Premium">Premium</option>
+
+<option value="Member">Member</option>
+
+</select>
+
+<button id="reloadBtn">
+
+<span class="material-symbols-outlined">
+
+refresh
+
+</span>
+
+Refresh
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+<span class="material-symbols-outlined">
+
+group
+
+</span>
+
+USER LIST
+
+</div>
+
+<div id="userList">
+
+<div class="empty">
+
+<span class="material-symbols-outlined">
+
+hourglass_empty
+
+</span>
+
+<p>
+
+Loading users...
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.searchBox{
+
+height:56px;
+
+display:flex;
+align-items:center;
+
+background:#191919;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:0 18px;
+
+margin-bottom:16px;
+
+}
+
+.searchBox span{
+
+font-size:26px;
+
+color:#ff3030;
+
+margin-right:12px;
+
+}
+
+.searchBox input{
+
+flex:1;
+
+background:none;
+
+border:none;
+
+outline:none;
+
+color:#fff;
+
+font-size:14px;
+
+}
+
+.filterGrid{
+
+display:grid;
+
+grid-template-columns:1fr auto;
+
+gap:12px;
+
+}
+
+.filterGrid select{
+
+height:54px;
+
+background:#191919;
+
+border:1px solid #333;
+
+border-radius:16px;
+
+color:#fff;
+
+padding:0 16px;
+
+font-size:13px;
+
+outline:none;
+
+}
+
+#reloadBtn{
+
+height:54px;
+
+padding:0 20px;
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:16px;
+
+color:#fff;
+
+cursor:pointer;
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+transition:.25s;
+
+}
+
+#reloadBtn:hover{
+
+border-color:#ff3030;
+
+box-shadow:0 0 18px rgba(255,0,0,.25);
+
+}
+
+#reloadBtn span{
+
+color:#ff3030;
+
+}
+
+.userCard{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+background:#191919;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:16px;
+
+margin-bottom:14px;
+
+transition:.25s;
+
+}
+
+.userCard:hover{
+
+border-color:#ff3030;
+
+box-shadow:0 0 18px rgba(255,0,0,.18);
+
+}
+
+.left{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+}
+
+.avatar{
+
+width:58px;
+
+height:58px;
+
+border-radius:50%;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:linear-gradient(180deg,#ff3030,#700);
+
+box-shadow:0 0 15px rgba(255,0,0,.4);
+
+}
+
+.avatar span{
+
+font-size:30px;
+
+}
+
+.name{
+
+font-size:16px;
+
+margin-bottom:6px;
+
+}
+
+.email{
+
+font-size:11px;
+
+color:#999;
+
+}
+
+.role{
+
+display:inline-block;
+
+margin-top:8px;
+
+padding:4px 10px;
+
+border-radius:20px;
+
+background:#2b0000;
+
+border:1px solid #700;
+
+font-size:10px;
+
+color:#ff8888;
+
+}
+
+.right{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.action{
+
+width:46px;
+
+height:46px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+background:#202020;
+
+border:1px solid #333;
+
+border-radius:14px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.action:hover{
+
+border-color:#ff3030;
+
+}
+
+.action span{
+
+font-size:24px;
+
+color:#ff3030;
+
+}
+
+.empty{
+
+padding:45px 20px;
+
+text-align:center;
+
+color:#888;
+
+}
+
+.empty span{
+
+font-size:56px;
+
+margin-bottom:10px;
+
+display:block;
+
+color:#555;
+
+}
+
+  </style>
+
+  <script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getDatabase,
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const db=getDatabase(app);
+
+const userList=document.getElementById("userList");
+
+const search=document.getElementById("search");
+
+const filter=document.getElementById("filterRole");
+
+let users=[];
+
+function roleIcon(role){
+
+switch(role){
+
+case "Developer":
+return "developer_mode";
+
+case "Owner":
+return "verified";
+
+case "Admin":
+return "admin_panel_settings";
+
+case "Reseller":
+return "storefront";
+
+case "Premium":
+return "workspace_premium";
+
+default:
+return "person";
+
+}
+
+}
+
+function deviceIcon(device){
+
+if(!device) return "devices";
+
+device=device.toLowerCase();
+
+if(device.includes("android"))
+return "smartphone";
+
+if(device.includes("iphone"))
+return "phone_iphone";
+
+if(device.includes("windows"))
+return "desktop_windows";
+
+if(device.includes("mac"))
+return "laptop_mac";
+
+return "devices";
+
+}
+
+function render(){
+
+userList.innerHTML="";
+
+let total=0;
+let active=0;
+let expired=0;
+
+const today=new Date().toISOString().split("T")[0];
+
+users.forEach(u=>{
+
+if(
+search.value &&
+!(
+(u.username||"").toLowerCase().includes(search.value.toLowerCase()) ||
+(u.email||"").toLowerCase().includes(search.value.toLowerCase())
+)
+)return;
+
+if(
+filter.value!="All" &&
+u.role!=filter.value
+)return;
+
+total++;
+
+if(u.expired>=today){
+
+active++;
+
+}else{
+
+expired++;
+
+}
+
+userList.innerHTML+=`
+
+<div class="userCard">
+
+<div class="left">
+
+<div class="avatar">
+
+<span class="material-symbols-outlined">
+
+${roleIcon(u.role)}
+
+</span>
+
+</div>
+
+<div>
+
+<div class="name">
+
+${u.username}
+
+</div>
+
+<div class="email">
+
+${u.email}
+
+</div>
+
+<div class="role">
+
+${u.role}
+
+</div>
+
+<div class="email">
+
+<span class="material-symbols-outlined" style="font-size:14px;vertical-align:middle">
+
+${deviceIcon(u.device)}
+
+</span>
+
+${u.device||"Unknown"}
+
+</div>
+
+</div>
+
+</div>
+
+<div class="right">
+
+<div
+class="action editBtn"
+data-id="${u.uid}">
+
+<span class="material-symbols-outlined">
+
+edit
+
+</span>
+
+</div>
+
+<div
+class="action deleteBtn"
+data-id="${u.uid}">
+
+<span class="material-symbols-outlined">
+
+delete
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+if(total==0){
+
+userList.innerHTML=`
+
+<div class="empty">
+
+<span class="material-symbols-outlined">
+
+person_off
+
+</span>
+
+<p>
+
+Tidak ada user.
+
+</p>
+
+</div>
+
+`;
+
+}
+
+document.getElementById("totalUser").textContent=users.length;
+
+document.getElementById("activeUser").textContent=active;
+
+document.getElementById("expiredUser").textContent=expired;
+
+}
+
+onValue(ref(db,"users"),snap=>{
+
+users=[];
+
+if(snap.exists()){
+
+snap.forEach(c=>{
+
+users.push(c.val());
+
+});
+
+}
+
+render();
+
+});
+
+onValue(ref(db,"online"),snap=>{
+
+document.getElementById("onlineUser").textContent=
+
+snap.exists()?snap.size:0;
+
+});
+
+search.oninput=render;
+
+filter.onchange=render;
+
+document.getElementById("reloadBtn").onclick=render;
+
+document.getElementById("refreshBtn").onclick=()=>{
+
+location.reload();
+
+};
+
+  </script>
+
+  <div id="editModal" class="modal">
+
+<div class="modalBox">
+
+<h2>Edit User</h2>
+
+<input id="editUsername" placeholder="Username">
+
+<select id="editRole">
+
+<option>Developer</option>
+<option>Owner</option>
+<option>Admin</option>
+<option>Reseller</option>
+<option>Premium</option>
+<option>Member</option>
+
+</select>
+
+<input
+type="date"
+id="editExpired">
+
+<select id="editStatus">
+
+<option>Active</option>
+<option>Inactive</option>
+
+</select>
+
+<div class="modalBtn">
+
+<button id="saveUser">
+
+Save
+
+</button>
+
+<button id="closeModal">
+
+Cancel
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.modal{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.7);
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+backdrop-filter:blur(4px);
+
+}
+
+.modal.show{
+
+display:flex;
+
+}
+
+.modalBox{
+
+width:92%;
+
+max-width:420px;
+
+background:#141414;
+
+border:1px solid #333;
+
+border-radius:22px;
+
+padding:22px;
+
+}
+
+.modalBox h2{
+
+margin-bottom:20px;
+
+font-size:18px;
+
+letter-spacing:2px;
+
+}
+
+.modalBox input,
+.modalBox select{
+
+width:100%;
+
+height:55px;
+
+margin-bottom:15px;
+
+padding:0 16px;
+
+background:#1b1b1b;
+
+border:1px solid #333;
+
+border-radius:15px;
+
+color:#fff;
+
+outline:none;
+
+}
+
+.modalBtn{
+
+display:flex;
+
+gap:10px;
+
+}
+
+.modalBtn button{
+
+flex:1;
+
+height:52px;
+
+border:none;
+
+border-radius:15px;
+
+cursor:pointer;
+
+font-size:14px;
+
+}
+
+#saveUser{
+
+background:#ff3030;
+
+color:#fff;
+
+}
+
+#closeModal{
+
+background:#222;
+
+color:#fff;
+
+}
+
+</style>
+
+<script type="module">
+
+import{
+
+update,
+remove
+
+}from"https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+let selectedUID="";
+
+document.addEventListener("click",async(e)=>{
+
+if(e.target.closest(".editBtn")){
+
+selectedUID=e.target.closest(".editBtn").dataset.id;
+
+const u=users.find(x=>x.uid===selectedUID);
+
+editUsername.value=u.username;
+
+editRole.value=u.role;
+
+editExpired.value=u.expired;
+
+editStatus.value=u.status;
+
+editModal.classList.add("show");
+
+}
+
+if(e.target.closest(".deleteBtn")){
+
+const uid=e.target.closest(".deleteBtn").dataset.id;
+
+if(confirm("Hapus user ini?")){
+
+await remove(ref(db,"users/"+uid));
+
+}
+
+}
+
+});
+
+closeModal.onclick=()=>{
+
+editModal.classList.remove("show");
+
+};
+
+saveUser.onclick=async()=>{
+
+await update(ref(db,"users/"+selectedUID),{
+
+username:editUsername.value,
+
+role:editRole.value,
+
+expired:editExpired.value,
+
+status:editStatus.value
+
+});
+
+editModal.classList.remove("show");
+
+};
+
+</script>
+
+  <div id="toast" class="toast">
+
+<span class="material-symbols-outlined" id="toastIcon">
+
+check_circle
+
+</span>
+
+<p id="toastText">
+
+Success
+
+</p>
+
+</div>
+
+<a href="create-user.html" class="fab">
+
+<span class="material-symbols-outlined">
+
+person_add
+
+</span>
+
+</a>
+
+<nav class="bottomNav">
+
+<a href="dashboard.html">
+
+<span class="material-symbols-outlined">
+
+home
+
+</span>
+
+</a>
+
+<a class="active">
+
+<span class="material-symbols-outlined">
+
+groups
+
+</span>
+
+</a>
+
+<a href="tools.html">
+
+<span class="material-symbols-outlined">
+
+construction
+
+</span>
+
+</a>
+
+<a href="settings.html">
+
+<span class="material-symbols-outlined">
+
+settings
+
+</span>
+
+</a>
+
+</nav>
+
+<style>
+
+.fab{
+
+position:fixed;
+
+right:22px;
+
+bottom:95px;
+
+width:64px;
+
+height:64px;
+
+border-radius:50%;
+
+background:linear-gradient(180deg,#ff3030,#990000);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-decoration:none;
+
+color:#fff;
+
+box-shadow:0 0 25px rgba(255,0,0,.45);
+
+z-index:999;
+
+transition:.25s;
+
+}
+
+.fab:hover{
+
+transform:scale(1.08);
+
+}
+
+.fab span{
+
+font-size:34px;
+
+}
+
+.bottomNav{
+
+position:fixed;
+
+left:15px;
+
+right:15px;
+
+bottom:15px;
+
+height:70px;
+
+background:#121212;
+
+border:1px solid #333;
+
+border-radius:35px;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+box-shadow:0 0 20px rgba(255,0,0,.15);
+
+z-index:998;
+
+}
+
+.bottomNav a{
+
+color:#888;
+
+text-decoration:none;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+.bottomNav a.active{
+
+color:#ff3030;
+
+}
+
+.bottomNav span{
+
+font-size:30px;
+
+}
+
+.toast{
+
+position:fixed;
+
+left:50%;
+
+bottom:-100px;
+
+transform:translateX(-50%);
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+padding:16px 22px;
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+transition:.35s;
+
+z-index:9999;
+
+}
+
+.toast.show{
+
+bottom:105px;
+
+}
+
+.toast span{
+
+font-size:28px;
+
+color:#00ff66;
+
+}
+
+.toast p{
+
+font-size:13px;
+
+letter-spacing:1px;
+
+}
+
+.online{
+
+color:#00ff66;
+
+}
+
+.offline{
+
+color:#ff4444;
+
+}
+
+.expiredBadge{
+
+display:inline-block;
+
+margin-top:8px;
+
+padding:4px 10px;
+
+background:#330000;
+
+border:1px solid #700;
+
+border-radius:20px;
+
+font-size:10px;
+
+color:#ff6666;
+
+}
+
+.activeBadge{
+
+display:inline-block;
+
+margin-top:8px;
+
+padding:4px 10px;
+
+background:#003300;
+
+border:1px solid #006600;
+
+border-radius:20px;
+
+font-size:10px;
+
+color:#55ff88;
+
+}
+
+</style>
+
+<script>
+
+function toast(msg){
+
+const t=document.getElementById("toast");
+
+document.getElementById("toastText").textContent=msg;
+
+t.classList.add("show");
+
+setTimeout(()=>{
+
+t.classList.remove("show");
+
+},2500);
+
+}
+
+document.addEventListener("click",(e)=>{
+
+if(e.target.closest(".editBtn")){
+
+toast("Edit User");
+
+}
+
+if(e.target.closest(".deleteBtn")){
+
+toast("Delete User");
+
+}
+
+});
+
+window.addEventListener("online",()=>{
+
+toast("Internet Connected");
+
+});
+
+window.addEventListener("offline",()=>{
+
+toast("Internet Disconnected");
+
+});
+
+document.addEventListener("visibilitychange",()=>{
+
+if(!document.hidden){
+
+document.getElementById("refreshBtn").click();
+
+}
+
+});
+
+</script>
+
+</body>
+</html>
