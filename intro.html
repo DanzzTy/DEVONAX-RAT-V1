@@ -361,23 +361,40 @@ username.textContent=data.username||user.email.split("@")[0];
 
 function masuk(){
 
-const role=data.role||"User";
+const role=(data.role||"").toLowerCase();
 
-if(
-role==="Developer"||
-role==="Owner"||
-role==="Reseller"
-){
+switch(role){
 
+case "owner":
+location.replace("owner/dashboard.html");
+break;
+
+case "developer":
 location.replace("developer/dashboard.html");
+break;
 
-}else{
+case "admin":
+location.replace("admin/dashboard.html");
+break;
 
+case "reseller":
+location.replace("reseller/dashboard.html");
+break;
+
+case "vip":
+location.replace("vip/dashboard.html");
+break;
+
+case "member":
+location.replace("member/dashboard.html");
+break;
+
+default:
 location.replace("dashboard.html");
 
 }
 
-}
+  }
 
 skip.onclick=masuk;
 
