@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX Support</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+
+--bg:#070707;
+--card:#121212;
+--red:#ff3030;
+--border:#333;
+--text:#fff;
+--gray:#9c9c9c;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+padding:18px 18px 100px;
+
+}
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(circle at top left,#ff000015,transparent 35%),
+
+radial-gradient(circle at bottom right,#ff000015,transparent 35%);
+
+pointer-events:none;
+
+}
+
+.grid{
+
+position:fixed;
+inset:0;
+
+opacity:.04;
+
+background-image:
+
+linear-gradient(#ff0000 1px,transparent 1px),
+
+linear-gradient(90deg,#ff0000 1px,transparent 1px);
+
+background-size:40px 40px;
+
+pointer-events:none;
+
+z-index:-1;
+
+}
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+margin-bottom:22px;
+
+}
+
+.backBtn,
+.engineerBtn{
+
+width:52px;
+height:52px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+border-radius:18px;
+
+background:#161616;
+
+border:1px solid #333;
+
+transition:.25s;
+
+}
+
+.backBtn{
+
+text-decoration:none;
+color:#fff;
+
+}
+
+.backBtn:hover,
+.engineerBtn:hover{
+
+border-color:var(--red);
+
+box-shadow:0 0 18px rgba(255,0,0,.35);
+
+}
+
+.backBtn span,
+.engineerBtn span{
+
+font-size:28px;
+
+}
+
+.engineerBtn span{
+
+color:#ff3030;
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:800;
+letter-spacing:6px;
+
+color:#d8d8d8;
+
+text-shadow:0 0 10px rgba(255,255,255,.25);
+
+}
+
+.banner{
+
+position:relative;
+
+height:220px;
+
+border-radius:24px;
+
+overflow:hidden;
+
+border:1px solid #333;
+
+margin-bottom:24px;
+
+box-shadow:0 0 20px rgba(255,0,0,.15);
+
+}
+
+.banner img{
+
+width:100%;
+height:100%;
+object-fit:cover;
+
+filter:brightness(.38);
+
+}
+
+.banner::after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:linear-gradient(
+
+transparent,
+
+rgba(0,0,0,.35),
+
+rgba(0,0,0,.92)
+
+);
+
+}
+
+.official{
+
+position:absolute;
+
+top:18px;
+left:18px;
+
+padding:8px 14px;
+
+background:#ff3030;
+
+border-radius:30px;
+
+font-size:10px;
+
+letter-spacing:2px;
+
+z-index:2;
+
+}
+
+.bannerText{
+
+position:absolute;
+
+left:22px;
+
+bottom:22px;
+
+z-index:2;
+
+}
+
+.bannerText h1{
+
+font-size:30px;
+
+letter-spacing:5px;
+
+margin-bottom:8px;
+
+}
+
+.bannerText p{
+
+font-size:11px;
+
+letter-spacing:3px;
+
+color:#ddd;
+
+}
+
+.sectionTitle{
+
+display:flex;
+align-items:center;
+gap:10px;
+
+margin-bottom:18px;
+
+color:#ff5555;
+
+letter-spacing:3px;
+
+font-size:15px;
+
+}
+
+.sectionTitle span{
+
+font-size:28px;
+
+}
+
+.supportGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<a href="dashboard.html" class="backBtn">
+
+<span class="material-symbols-outlined">
+
+arrow_back_ios_new
+
+</span>
+
+</a>
+
+<div class="logo">
+
+DEVONAX
+
+</div>
+
+<div class="engineerBtn">
+
+<span class="material-symbols-outlined">
+
+engineering
+
+</span>
+
+</div>
+
+  </header>
+
+  <div class="banner">
+
+<img src="img/wp11989588.png">
+
+<div class="official">
+
+OFFICIAL
+
+</div>
+
+<div class="bannerText">
+
+<h1>
+
+SUPPORT
+
+</h1>
+
+<p>
+
+DEVONAX DEVELOPER TEAM
+
+</p>
+
+</div>
+
+</div>
+
+<div class="sectionTitle">
+
+<span class="material-symbols-outlined">
+
+engineering
+
+</span>
+
+DEVELOPER TEAM
+
+</div>
+
+<div class="supportGrid" id="supportGrid">
+
+<div class="supportCard" onclick="openSupport(0)">
+
+<div class="avatar">
+
+<img src="img/dev1.png">
+
+<div class="online"></div>
+
+</div>
+
+<h3>
+
+Developer 1
+
+</h3>
+
+<div class="role">
+
+OWNER
+
+</div>
+
+</div>
+
+<div class="supportCard" onclick="openSupport(1)">
+
+<div class="avatar">
+
+<img src="img/dev2.png">
+
+<div class="online"></div>
+
+</div>
+
+<h3>
+
+Developer 2
+
+</h3>
+
+<div class="role">
+
+DEVELOPER
+
+</div>
+
+</div>
+
+<div class="supportCard" onclick="openSupport(2)">
+
+<div class="avatar">
+
+<img src="img/dev3.png">
+
+<div class="online"></div>
+
+</div>
+
+<h3>
+
+Developer 3
+
+</h3>
+
+<div class="role">
+
+SUPPORT
+
+</div>
+
+</div>
+
+<div class="supportCard" onclick="openSupport(3)">
+
+<div class="avatar">
+
+<img src="img/dev4.png">
+
+<div class="online"></div>
+
+</div>
+
+<h3>
+
+Developer 4
+
+</h3>
+
+<div class="role">
+
+MODERATOR
+
+</div>
+
+</div>
+
+</div>
+
+<div id="supportModal" class="modal">
+
+<div class="modalContent">
+
+<div class="modalHandle"></div>
+
+<div class="profileBox">
+
+<img id="modalPhoto" src="img/dev1.png">
+
+<h2 id="modalName">
+
+Developer
+
+</h2>
+
+<div id="modalRole" class="modalRole">
+
+OWNER
+
+</div>
+
+</div>
+
+<div class="cardBox">
+
+<div class="cardTitle">
+
+<span class="material-symbols-outlined">
+
+qr_code_2
+
+</span>
+
+QRIS SUPPORT
+
+</div>
+
+<img
+id="modalQRIS"
+class="qrisImage"
+src="img/qris1.png">
+
+</div>
+
+<div class="cardBox">
+
+<div class="cardTitle">
+
+<span class="material-symbols-outlined">
+
+alternate_email
+
+</span>
+
+TELEGRAM
+
+</div>
+
+<div id="modalTelegram" class="telegramText">
+
+@developer
+
+</div>
+
+<a
+id="telegramBtn"
+class="chatButton"
+target="_blank">
+
+<span class="material-symbols-outlined">
+
+send
+
+</span>
+
+CHAT TELEGRAM
+
+</a>
+
+</div>
+
+<button
+class="closeButton"
+onclick="closeSupport()">
+
+TUTUP
+
+</button>
+
+</div>
+
+</div>
+
+<style>
+
+.modal{
+
+position:fixed;
+
+inset:0;
+
+display:none;
+
+justify-content:flex-end;
+
+flex-direction:column;
+
+background:rgba(0,0,0,.65);
+
+backdrop-filter:blur(6px);
+
+z-index:999;
+
+}
+
+.modal.show{
+
+display:flex;
+
+animation:fade .25s;
+
+}
+
+.modalContent{
+
+background:#121212;
+
+border-top-left-radius:28px;
+
+border-top-right-radius:28px;
+
+padding:22px;
+
+border-top:1px solid #333;
+
+animation:up .3s;
+
+}
+
+.modalHandle{
+
+width:60px;
+
+height:5px;
+
+border-radius:20px;
+
+background:#555;
+
+margin:auto;
+
+margin-bottom:18px;
+
+}
+
+.profileBox{
+
+text-align:center;
+
+}
+
+.profileBox img{
+
+width:110px;
+
+height:110px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:3px solid #ff3030;
+
+box-shadow:0 0 20px rgba(255,0,0,.4);
+
+}
+
+.profileBox h2{
+
+margin-top:14px;
+
+font-size:22px;
+
+}
+
+.modalRole{
+
+margin:12px auto;
+
+display:inline-block;
+
+padding:6px 16px;
+
+border-radius:20px;
+
+background:#2b0000;
+
+border:1px solid #700;
+
+color:#ff7a7a;
+
+font-size:12px;
+
+}
+
+.cardBox{
+
+margin-top:20px;
+
+background:#191919;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:18px;
+
+}
+
+.cardTitle{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+margin-bottom:14px;
+
+color:#ff5555;
+
+font-size:13px;
+
+}
+
+.cardTitle span{
+
+font-size:22px;
+
+}
+
+.qrisImage{
+
+width:100%;
+
+border-radius:14px;
+
+border:1px solid #333;
+
+}
+
+.telegramText{
+
+text-align:center;
+
+font-size:15px;
+
+margin:16px 0;
+
+color:#ddd;
+
+}
+
+.chatButton{
+
+height:52px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:10px;
+
+background:#ff3030;
+
+border-radius:16px;
+
+text-decoration:none;
+
+color:#fff;
+
+font-size:13px;
+
+}
+
+.closeButton{
+
+margin-top:20px;
+
+width:100%;
+
+height:50px;
+
+background:#202020;
+
+border:1px solid #333;
+
+border-radius:16px;
+
+color:#fff;
+
+font-size:13px;
+
+}
+
+@keyframes up{
+
+from{
+
+transform:translateY(100%);
+
+}
+
+to{
+
+transform:translateY(0);
+
+}
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+}
+
+to{
+
+opacity:1;
+
+}
+
+}
+
+</style>
+
+<script>
+
+const developers=[
+
+{
+
+name:"Developer 1",
+
+role:"OWNER",
+
+photo:"img/dev1.png",
+
+qris:"img/qris1.png",
+
+telegram:"@developer1",
+
+link:"https://t.me/developer1"
+
+},
+
+{
+
+name:"Developer 2",
+
+role:"DEVELOPER",
+
+photo:"img/dev2.png",
+
+qris:"img/qris2.png",
+
+telegram:"@developer2",
+
+link:"https://t.me/developer2"
+
+},
+
+{
+
+name:"Developer 3",
+
+role:"SUPPORT",
+
+photo:"img/dev3.png",
+
+qris:"img/qris3.png",
+
+telegram:"@developer3",
+
+link:"https://t.me/developer3"
+
+},
+
+{
+
+name:"Developer 4",
+
+role:"MODERATOR",
+
+photo:"img/dev4.png",
+
+qris:"img/qris4.png",
+
+telegram:"@developer4",
+
+link:"https://t.me/developer4"
+
+}
+
+];
+
+function openSupport(index){
+
+const d=developers[index];
+
+document.getElementById("modalPhoto").src=d.photo;
+
+document.getElementById("modalName").textContent=d.name;
+
+document.getElementById("modalRole").textContent=d.role;
+
+document.getElementById("modalQRIS").src=d.qris;
+
+document.getElementById("modalTelegram").textContent=d.telegram;
+
+document.getElementById("telegramBtn").href=d.link;
+
+document.getElementById("supportModal").classList.add("show");
+
+}
+
+function closeSupport(){
+
+document.getElementById("supportModal").classList.remove("show");
+
+}
+
+document.getElementById("supportModal").onclick=function(e){
+
+if(e.target.id=="supportModal"){
+
+closeSupport();
+
+}
+
+};
+
+</script>
+
+</body>
+</html>
