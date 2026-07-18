@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+body{
+background:#000;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+video{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+linear-gradient(
+180deg,
+rgba(0,0,0,.15),
+rgba(0,0,0,.45),
+rgba(0,0,0,.92)
+);
+z-index:1;
+}
+
+.overlay{
+position:fixed;
+inset:0;
+display:flex;
+flex-direction:column;
+justify-content:flex-end;
+align-items:center;
+padding:55px 25px;
+z-index:2;
+}
+
+.logo{
+
+font-size:42px;
+font-weight:800;
+letter-spacing:10px;
+
+color:#d9d9d9;
+
+text-shadow:
+0 0 10px rgba(255,255,255,.20),
+0 0 25px rgba(255,255,255,.12);
+
+animation:glow 2s infinite alternate;
+
+}
+
+@keyframes glow{
+
+from{
+
+text-shadow:
+0 0 8px rgba(255,255,255,.15);
+
+}
+
+to{
+
+text-shadow:
+0 0 24px rgba(255,255,255,.35);
+
+}
+
+}
+
+.username{
+
+margin-top:15px;
+
+font-size:18px;
+
+letter-spacing:4px;
+
+color:#fff;
+
+min-height:22px;
+
+}
+
+.loading{
+
+margin-top:35px;
+
+width:270px;
+
+height:6px;
+
+background:#222;
+
+border-radius:30px;
+
+overflow:hidden;
+
+}
+
+.bar{
+
+width:0;
+
+height:100%;
+
+background:#cfcfcf;
+
+box-shadow:0 0 18px rgba(255,255,255,.35);
+
+animation:loading 6s linear forwards;
+
+}
+
+@keyframes loading{
+
+100%{
+
+width:100%;
+
+}
+
+}
+
+.skip{
+
+position:absolute;
+
+top:25px;
+
+right:25px;
+
+width:130px;
+
+height:48px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:8px;
+
+background:#3a3a3a;
+
+border:1px solid #777;
+
+border-radius:15px;
+
+color:#fff;
+
+font-size:13px;
+
+letter-spacing:2px;
+
+cursor:pointer;
+
+transition:.25s;
+
+box-shadow:0 0 12px rgba(255,255,255,.15);
+
+}
+
+.skip:hover{
+
+background:#555;
+
+border-color:#bbb;
+
+box-shadow:0 0 18px rgba(255,255,255,.35);
+
+}
+
+.skip .material-symbols-outlined{
+
+font-size:22px;
+
+font-variation-settings:
+'FILL' 1,
+'wght' 500,
+'GRAD' 0,
+'opsz' 24;
+
+}
+
+.version{
+
+margin-top:30px;
+
+font-size:11px;
+
+letter-spacing:4px;
+
+color:#aaa;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<video
+id="video"
+autoplay
+muted
+playsinline>
+
+<source
+src="https://www.image2url.com/r2/default/videos/1784292380435-2936954c-dec2-473b-a3fe-2cfdfc1ecad9.mp4"
+type="video/mp4">
+
+</video>
+
+<div class="overlay">
+
+<button
+class="skip"
+id="skip">
+
+<span class="material-symbols-outlined">
+
+fast_forward
+
+</span>
+
+<span>SKIP</span>
+
+</button>
+
+<div class="logo">
+
+DEVONAX
+
+</div>
+
+<div
+class="username"
+id="username">
+
+Loading...
+
+</div>
+
+<div class="loading">
+
+<div class="bar"></div>
+
+</div>
+
+<div class="version">
+
+LOADING SYSTEM...
+
+</div>
+
+  </div>
