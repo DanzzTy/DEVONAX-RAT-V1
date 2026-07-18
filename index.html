@@ -241,7 +241,7 @@ Hack The Planet
 
 <img src="img/file_00000000948c720b9e45b20eec849d6c.png" class="character">
 
-<button onclick="location.href='login.html'">
+<button id="accessBtn">
 
 ➜ ACCESS SYSTEM
 
@@ -254,6 +254,57 @@ Hack The Planet
 </div>
 
 </div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+document.getElementById("accessBtn").onclick=()=>{
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+location.href="intro.html";
+
+}else{
+
+location.href="login.html";
+
+}
+
+});
+
+};
+
+</script>
 
 </body>
 </html>
