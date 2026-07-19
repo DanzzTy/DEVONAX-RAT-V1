@@ -490,6 +490,41 @@
     </nav>
 
     <script>
+
+        function dashboard(){
+
+const role=(data.role||"").toLowerCase();
+
+switch(role){
+
+case "owner":
+location.replace("owner/dashboard.html");
+break;
+
+case "developer":
+location.replace("developer/dashboard.html");
+break;
+
+case "admin":
+location.replace("admin/dashboard.html");
+break;
+
+case "reseller":
+location.replace("reseller/dashboard.html");
+break;
+
+case "vip":
+location.replace("vip/dashboard.html");
+break;
+
+case "member":
+location.replace("member/dashboard.html");
+break;
+
+default:
+location.replace("dashboard.html");
+           }
+        }   
         function openBottomSheet(id) {
             const sheet = document.getElementById(id);
             if (sheet) {
