@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX • DEVICES</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+--bg:#090909;
+--card:#161616;
+--card2:#1f1f1f;
+--red:#ff2b2b;
+--border:#343434;
+--text:#ffffff;
+--green:#18d26e;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+padding:18px;
+padding-bottom:110px;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:
+radial-gradient(circle at top left,#ff000015,transparent 35%),
+radial-gradient(circle at bottom right,#ff000015,transparent 35%);
+}
+
+.grid{
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.04;
+background-image:
+linear-gradient(#ff2b2b 1px,transparent 1px),
+linear-gradient(90deg,#ff2b2b 1px,transparent 1px);
+background-size:40px 40px;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.navBtn{
+width:54px;
+height:54px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#171717;
+border:1px solid #333;
+border-radius:18px;
+cursor:pointer;
+transition:.25s;
+}
+
+.navBtn:hover{
+border-color:var(--red);
+}
+
+.logo{
+font-size:27px;
+font-weight:800;
+letter-spacing:5px;
+}
+
+.banner{
+height:190px;
+border-radius:24px;
+overflow:hidden;
+position:relative;
+margin-bottom:20px;
+background:linear-gradient(135deg,#1d1d1d,#090909);
+border:1px solid #333;
+display:flex;
+align-items:flex-end;
+padding:24px;
+}
+
+.banner::before{
+content:"";
+position:absolute;
+inset:0;
+background:
+radial-gradient(circle at right,#ff202022,transparent 50%);
+}
+
+.bannerText{
+position:relative;
+z-index:2;
+}
+
+.bannerText h2{
+font-size:28px;
+letter-spacing:3px;
+margin-bottom:8px;
+}
+
+.bannerText p{
+font-size:11px;
+color:#bbb;
+letter-spacing:2px;
+}
+
+.card{
+background:var(--card);
+border:1px solid #333;
+border-radius:22px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 0 18px rgba(255,0,0,.08);
+}
+
+.title{
+font-size:13px;
+letter-spacing:3px;
+color:#ff8080;
+margin-bottom:16px;
+}
+
+.deviceCard{
+display:flex;
+align-items:center;
+gap:16px;
+padding:16px;
+background:var(--card2);
+border:1px solid #333;
+border-radius:18px;
+}
+
+.deviceIcon{
+width:72px;
+height:72px;
+border-radius:18px;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(180deg,#ff3030,#770000);
+}
+
+.deviceIcon span{
+font-size:38px;
+}
+
+.deviceInfo{
+flex:1;
+}
+
+.deviceInfo h3{
+font-size:18px;
+margin-bottom:6px;
+}
+
+.deviceInfo p{
+font-size:11px;
+color:#999;
+}
+
+.online{
+display:flex;
+align-items:center;
+gap:8px;
+margin-top:10px;
+}
+
+.dot{
+width:10px;
+height:10px;
+border-radius:50%;
+background:var(--green);
+}
+
+.statusText{
+font-size:11px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div class="navBtn" id="backBtn">
+
+<span class="material-symbols-outlined">
+arrow_back
+</span>
+
+</div>
+
+<div class="logo">
+
+DEVICES
+
+</div>
+
+<div class="navBtn">
+
+<span class="material-symbols-outlined">
+devices
+</span>
+
+</div>
+
+</header>
+
+<div class="banner">
+
+<div class="bannerText">
+
+<h2>DEVICE CONTROL</h2>
+
+<p>REALTIME DEVICE MANAGEMENT</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+CONNECTED DEVICE
+
+</div>
+
+<div class="deviceCard">
+
+<div class="deviceIcon">
+
+<span class="material-symbols-outlined">
+smartphone
+</span>
+
+</div>
+
+<div class="deviceInfo">
+
+<h3 id="deviceName">Loading...</h3>
+
+<p id="pairingId">Pairing ID : Loading...</p>
+
+<div class="online">
+
+<div class="dot" id="onlineDot"></div>
+
+<div class="statusText" id="deviceStatus">
+
+OFFLINE
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+  </div>
+
+<div class="card">
+
+<div class="title">
+
+DEVICE INFORMATION
+
+</div>
+
+<div class="infoGrid">
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+battery_full
+
+</span>
+
+<h4>Battery</h4>
+
+<p id="batteryLevel">--%</p>
+
+</div>
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+memory
+
+</span>
+
+<h4>Platform</h4>
+
+<p id="platform">Unknown</p>
+
+</div>
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+schedule
+
+</span>
+
+<h4>Last Online</h4>
+
+<p id="lastOnline">-</p>
+
+</div>
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+link
+
+</span>
+
+<h4>Connection</h4>
+
+<p id="connectionStatus">Disconnected</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+REQUEST CENTER
+
+</div>
+
+<div class="requestGrid">
+
+<button class="requestBtn" id="btnLocation">
+
+<span class="material-symbols-outlined">
+
+location_on
+
+</span>
+
+<div>
+
+<h4>Request Location</h4>
+
+<p>Meminta pengguna membagikan lokasi.</p>
+
+</div>
+
+</button>
+
+<button class="requestBtn" id="btnPhoto">
+
+<span class="material-symbols-outlined">
+
+photo_camera
+
+</span>
+
+<div>
+
+<h4>Request Photo</h4>
+
+<p>Meminta pengguna mengambil dan membagikan foto.</p>
+
+</div>
+
+</button>
+
+<button class="requestBtn" id="btnRefresh">
+
+<span class="material-symbols-outlined">
+
+sync
+
+</span>
+
+<div>
+
+<h4>Refresh</h4>
+
+<p>Meminta sinkronisasi data perangkat.</p>
+
+</div>
+
+</button>
+
+<button class="requestBtn" id="btnSound">
+
+<span class="material-symbols-outlined">
+
+volume_up
+
+</span>
+
+<div>
+
+<h4>Play Sound</h4>
+
+<p>Meminta perangkat memutar suara.</p>
+
+</div>
+
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+LAST ACTIVITY
+
+</div>
+
+<div class="activityBox">
+
+<div class="activityItem">
+
+<b>Last Request</b>
+
+<span id="lastRequest">-</span>
+
+</div>
+
+<div class="activityItem">
+
+<b>Request Status</b>
+
+<span id="requestStatus">Idle</span>
+
+</div>
+
+<div class="activityItem">
+
+<b>Last Response</b>
+
+<span id="lastResponse">-</span>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.infoGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.infoBox{
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:16px;
+
+text-align:center;
+
+}
+
+.infoBox span{
+
+font-size:34px;
+
+color:var(--red);
+
+margin-bottom:10px;
+
+display:block;
+
+}
+
+.infoBox h4{
+
+font-size:12px;
+
+margin-bottom:8px;
+
+}
+
+.infoBox p{
+
+font-size:11px;
+
+color:#aaa;
+
+word-break:break-word;
+
+}
+
+.requestGrid{
+
+display:grid;
+
+grid-template-columns:1fr;
+
+gap:14px;
+
+}
+
+.requestBtn{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+width:100%;
+
+padding:16px;
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+color:#fff;
+
+cursor:pointer;
+
+text-align:left;
+
+transition:.2s;
+
+}
+
+.requestBtn:hover{
+
+border-color:var(--red);
+
+}
+
+.requestBtn span{
+
+font-size:34px;
+
+color:var(--red);
+
+}
+
+.requestBtn h4{
+
+font-size:13px;
+
+margin-bottom:5px;
+
+}
+
+.requestBtn p{
+
+font-size:11px;
+
+color:#aaa;
+
+}
+
+.activityBox{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.activityItem{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:14px;
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+}
+
+.activityItem b{
+
+font-size:12px;
+
+}
+
+.activityItem span{
+
+font-size:11px;
+
+color:#aaa;
+
+}
+
+  </style>
+
+<div class="card">
+
+<div class="title">
+
+LAST SHARED PHOTO
+
+</div>
+
+<div class="photoBox">
+
+<img
+id="sharedPhoto"
+src="img/no-photo.png"
+alt="Shared Photo">
+
+</div>
+
+</div>
+
+<div
+id="photoViewer"
+class="viewer">
+
+<img
+id="viewerImage">
+
+</div>
+
+<style>
+
+.photoBox{
+
+width:220px;
+
+height:220px;
+
+margin:auto;
+
+border-radius:18px;
+
+overflow:hidden;
+
+border:1px solid #333;
+
+background:#111;
+
+cursor:pointer;
+
+}
+
+.photoBox img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.viewer{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.92);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+}
+
+.viewer img{
+
+max-width:95%;
+
+max-height:95%;
+
+border-radius:16px;
+
+}
+
+.viewer.show{
+
+display:flex;
+
+}
+
+</style>
+
+<script>
+
+const photo=document.getElementById("sharedPhoto");
+
+const viewer=document.getElementById("photoViewer");
+
+const viewerImg=document.getElementById("viewerImage");
+
+photo.onclick=()=>{
+
+viewer.classList.add("show");
+
+viewerImg.src=photo.src;
+
+};
+
+viewer.onclick=()=>{
+
+viewer.classList.remove("show");
+
+};
+
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+import {
+  getDatabase,
+  ref,
+  get,
+  onValue,
+  push,
+  set
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig = {
+
+  apiKey:"YOUR_API_KEY",
+  authDomain:"YOUR_AUTH_DOMAIN",
+  databaseURL:"YOUR_DATABASE_URL",
+  projectId:"YOUR_PROJECT_ID",
+  storageBucket:"YOUR_STORAGE_BUCKET",
+  messagingSenderId:"YOUR_SENDER_ID",
+  appId:"YOUR_APP_ID"
+
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+let pairingId = "";
+
+onAuthStateChanged(auth, async(user)=>{
+
+  if(!user){
+    location.href="login.html";
+    return;
+  }
+
+  const snap = await get(ref(db,"users/"+user.uid));
+
+  if(!snap.exists()) return;
+
+  const userData = snap.val();
+
+  pairingId = userData.pairingId;
+
+  document.getElementById("pairingId").textContent =
+      "Pairing ID : " + pairingId;
+
+  listenDevice();
+
+  listenGallery();
+
+});
+
+function listenDevice(){
+
+  onValue(ref(db,"devices/"+pairingId),(snap)=>{
+
+      if(!snap.exists()) return;
+
+      const d = snap.val();
+
+      deviceName.textContent = d.deviceName || "Unknown";
+
+      batteryLevel.textContent =
+          (d.battery ?? "--")+"%";
+
+      platform.textContent =
+          d.platform || "-";
+
+      lastOnline.textContent =
+          d.lastOnline || "-";
+
+      deviceStatus.textContent =
+          d.online ? "ONLINE" : "OFFLINE";
+
+      connectionStatus.textContent =
+          d.online ? "Connected" : "Disconnected";
+
+      onlineDot.style.background =
+          d.online ? "#16d85c" : "#666";
+
+  });
+
+}
+
+function sendRequest(type){
+
+   if(!pairingId) return;
+
+   const id = push(ref(db,"requests/"+pairingId));
+
+   set(id,{
+      type:type,
+      status:"waiting",
+      createdAt:Date.now()
+   });
+
+   lastRequest.textContent = type;
+   requestStatus.textContent = "Waiting";
+
+}
+
+btnLocation.onclick = ()=>{
+
+ sendRequest("share_location");
+
+};
+
+btnPhoto.onclick = ()=>{
+
+ sendRequest("share_photo");
+
+};
+
+btnRefresh.onclick = ()=>{
+
+ sendRequest("refresh");
+
+};
+
+btnSound.onclick = ()=>{
+
+ sendRequest("play_sound");
+
+};
+
+function listenGallery(){
+
+ onValue(ref(db,"sharedPhotos/"+pairingId),(snap)=>{
+
+   if(!snap.exists()) return;
+
+   // Di Part 4 akan ditampilkan sebagai galeri thumbnail.
+
+ });
+
+}
+
+</script>
+<div class="card">
+
+<div class="title">
+
+SHARED PHOTOS
+
+</div>
+
+<div id="photoGrid" class="photoGrid">
+
+<div class="emptyPhoto">
+
+Belum ada foto yang dibagikan.
+
+</div>
+
+</div>
+
+</div>
+
+<div id="photoViewer" class="viewer">
+
+<img id="viewerImage">
+
+</div>
+
+<style>
+
+.photoGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.photoItem{
+
+aspect-ratio:1/1;
+
+border-radius:18px;
+
+overflow:hidden;
+
+border:1px solid #333;
+
+background:#111;
+
+cursor:pointer;
+
+}
+
+.photoItem img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+.emptyPhoto{
+
+grid-column:1/-1;
+
+padding:30px;
+
+text-align:center;
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+color:#888;
+
+}
+
+.viewer{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.95);
+
+justify-content:center;
+
+align-items:center;
+
+z-index:9999;
+
+padding:20px;
+
+}
+
+.viewer.show{
+
+display:flex;
+
+}
+
+.viewer img{
+
+max-width:100%;
+
+max-height:100%;
+
+border-radius:18px;
+
+}
+
+</style>
+
+<script>
+
+const photoGrid=document.getElementById("photoGrid");
+
+const viewer=document.getElementById("photoViewer");
+
+const viewerImage=document.getElementById("viewerImage");
+
+function listenGallery(){
+
+onValue(ref(db,"sharedPhotos/"+pairingId),(snap)=>{
+
+photoGrid.innerHTML="";
+
+if(!snap.exists()){
+
+photoGrid.innerHTML='<div class="emptyPhoto">Belum ada foto yang dibagikan.</div>';
+
+return;
+
+}
+
+snap.forEach(item=>{
+
+const data=item.val();
+
+const box=document.createElement("div");
+
+box.className="photoItem";
+
+const img=document.createElement("img");
+
+img.src=data.imageUrl;
+
+img.loading="lazy";
+
+box.appendChild(img);
+
+box.onclick=()=>{
+
+viewer.classList.add("show");
+
+viewerImage.src=data.imageUrl;
+
+};
+
+photoGrid.appendChild(box);
+
+});
+
+});
+
+}
+
+viewer.onclick=()=>{
+
+viewer.classList.remove("show");
+
+};
+
+</script>
+
+</body>
+</html>
