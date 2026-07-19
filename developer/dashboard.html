@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX Admin</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+
+--bg:#070707;
+--card:#121212;
+--red:#ff2020;
+--text:#fff;
+--border:#2a2a2a;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+padding:18px 18px 100px;
+
+}
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(circle at top left,#ff000018,transparent 35%),
+
+radial-gradient(circle at bottom right,#ff000018,transparent 35%);
+
+pointer-events:none;
+
+}
+
+.grid{
+
+position:fixed;
+inset:0;
+
+opacity:.04;
+
+background-image:
+
+linear-gradient(#ff0000 1px,transparent 1px),
+
+linear-gradient(90deg,#ff0000 1px,transparent 1px);
+
+background-size:40px 40px;
+
+pointer-events:none;
+
+}
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+
+}
+
+.menu,
+.profile{
+
+width:50px;
+height:50px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+border-radius:16px;
+
+background:#161616;
+
+border:1px solid #333;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.menu:hover,
+.profile:hover{
+
+border-color:var(--red);
+box-shadow:0 0 15px rgba(255,0,0,.4);
+
+}
+
+.menu span,
+.profile span{
+
+font-size:28px;
+
+}
+
+.logo{
+
+font-size:28px;
+font-weight:800;
+letter-spacing:6px;
+color:#d8d8d8;
+
+text-shadow:
+0 0 8px rgba(255,255,255,.25);
+
+}
+
+.banner{
+
+position:relative;
+
+height:200px;
+
+border-radius:24px;
+
+overflow:hidden;
+
+border:1px solid #333;
+
+margin-bottom:22px;
+
+box-shadow:0 0 20px rgba(255,0,0,.15);
+
+}
+
+.slide{
+
+position:absolute;
+
+inset:0;
+
+opacity:0;
+
+transition:opacity .8s;
+
+}
+
+.slide.active{
+
+opacity:1;
+
+}
+
+.slide img{
+
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(.45);
+
+}
+
+.caption{
+
+position:absolute;
+
+left:22px;
+
+bottom:22px;
+
+z-index:2;
+
+}
+
+.caption h2{
+
+font-size:24px;
+
+letter-spacing:3px;
+
+}
+
+.caption p{
+
+margin-top:8px;
+
+font-size:12px;
+
+color:#ddd;
+
+}
+
+.dotBox{
+
+position:absolute;
+
+left:50%;
+
+bottom:14px;
+
+transform:translateX(-50%);
+
+display:flex;
+
+gap:8px;
+
+z-index:3;
+
+}
+
+.dot{
+
+width:10px;
+height:10px;
+
+border-radius:50%;
+
+background:#777;
+
+transition:.3s;
+
+}
+
+.dot.active{
+
+background:var(--red);
+
+box-shadow:0 0 12px red;
+
+}
+
+.card{
+
+background:var(--card);
+
+border:1px solid #333;
+
+border-radius:22px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+box-shadow:0 0 15px rgba(255,0,0,.08);
+
+}
+
+.title{
+
+font-size:15px;
+
+letter-spacing:3px;
+
+color:#ff5555;
+
+margin-bottom:15px;
+
+}
+
+.profileCard{
+
+display:flex;
+
+align-items:center;
+
+gap:16px;
+
+}
+
+.avatar{
+
+width:72px;
+height:72px;
+
+border-radius:50%;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:linear-gradient(180deg,#ff3030,#700);
+
+box-shadow:0 0 18px red;
+
+}
+
+.avatar span{
+
+font-size:38px;
+
+}
+
+.info h2{
+
+font-size:22px;
+
+}
+
+.role{
+
+display:inline-block;
+
+margin-top:6px;
+
+padding:5px 12px;
+
+border-radius:20px;
+
+background:#2a0000;
+
+border:1px solid #600;
+
+font-size:12px;
+
+color:#ff7777;
+
+}
+
+.expired{
+
+margin-top:10px;
+
+font-size:12px;
+
+color:#999;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div class="menu" id="menuBtn">
+
+<span class="material-symbols-outlined">
+
+menu
+
+</span>
+
+</div>
+
+<div class="logo">
+
+DEVONAX
+
+</div>
+
+<div class="profile">
+
+<span class="material-symbols-outlined">
+
+admin_panel_settings
+
+</span>
+
+</div>
+
+</header>
+
+<div class="banner">
+
+<div class="slide active">
+
+<img id="banner1" src="../img/wp11989588.png">
+
+<div class="caption">
+
+<h2 id="bannerTitle1">
+
+WELCOME
+
+</h2>
+
+<p id="bannerText1">
+
+Developer: @DANZZGNTG
+
+</p>
+
+</div>
+
+</div>
+
+<div class="slide">
+
+<img id="banner2" src="../img/Jujutsu-Kaisen-Desktop-Wallpaper.jpg">
+
+<div class="caption">
+
+<h2 id="bannerTitle2">
+
+NEWS
+
+</h2>
+
+<p id="bannerText2">
+
+DEVONAX PROJECT
+
+</p>
+
+</div>
+
+</div>
+
+<div class="dotBox">
+
+<div class="dot active"></div>
+
+<div class="dot"></div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+ADMIN PROFILE
+
+</div>
+
+<div class="profileCard">
+
+<div class="avatar">
+
+<span class="material-symbols-outlined">
+
+person
+
+</span>
+
+</div>
+
+<div class="info">
+
+<h2 id="username">
+
+Loading...
+
+</h2>
+
+<div class="role" id="role">
+
+Loading...
+
+</div>
+
+<div class="expired" id="expired">
+
+Expired : -
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+  <div class="card">
+
+<div class="title">
+
+SYSTEM STATISTICS
+
+</div>
+
+<div class="stats">
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+groups
+</span>
+
+<h2 id="totalUser">
+0
+</h2>
+
+<p>Total User</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+verified_user
+</span>
+
+<h2 id="activeUser">
+0
+</h2>
+
+<p>Active</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+event_busy
+</span>
+
+<h2 id="expiredUser">
+0
+</h2>
+
+<p>Expired</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+wifi
+</span>
+
+<h2 id="onlineUser">
+0
+</h2>
+
+<p>Online</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+QUICK MENU
+
+</div>
+
+<div class="menuGrid">
+
+<div class="item" onclick="location.href='create-user.html'">
+
+<span class="material-symbols-outlined">
+
+person_add
+
+</span>
+
+<p>Create User</p>
+
+</div>
+
+<div class="item" onclick="location.href='users.html'">
+
+<span class="material-symbols-outlined">
+
+groups
+
+</span>
+
+<p>Users</p>
+
+</div>
+
+<div class="item" onclick="location.href='support.html'">
+
+<span class="material-symbols-outlined">
+
+support_agent
+
+</span>
+
+<p>Developer</p>
+
+</div>
+
+<div class="item" onclick="location.href='../devices.html'">
+
+<span class="material-symbols-outlined">
+
+devices
+
+</span>
+
+<p>Device</p>
+
+</div>
+
+<div class="item" onclick="location.href='../tools.html'">
+
+<span class="material-symbols-outlined">
+
+terminal
+
+</span>
+
+<p>Tools</p>
+
+</div>
+
+<div class="item" onclick="location.href='../music.html'">
+
+<span class="material-symbols-outlined">
+
+music_note
+
+</span>
+
+<p>Music</p>
+
+</div>
+
+</div>
+
+</div>
+
+<nav class="bottomNav">
+
+<a href="dashboard.html" class="active">
+
+<span class="material-symbols-outlined">
+
+home
+
+</span>
+
+</a>
+
+<a href="users.html">
+
+<span class="material-symbols-outlined">
+
+groups
+
+</span>
+
+</a>
+
+<a href="../devices.html">
+
+<span class="material-symbols-outlined">
+
+devices
+
+</span>
+
+</a>
+
+<a href="../tools.html">
+
+<span class="material-symbols-outlined">
+
+terminal
+
+</span>
+
+</a>
+
+</nav>
+
+<style>
+
+.stats{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.box{
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:20px;
+
+padding:18px;
+
+text-align:center;
+
+transition:.25s;
+
+}
+
+.box:hover{
+
+border-color:#ff2020;
+
+box-shadow:0 0 18px rgba(255,0,0,.25);
+
+}
+
+.box span{
+
+font-size:34px;
+
+color:#ff3030;
+
+}
+
+.box h2{
+
+margin-top:10px;
+
+font-size:24px;
+
+}
+
+.box p{
+
+margin-top:6px;
+
+font-size:12px;
+
+color:#999;
+
+}
+
+.menuGrid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:14px;
+
+}
+
+.item{
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:20px;
+
+padding:18px 10px;
+
+text-align:center;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.item:hover{
+
+transform:translateY(-4px);
+
+border-color:#ff2020;
+
+box-shadow:0 0 18px rgba(255,0,0,.25);
+
+}
+
+.item span{
+
+font-size:34px;
+
+color:#ff3030;
+
+}
+
+.item p{
+
+margin-top:10px;
+
+font-size:11px;
+
+}
+
+.bottomNav{
+
+position:fixed;
+
+left:15px;
+
+right:15px;
+
+bottom:15px;
+
+height:68px;
+
+background:#121212;
+
+border:1px solid #333;
+
+border-radius:35px;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+box-shadow:0 0 20px rgba(255,0,0,.15);
+
+z-index:100;
+
+}
+
+.bottomNav a{
+
+color:#888;
+
+text-decoration:none;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+}
+
+.bottomNav a.active{
+
+color:#ff2020;
+
+}
+
+.bottomNav span{
+
+font-size:30px;
+
+}
+
+          </style>
+
+  <div id="drawer" class="drawer">
+
+<div class="drawerHeader">
+
+<div class="drawerAvatar">
+
+<span class="material-symbols-outlined">
+
+admin_panel_settings
+
+</span>
+
+</div>
+
+<div>
+
+<h2 id="drawerName">
+
+Loading...
+
+</h2>
+
+<p id="drawerRole">
+
+Developer
+
+</p>
+
+</div>
+
+</div>
+
+<div class="drawerMenu">
+
+<div class="drawerItem" onclick="location.href='dashboard.html'">
+
+<span class="material-symbols-outlined">
+
+dashboard
+
+</span>
+
+Dashboard
+
+</div>
+
+<div class="drawerItem" onclick="location.href='create-user.html'">
+
+<span class="material-symbols-outlined">
+
+person_add
+
+</span>
+
+Create User
+
+</div>
+
+<div class="drawerItem" onclick="location.href='users.html'">
+
+<span class="material-symbols-outlined">
+
+groups
+
+</span>
+
+Manage Users
+
+</div>
+
+<div class="drawerItem" onclick="location.href='support.html'">
+
+<span class="material-symbols-outlined">
+
+support_agent
+
+</span>
+
+Support
+
+</div>
+
+<div class="drawerItem" onclick="location.href='news.html'">
+
+<span class="material-symbols-outlined">
+
+devices
+
+</span>
+
+Manage Device
+
+</div>
+
+<div class="drawerItem" onclick="location.href='../music.html'">
+
+<span class="material-symbols-outlined">
+
+music_note
+
+</span>
+
+Music Player
+
+</div>
+
+<div class="drawerItem" onclick="location.href='../tools.html'">
+
+<span class="material-symbols-outlined">
+
+terminal
+
+</span>
+
+Terminal
+
+</div>
+
+<div class="drawerItem" onclick="location.href='logs.html'">
+
+<span class="material-symbols-outlined">
+
+receipt_long
+
+</span>
+
+Activity Logs
+
+</div>
+
+<div class="drawerItem" onclick="location.href='../change-password.html'">
+
+<span class="material-symbols-outlined">
+
+settings
+
+</span>
+
+Settings
+
+</div>
+
+<div class="drawerItem logout" id="logoutBtn">
+
+<span class="material-symbols-outlined">
+
+logout
+
+</span>
+
+Logout
+
+</div>
+
+</div>
+
+</div>
+
+<div id="overlay" class="overlayMenu"></div>
+
+<style>
+
+.drawer{
+
+position:fixed;
+
+top:0;
+
+left:-310px;
+
+width:300px;
+
+height:100%;
+
+background:#111;
+
+border-right:1px solid #333;
+
+transition:.3s;
+
+z-index:999;
+
+overflow:auto;
+
+box-shadow:0 0 25px rgba(255,0,0,.25);
+
+}
+
+.drawer.show{
+
+left:0;
+
+}
+
+.overlayMenu{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.45);
+
+backdrop-filter:blur(2px);
+
+display:none;
+
+z-index:998;
+
+}
+
+.overlayMenu.show{
+
+display:block;
+
+}
+
+.drawerHeader{
+
+padding:25px;
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+border-bottom:1px solid #222;
+
+}
+
+.drawerAvatar{
+
+width:65px;
+
+height:65px;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:linear-gradient(180deg,#ff3030,#700);
+
+box-shadow:0 0 18px red;
+
+}
+
+.drawerAvatar span{
+
+font-size:34px;
+
+}
+
+#drawerName{
+
+font-size:18px;
+
+}
+
+#drawerRole{
+
+margin-top:6px;
+
+font-size:12px;
+
+color:#ff6666;
+
+}
+
+.drawerMenu{
+
+padding:12px;
+
+}
+
+.drawerItem{
+
+height:58px;
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+padding:0 18px;
+
+border-radius:16px;
+
+margin-bottom:10px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.drawerItem:hover{
+
+background:#1b1b1b;
+
+}
+
+.drawerItem span{
+
+font-size:26px;
+
+color:#ff3030;
+
+}
+
+.logout{
+
+margin-top:25px;
+
+background:#220000;
+
+border:1px solid #600;
+
+color:#ff7777;
+
+}
+
+.logout span{
+
+color:#ff7777;
+
+}
+
+</style>
+
+<script>
+
+const drawer=document.getElementById("drawer");
+
+const overlay=document.getElementById("overlay");
+
+document.getElementById("menuBtn").onclick=()=>{
+
+drawer.classList.add("show");
+
+overlay.classList.add("show");
+
+};
+
+overlay.onclick=()=>{
+
+drawer.classList.remove("show");
+
+overlay.classList.remove("show");
+
+};
+
+  </script>
+
+  <div class="card">
+
+<div class="title">
+
+SYSTEM STATUS
+
+</div>
+
+<div class="statusGrid">
+
+<div class="statusBox">
+
+<span class="material-symbols-outlined">
+
+schedule
+
+</span>
+
+<h3 id="clock">
+
+00:00:00
+
+</h3>
+
+<p>Realtime Clock</p>
+
+</div>
+
+<div class="statusBox">
+
+<span class="material-symbols-outlined">
+
+wifi
+
+</span>
+
+<h3 id="serverStatus">
+
+ONLINE
+
+</h3>
+
+<p>Server</p>
+
+</div>
+
+<div class="statusBox">
+
+<span class="material-symbols-outlined">
+
+notifications
+
+</span>
+
+<h3 id="notifCount">
+
+0
+
+</h3>
+
+<p>Notification</p>
+
+</div>
+
+<div class="statusBox">
+
+<span class="material-symbols-outlined">
+
+monitor_heart
+
+</span>
+
+<h3 id="systemHealth">
+
+100%
+
+</h3>
+
+<p>System Health</p>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.statusGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.statusBox{
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:18px;
+
+text-align:center;
+
+transition:.25s;
+
+}
+
+.statusBox:hover{
+
+border-color:#ff2020;
+
+box-shadow:0 0 20px rgba(255,0,0,.2);
+
+}
+
+.statusBox span{
+
+font-size:34px;
+
+color:#ff3030;
+
+}
+
+.statusBox h3{
+
+margin-top:10px;
+
+font-size:18px;
+
+}
+
+.statusBox p{
+
+margin-top:8px;
+
+font-size:11px;
+
+color:#888;
+
+}
+
+</style>
+
+<script>
+
+function updateClock(){
+
+const now=new Date();
+
+document.getElementById("clock").textContent=
+
+now.toLocaleTimeString("id-ID");
+
+}
+
+setInterval(updateClock,1000);
+
+updateClock();
+
+const slides=document.querySelectorAll(".slide");
+
+const dots=document.querySelectorAll(".dot");
+
+let current=0;
+
+setInterval(()=>{
+
+slides[current].classList.remove("active");
+
+dots[current].classList.remove("active");
+
+current++;
+
+if(current>=slides.length){
+
+current=0;
+
+}
+
+slides[current].classList.add("active");
+
+dots[current].classList.add("active");
+
+},5000);
+
+</script>
+
+  <script type="module">
+
+import {
+getDatabase,
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+import {
+getApp
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+const db=getDatabase(getApp());
+
+onValue(ref(db,"users"),(snap)=>{
+
+let total=0;
+let active=0;
+let expired=0;
+
+const now=new Date().getTime();
+
+if(snap.exists()){
+
+snap.forEach(user=>{
+
+total++;
+
+const data=user.val();
+
+if(data.expired){
+
+const exp=new Date(data.expired).getTime();
+
+if(exp>=now){
+
+active++;
+
+}else{
+
+expired++;
+
+}
+
+}else{
+
+active++;
+
+}
+
+});
+
+}
+
+totalUser.textContent=total;
+activeUser.textContent=active;
+expiredUser.textContent=expired;
+
+});
+
+document.getElementById("totalUser").textContent=total;
+
+document.getElementById("activeUser").textContent=active;
+
+document.getElementById("expiredUser").textContent=expired;
+
+});
+
+onValue(ref(db,"online"),(snap)=>{
+
+let online=0;
+
+if(snap.exists()){
+
+onValue(ref(db,"online"), (snap) => {
+
+let online = 0;
+
+if (snap.exists()) {
+
+snap.forEach(() => {
+online++;
+});
+
+}
+
+document.getElementById("onlineUser").textContent = online;
+
+});
+
+onValue(ref(db,"banner/1"),(snap)=>{
+
+if(!snap.exists()) return;
+
+const d=snap.val();
+
+if(d.image)
+document.getElementById("banner1").src=d.image;
+
+if(d.title)
+document.getElementById("bannerTitle1").textContent=d.title;
+
+if(d.text)
+document.getElementById("bannerText1").textContent=d.text;
+
+});
+
+onValue(ref(db,"banner/2"),(snap)=>{
+
+if(!snap.exists()) return;
+
+const d=snap.val();
+
+if(d.image)
+document.getElementById("banner2").src=d.image;
+
+if(d.title)
+document.getElementById("bannerTitle2").textContent=d.title;
+
+if(d.text)
+document.getElementById("bannerText2").textContent=d.text;
+
+});
+
+onValue(ref(db,"news"),(snap)=>{
+
+let jumlah=0;
+
+if(snap.exists()){
+
+snap.forEach(()=>{
+
+jumlah++;
+
+});
+
+}
+
+document.getElementById("notifCount").textContent=jumlah;
+
+});
+
+  </script>
+
+  <script>
+
+window.addEventListener("load",()=>{
+
+document.body.style.opacity="0";
+
+document.body.style.transition="opacity .5s";
+
+setTimeout(()=>{
+
+document.body.style.opacity="1";
+
+},100);
+
+});
+
+document.addEventListener("visibilitychange",()=>{
+
+const status=document.getElementById("serverStatus");
+
+if(document.hidden){
+
+status.textContent="PAUSED";
+
+status.style.color="#ffaa00";
+
+}else{
+
+status.textContent="ONLINE";
+
+status.style.color="#00ff66";
+
+}
+
+});
+
+window.addEventListener("online",()=>{
+
+document.getElementById("serverStatus").textContent="ONLINE";
+
+document.getElementById("serverStatus").style.color="#00ff66";
+
+});
+
+window.addEventListener("offline",()=>{
+
+document.getElementById("serverStatus").textContent="OFFLINE";
+
+document.getElementById("serverStatus").style.color="#ff3030";
+
+});
+
+setInterval(()=>{
+
+const health=document.getElementById("systemHealth");
+
+const online=document.getElementById("onlineUser").textContent;
+
+health.textContent=(98+Math.floor(Math.random()*3))+"%";
+
+if(Number(online)>0){
+
+document.getElementById("serverStatus").textContent="ONLINE";
+
+document.getElementById("serverStatus").style.color="#00ff66";
+
+}
+
+},5000);
+
+</script>
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+get,
+onValue,
+set
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+let currentUser=null;
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+location.replace("../login.html");
+
+return;
+
+}
+
+currentUser=user;
+
+const snap=await get(ref(db,"users/"+user.uid));
+
+if(!snap.exists()){
+
+location.replace("../setup.html");
+
+return;
+
+}
+
+const d=snap.val();
+
+document.getElementById("username").textContent=d.username||user.email.split("@")[0];
+
+document.getElementById("drawerName").textContent=d.username||user.email.split("@")[0];
+
+document.getElementById("role").textContent=d.role||"User";
+
+document.getElementById("drawerRole").textContent=d.role||"User";
+
+document.getElementById("expired").textContent="Expired : "+(d.expired||"-");
+
+await set(ref(db,"online/"+user.uid),{
+
+username:d.username||user.email.split("@")[0],
+
+role:d.role||"User",
+
+time:Date.now()
+
+});
+
+window.addEventListener("beforeunload",()=>{
+
+set(ref(db,"online/"+user.uid),null);
+
+});
+
+});
+
+document.getElementById("logoutBtn").onclick=async()=>{
+
+if(!confirm("Logout dari DEVONAX?")) return;
+
+if(currentUser){
+
+await set(ref(db,"online/"+currentUser.uid),null);
+
+}
+
+await signOut(auth);
+
+location.replace("../login.html");
+
+};
+
+</script>
+</body>
+  </html>
