@@ -469,9 +469,9 @@
     </div>
 
     <nav class="nav-bar">
-        <a href="dashboard.html" class="nav-item">
-            <i class="fas fa-home"></i>
-            <span>Portal</span>
+        <a href="#" id="dashboardBtn" class="nav-item">
+    <i class="fas fa-home"></i>
+    <span>Portal</span>
         </a>
         <a href="execution" class="nav-item">
             <svg width="22" height="22" viewBox="0 -960 960 960" fill="currentColor" transform="matrix(-1,0,0,1,0,0)">
@@ -491,40 +491,67 @@
 
     <script>
 
-        function dashboard(){
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
-const role=(data.role||"").toLowerCase();
+const firebaseConfig = {
+  apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+  authDomain:"project-coding-gabut.firebaseapp.com",
+  databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"project-coding-gabut",
+  storageBucket:"project-coding-gabut.firebasestorage.app",
+  messagingSenderId:"234910334669",
+  appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+};
 
-switch(role){
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
 
-case "owner":
-location.replace("owner/dashboard.html");
-break;
+const dashboard = document.getElementById("dashboardBtn");
 
-case "developer":
-location.replace("developer/dashboard.html");
-break;
+onAuthStateChanged(auth, async(user)=>{
+    if(!user){
+        location.href="login.html";
+        return;
+    }
 
-case "admin":
-location.replace("admin/dashboard.html");
-break;
+    const snap = await get(ref(db,"users/"+user.uid));
 
-case "reseller":
-location.replace("reseller/dashboard.html");
-break;
+    if(!snap.exists()){
+        dashboard.href="dashboard.html";
+        return;
+    }
 
-case "vip":
-location.replace("vip/dashboard.html");
-break;
+    const role = (snap.val().role || "member").toLowerCase();
 
-case "member":
-location.replace("member/dashboard.html");
-break;
+    switch(role){
+        case "developer":
+            dashboard.href="admin/dashboard.html";
+            break;
 
-default:
-location.replace("dashboard.html");
-           }
-        }   
+        case "owner":
+            dashboard.href="owner/dashboard.html";
+            break;
+
+        case "reseller":
+            dashboard.href="reseller/dashboard.html";
+            break;
+
+        case "admin":
+            dashboard.href="admin/dashboard.html";
+            break;
+
+        case "vip":
+            dashboard.href="vip/dashboard.html";
+            break;
+
+        default:
+            dashboard.href="dashboard.html";
+    }
+}
         function openBottomSheet(id) {
             const sheet = document.getElementById(id);
             if (sheet) {
