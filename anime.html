@@ -267,13 +267,31 @@
 </head>
 <body>
 
-<div id="page-anime" class="page-container">
-    <div class="lux-header-card">
-        <h2 style="font-family: 'Rajdhani'; letter-spacing: 2px;">SUB<span style="color:var(--pink)">NIME</span></h2>
-        <div class="lux-right-info">
-            <span class="role-badge"><i class="fa-solid fa-crown" style="margin-right: 5px;"></i> Station</span>
+<div class="lux-header-card">
+    <h2 style="font-family:'Rajdhani';letter-spacing:2px;">
+        SUB<span style="color:var(--pink)">NIME</span>
+    </h2>
+
+    <div style="display:flex;gap:12px;align-items:center;">
+
+        <button id="dashboardBtn" style="
+            background:var(--lux-grad);
+            color:#fff;
+            border:none;
+            padding:10px 18px;
+            border-radius:12px;
+            cursor:pointer;
+            font-weight:700;">
+            <i class="fa-solid fa-house"></i> Dashboard
+        </button>
+
+        <div class="role-badge">
+            <i class="fa-solid fa-crown"></i>
+            Station
         </div>
+
     </div>
+</div>
   
     <div class="search">
         <input type="text" placeholder="Search your favorite anime..." />
@@ -517,14 +535,69 @@
     </section>
 </div>
 
-<nav class="bottom-nav">
-    <a href="dashboard.html" class="nav-item-bottom"><i class="fa-solid fa-house"></i><span>Home</span></a>
-    <a href="" class="nav-item-bottom"><svg width="22" height="22" viewBox="0 -960 960 960" fill="currentColor" transform="matrix(-1,0,0,1,0,0)">
-                <path d="M240-400h480v-80H240v80Zm0-120h480v-80H240v80Zm0-120h480v-80H240v80ZM880-80 720-240H160q-33 0-56.5-23.5T80-320v-480q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v720ZM160-320h594l46 45v-525H160v480Zm0 0v-480 480Z"></path>
-            </svg><span>Chat</span></a>
-    <a href="tools.html" class="nav-item-bottom"><i class="fa-solid fa-tools"></i><span>Tools</span></a>
-    <a href="anime.html" class="nav-item-bottom active"><i class="fa-solid fa-film"></i><span>Anime</span></a>
-</nav>
+<script type="module">
+import {
+    getAuth,
+    onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+    getDatabase,
+    ref,
+    get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+import { getApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+const app = getApp();
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+onAuthStateChanged(auth, async (user)=>{
+
+    if(!user){
+        location.href="../login.html";
+        return;
+    }
+
+    const snap = await get(ref(db,"users/"+user.uid));
+
+    if(!snap.exists()) return;
+
+    const role = (snap.val().role || "").toLowerCase();
+
+    document.getElementById("dashboardBtn").onclick = ()=>{
+
+        switch(role){
+
+            case "owner":
+                location.href="../owner/dashboard.html";
+                break;
+
+            case "developer":
+                location.href="../developer/dashboard.html";
+                break;
+
+            case "admin":
+                location.href="../admin/dashboard.html";
+                break;
+
+            case "reseller":
+                location.href="../reseller/dashboard.html";
+                break;
+
+            case "vip":
+                location.href="../vip/dashboard.html";
+                break;
+
+            default:
+                location.href="../member/dashboard.html";
+        }
+
+    };
+
+});
+</script>
 
 </body>
                                        </html>
