@@ -1734,6 +1734,24 @@ return;
 
 const d=snap.val();
 
+if (d.expired) {
+
+    const expiredTime = new Date(d.expired).getTime();
+
+    if (Date.now() > expiredTime) {
+
+        alert("Masa aktif akun telah habis!");
+
+        await signOut(auth);
+
+        location.replace("../login.html");
+
+        return;
+
+    }
+
+  }
+
 document.getElementById("username").textContent=d.username||user.email.split("@")[0];
 
 document.getElementById("drawerName").textContent=d.username||user.email.split("@")[0];
@@ -1753,6 +1771,30 @@ role:d.role||"User",
 time:Date.now()
 
 });
+
+setInterval(async () => {
+
+    if (!currentUser) return;
+
+    const snap = await get(ref(db, "users/" + currentUser.uid));
+
+    if (!snap.exists()) return;
+
+    const d = snap.val();
+
+    if (d.expired && Date.now() > new Date(d.expired).getTime()) {
+
+        alert("Masa aktif akun telah habis!");
+
+        await set(ref(db, "online/" + currentUser.uid), null);
+
+        await signOut(auth);
+
+        location.replace("../login.html");
+
+    }
+
+}, 60000);
 
 window.addEventListener("beforeunload",()=>{
 
