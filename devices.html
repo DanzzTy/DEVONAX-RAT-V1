@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX • Devices</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+
+--bg:#090909;
+--card:#171717;
+--card2:#202020;
+--border:#343434;
+--red:#ff2b2b;
+--green:#1dd760;
+--text:#ffffff;
+--sub:#9b9b9b;
+
+}
+
+html{
+
+scroll-behavior:smooth;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+padding:18px;
+padding-bottom:120px;
+overflow-x:hidden;
+
+}
+
+body::before{
+
+content:"";
+
+position:fixed;
+inset:0;
+pointer-events:none;
+
+background:
+radial-gradient(circle at top left,#ff000015,transparent 35%),
+radial-gradient(circle at bottom right,#ff000015,transparent 35%);
+
+}
+
+.grid{
+
+position:fixed;
+inset:0;
+pointer-events:none;
+opacity:.04;
+
+background-image:
+
+linear-gradient(#ff2b2b 1px,transparent 1px),
+linear-gradient(90deg,#ff2b2b 1px,transparent 1px);
+
+background-size:40px 40px;
+
+}
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+
+}
+
+.iconBtn{
+
+width:54px;
+height:54px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+border-radius:18px;
+
+background:#171717;
+
+border:1px solid #333;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.iconBtn:hover{
+
+border-color:var(--red);
+
+}
+
+.iconBtn span{
+
+font-size:28px;
+
+}
+
+.logo{
+
+font-size:27px;
+font-weight:800;
+letter-spacing:4px;
+
+}
+
+.banner{
+
+height:190px;
+
+border-radius:24px;
+
+background:
+
+linear-gradient(135deg,#1c1c1c,#080808);
+
+border:1px solid #333;
+
+display:flex;
+
+align-items:flex-end;
+
+padding:24px;
+
+margin-bottom:20px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.banner::before{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+radial-gradient(circle at right,#ff202020,transparent 55%);
+
+}
+
+.bannerContent{
+
+position:relative;
+
+z-index:2;
+
+}
+
+.bannerContent h2{
+
+font-size:28px;
+
+letter-spacing:3px;
+
+margin-bottom:8px;
+
+}
+
+.bannerContent p{
+
+font-size:11px;
+
+letter-spacing:2px;
+
+color:#b7b7b7;
+
+}
+
+.card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:22px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+box-shadow:0 0 18px rgba(255,0,0,.08);
+
+}
+
+.title{
+
+font-size:13px;
+
+letter-spacing:3px;
+
+color:#ff8a8a;
+
+margin-bottom:16px;
+
+text-transform:uppercase;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<button class="iconBtn" id="backBtn">
+
+<span class="material-symbols-outlined">
+
+arrow_back
+
+</span>
+
+</button>
+
+<div class="logo">
+
+DEVICES
+
+</div>
+
+<button class="iconBtn" id="refreshBtn">
+
+<span class="material-symbols-outlined">
+
+refresh
+
+</span>
+
+</button>
+
+</header>
+
+<div class="banner">
+
+<div class="bannerContent">
+
+<h2>
+
+DEVICE PANEL
+
+</h2>
+
+<p>
+
+REALTIME DEVICE INFORMATION
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+CONNECTED DEVICE
+
+</div>
+
+<div class="deviceCard">
+
+<div class="deviceIcon">
+
+<span class="material-symbols-outlined">
+
+smartphone
+
+</span>
+
+</div>
+
+<div class="deviceInfo">
+
+<h3 id="deviceName">
+
+Waiting...
+
+</h3>
+
+<p id="pairingId">
+
+Pairing ID : -
+
+</p>
+
+<div class="deviceStatus">
+
+<div id="onlineDot" class="dot"></div>
+
+<span id="deviceStatusText">
+
+OFFLINE
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+DEVICE INFORMATION
+
+</div>
+
+<div class="infoGrid">
+
+<div class="infoItem">
+
+<span class="material-symbols-outlined">
+
+battery_full
+
+</span>
+
+<label>Battery</label>
+
+<b id="batteryLevel">--%</b>
+
+</div>
+
+<div class="infoItem">
+
+<span class="material-symbols-outlined">
+
+memory
+
+</span>
+
+<label>Platform</label>
+
+<b id="platform">Unknown</b>
+
+</div>
+
+<div class="infoItem">
+
+<span class="material-symbols-outlined">
+
+schedule
+
+</span>
+
+<label>Last Online</label>
+
+<b id="lastOnline">-</b>
+
+</div>
+
+<div class="infoItem">
+
+<span class="material-symbols-outlined">
+
+sync
+
+</span>
+
+<label>Realtime</label>
+
+<b id="syncStatus">
+
+Disconnected
+
+</b>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.deviceCard{
+
+display:flex;
+
+align-items:center;
+
+gap:16px;
+
+padding:18px;
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:20px;
+
+}
+
+.deviceIcon{
+
+width:72px;
+
+height:72px;
+
+border-radius:18px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:linear-gradient(180deg,#ff3030,#7a0000);
+
+}
+
+.deviceIcon span{
+
+font-size:38px;
+
+color:#fff;
+
+}
+
+.deviceInfo{
+
+flex:1;
+
+}
+
+.deviceInfo h3{
+
+font-size:18px;
+
+margin-bottom:6px;
+
+}
+
+.deviceInfo p{
+
+font-size:11px;
+
+color:var(--sub);
+
+margin-bottom:10px;
+
+word-break:break-all;
+
+}
+
+.deviceStatus{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+}
+
+.dot{
+
+width:10px;
+
+height:10px;
+
+border-radius:50%;
+
+background:#666;
+
+}
+
+#deviceStatusText{
+
+font-size:11px;
+
+}
+
+.infoGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.infoItem{
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:18px;
+
+text-align:center;
+
+}
+
+.infoItem span{
+
+display:block;
+
+font-size:32px;
+
+color:var(--red);
+
+margin-bottom:10px;
+
+}
+
+.infoItem label{
+
+display:block;
+
+font-size:11px;
+
+color:var(--sub);
+
+margin-bottom:8px;
+
+}
+
+.infoItem b{
+
+font-size:12px;
+
+word-break:break-word;
+
+}
+
+  </style>
+
+<div class="card">
+
+<div class="title">
+
+RECENT ACTIVITY
+
+</div>
+
+<div class="activityList">
+
+<div class="activityItem">
+
+<div class="activityIcon">
+
+<span class="material-symbols-outlined">
+
+sync
+
+</span>
+
+</div>
+
+<div class="activityInfo">
+
+<h4>Last Sync</h4>
+
+<p id="lastSync">
+
+Waiting...
+
+</p>
+
+</div>
+
+</div>
+
+<div class="activityItem">
+
+<div class="activityIcon">
+
+<span class="material-symbols-outlined">
+
+notifications
+
+</span>
+
+</div>
+
+<div class="activityInfo">
+
+<h4>Last Request</h4>
+
+<p id="lastRequest">
+
+No request
+
+</p>
+
+</div>
+
+</div>
+
+<div class="activityItem">
+
+<div class="activityIcon">
+
+<span class="material-symbols-outlined">
+
+task_alt
+
+</span>
+
+</div>
+
+<div class="activityInfo">
+
+<h4>Last Response</h4>
+
+<p id="lastResponse">
+
+No response
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+SHARED PHOTOS
+
+</div>
+
+<div id="photoGrid" class="photoGrid">
+
+<div class="photoEmpty">
+
+Belum ada foto yang dibagikan.
+
+</div>
+
+</div>
+
+</div>
+
+<div id="photoViewer" class="photoViewer">
+
+<img id="photoViewerImage" alt="Shared photo">
+
+</div>
+
+<style>
+
+.activityList{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+.activityItem{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:14px;
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+}
+
+.activityIcon{
+
+width:52px;
+
+height:52px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+border-radius:14px;
+
+background:#1a1a1a;
+
+}
+
+.activityIcon span{
+
+font-size:28px;
+
+color:var(--red);
+
+}
+
+.activityInfo{
+
+flex:1;
+
+}
+
+.activityInfo h4{
+
+font-size:13px;
+
+margin-bottom:5px;
+
+}
+
+.activityInfo p{
+
+font-size:11px;
+
+color:var(--sub);
+
+}
+
+.photoGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.photoEmpty{
+
+grid-column:1/-1;
+
+padding:30px;
+
+text-align:center;
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+font-size:12px;
+
+color:var(--sub);
+
+}
+
+.photoCard{
+
+aspect-ratio:1/1;
+
+overflow:hidden;
+
+border-radius:18px;
+
+border:1px solid var(--border);
+
+cursor:pointer;
+
+background:#111;
+
+}
+
+.photoCard img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+display:block;
+
+}
+
+.photoViewer{
+
+display:none;
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.92);
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+z-index:9999;
+
+}
+
+.photoViewer.show{
+
+display:flex;
+
+}
+
+.photoViewer img{
+
+max-width:100%;
+
+max-height:100%;
+
+border-radius:18px;
+
+}
+
+</style>
+
+<script>
+
+const photoViewer=document.getElementById("photoViewer");
+
+const photoViewerImage=document.getElementById("photoViewerImage");
+
+function openPhoto(url){
+
+photoViewerImage.src=url;
+
+photoViewer.classList.add("show");
+
+}
+
+photoViewer.onclick=()=>{
+
+photoViewer.classList.remove("show");
+
+};
+
+</script>
+
+<div class="card">
+
+<div class="title">
+DEVICE STATUS
+</div>
+
+<div class="statusList">
+
+<div class="statusRow">
+<span class="material-symbols-outlined">wifi</span>
+<div>
+<h4>Connection</h4>
+<p id="connectionText">Connecting...</p>
+</div>
+</div>
+
+<div class="statusRow">
+<span class="material-symbols-outlined">battery_android_full</span>
+<div>
+<h4>Battery</h4>
+<p id="batteryText">--%</p>
+</div>
+</div>
+
+<div class="statusRow">
+<span class="material-symbols-outlined">smartphone</span>
+<div>
+<h4>Device</h4>
+<p id="deviceModel">Unknown</p>
+</div>
+</div>
+
+<div class="statusRow">
+<span class="material-symbols-outlined">schedule</span>
+<div>
+<h4>Last Sync</h4>
+<p id="lastSyncTime">-</p>
+</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+SYNC HISTORY
+</div>
+
+<div id="historyList" class="historyList">
+
+<div class="historyEmpty">
+Belum ada aktivitas.
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.statusList{
+
+display:flex;
+flex-direction:column;
+gap:12px;
+
+}
+
+.statusRow{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+padding:14px;
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+}
+
+.statusRow span{
+
+font-size:30px;
+color:var(--red);
+
+}
+
+.statusRow h4{
+
+font-size:13px;
+margin-bottom:4px;
+
+}
+
+.statusRow p{
+
+font-size:11px;
+color:var(--sub);
+
+}
+
+.historyList{
+
+display:flex;
+flex-direction:column;
+gap:10px;
+
+}
+
+.historyItem{
+
+padding:14px;
+
+background:var(--card2);
+
+border-radius:16px;
+
+border:1px solid var(--border);
+
+}
+
+.historyItem b{
+
+display:block;
+font-size:12px;
+margin-bottom:5px;
+
+}
+
+.historyItem span{
+
+font-size:11px;
+color:var(--sub);
+
+}
+
+.historyEmpty{
+
+padding:30px;
+text-align:center;
+
+background:var(--card2);
+
+border-radius:18px;
+
+color:#888;
+
+}
+
+</style>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+get,
+onValue
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+authDomain:"project-coding-gabut.firebaseapp.com",
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+projectId:"project-coding-gabut",
+storageBucket:"project-coding-gabut.firebasestorage.app",
+messagingSenderId:"234910334669",
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user)return;
+
+const snap=await get(ref(db,"users/"+user.uid));
+
+if(!snap.exists())return;
+
+const pairingId=snap.val().pairingId;
+
+onValue(ref(db,"devices/"+pairingId),(s)=>{
+
+if(!s.exists())return;
+
+const d=s.val();
+
+connectionText.textContent=d.online?"Connected":"Offline";
+
+batteryText.textContent=(d.battery??"--")+"%";
+
+deviceModel.textContent=d.deviceName||"Unknown";
+
+lastSyncTime.textContent=d.lastOnline||"-";
+
+});
+
+onValue(ref(db,"history/"+pairingId),(s)=>{
+
+historyList.innerHTML="";
+
+if(!s.exists()){
+
+historyList.innerHTML='<div class="historyEmpty">Belum ada aktivitas.</div>';
+
+return;
+
+}
+
+const arr=[];
+
+s.forEach(i=>arr.push(i.val()));
+
+arr.reverse();
+
+arr.slice(0,10).forEach(item=>{
+
+historyList.innerHTML+=`
+
+<div class="historyItem">
+
+<b>${item.title||"Activity"}</b>
+
+<span>${item.time||"-"}</span>
+
+</div>
+
+`;
+
+});
+
+});
+
+});
+
+</script>
+
+<div id="loadingScreen" class="loadingScreen">
+
+<div class="loader"></div>
+
+<h2>SYNCING DEVICE</h2>
+
+<p id="loadingText">Menghubungkan ke Firebase...</p>
+
+</div>
+
+<div id="toast" class="toast">
+Realtime Connected
+</div>
+
+<style>
+
+.loadingScreen{
+
+position:fixed;
+inset:0;
+
+background:#090909;
+
+display:flex;
+flex-direction:column;
+
+justify-content:center;
+align-items:center;
+
+z-index:99999;
+
+transition:.35s;
+
+}
+
+.loadingScreen.hide{
+
+opacity:0;
+visibility:hidden;
+
+}
+
+.loader{
+
+width:75px;
+height:75px;
+
+border-radius:50%;
+
+border:5px solid #2a2a2a;
+border-top:5px solid #ff2b2b;
+
+animation:spin 1s linear infinite;
+
+margin-bottom:25px;
+
+}
+
+@keyframes spin{
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.loadingScreen h2{
+
+letter-spacing:4px;
+margin-bottom:10px;
+
+}
+
+.loadingScreen p{
+
+font-size:12px;
+color:#888;
+
+}
+
+.toast{
+
+position:fixed;
+
+left:50%;
+bottom:25px;
+
+transform:translateX(-50%) translateY(120px);
+
+padding:14px 20px;
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:15px;
+
+font-size:12px;
+
+transition:.3s;
+
+z-index:999999;
+
+}
+
+.toast.show{
+
+transform:translateX(-50%) translateY(0);
+
+}
+
+</style>
+
+<script>
+
+const loadingScreen=document.getElementById("loadingScreen");
+const loadingText=document.getElementById("loadingText");
+const toast=document.getElementById("toast");
+
+function hideLoading(){
+
+loadingScreen.classList.add("hide");
+
+}
+
+function showToast(text){
+
+toast.textContent=text;
+
+toast.classList.add("show");
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2500);
+
+}
+
+refreshBtn.onclick=()=>{
+
+loadingScreen.classList.remove("hide");
+
+loadingText.textContent="Memuat ulang data perangkat...";
+
+setTimeout(()=>{
+
+hideLoading();
+
+showToast("Data berhasil diperbarui");
+
+},1200);
+
+};
+
+backBtn.onclick=()=>{
+
+history.back();
+
+};
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+setTimeout(()=>{
+
+hideLoading();
+
+showToast("Realtime Connected");
+
+},1000);
+
+});
+
+</script>
+
+<div class="card">
+
+<div class="title">
+
+DEVICE SUMMARY
+
+</div>
+
+<div class="summaryGrid">
+
+<div class="summaryItem">
+
+<h2 id="summaryOnline">0</h2>
+
+<span>Online</span>
+
+</div>
+
+<div class="summaryItem">
+
+<h2 id="summaryPhotos">0</h2>
+
+<span>Shared Photos</span>
+
+</div>
+
+<div class="summaryItem">
+
+<h2 id="summaryHistory">0</h2>
+
+<span>Activities</span>
+
+</div>
+
+</div>
+
+</div>
+
+<nav class="bottomNav">
+
+<button class="navItem" onclick="location.href='dashboard.html'">
+
+<span class="material-symbols-outlined">dashboard</span>
+
+<small>Dashboard</small>
+
+</button>
+
+<button class="navItem active">
+
+<span class="material-symbols-outlined">devices</span>
+
+<small>Devices</small>
+
+</button>
+
+<button class="navItem" onclick="location.href='profile.html'">
+
+<span class="material-symbols-outlined">person</span>
+
+<small>Profile</small>
+
+</button>
+
+</nav>
+
+<style>
+
+.summaryGrid{
+
+display:grid;
+
+grid-template-columns:repeat(3,1fr);
+
+gap:14px;
+
+}
+
+.summaryItem{
+
+background:var(--card2);
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:18px;
+
+text-align:center;
+
+transition:.25s;
+
+}
+
+.summaryItem:hover{
+
+border-color:var(--red);
+
+transform:translateY(-2px);
+
+}
+
+.summaryItem h2{
+
+font-size:28px;
+
+color:var(--red);
+
+margin-bottom:8px;
+
+}
+
+.summaryItem span{
+
+font-size:11px;
+
+color:var(--sub);
+
+}
+
+.bottomNav{
+
+position:fixed;
+
+left:18px;
+
+right:18px;
+
+bottom:18px;
+
+display:flex;
+
+justify-content:space-around;
+
+background:#141414;
+
+border:1px solid #333;
+
+border-radius:22px;
+
+padding:10px;
+
+box-shadow:0 0 20px rgba(0,0,0,.35);
+
+}
+
+.navItem{
+
+flex:1;
+
+background:none;
+
+border:none;
+
+color:#888;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+gap:4px;
+
+padding:8px;
+
+cursor:pointer;
+
+}
+
+.navItem span{
+
+font-size:26px;
+
+}
+
+.navItem small{
+
+font-size:10px;
+
+letter-spacing:1px;
+
+}
+
+.navItem.active{
+
+color:var(--red);
+
+}
+
+.onlinePulse{
+
+animation:pulse 1.8s infinite;
+
+}
+
+@keyframes pulse{
+
+0%{box-shadow:0 0 0 0 rgba(29,215,96,.45);}
+
+70%{box-shadow:0 0 0 12px rgba(29,215,96,0);}
+
+100%{box-shadow:0 0 0 0 rgba(29,215,96,0);}
+
+}
+
+</style>
+
+<script>
+
+function updateSummary(data){
+
+summaryOnline.textContent = data.online ? "1" : "0";
+
+if(data.online){
+
+onlineDot.classList.add("onlinePulse");
+
+}else{
+
+onlineDot.classList.remove("onlinePulse");
+
+}
+
+}
+
+function setPhotoCount(count){
+
+summaryPhotos.textContent = count;
+
+}
+
+function setHistoryCount(count){
+
+summaryHistory.textContent = count;
+
+}
+
+</script>
+
+</body>
+</html>
