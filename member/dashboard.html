@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX MEMBER</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+--bg:#070707;
+--card:#141414;
+--border:#303030;
+--red:#ff2020;
+--text:#fff;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+padding:18px 18px 90px;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:
+radial-gradient(circle at top left,#ff000015,transparent 35%),
+radial-gradient(circle at bottom right,#ff000015,transparent 35%);
+}
+
+.grid{
+position:fixed;
+inset:0;
+opacity:.03;
+pointer-events:none;
+background-image:
+linear-gradient(#ff0000 1px,transparent 1px),
+linear-gradient(90deg,#ff0000 1px,transparent 1px);
+background-size:40px 40px;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.logo{
+font-size:28px;
+font-weight:800;
+letter-spacing:5px;
+}
+
+.profileBtn{
+width:52px;
+height:52px;
+border-radius:16px;
+background:#151515;
+border:1px solid #333;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.profileBtn span{
+font-size:28px;
+color:#fff;
+}
+
+.banner{
+position:relative;
+height:180px;
+overflow:hidden;
+border-radius:24px;
+border:1px solid #333;
+margin-bottom:20px;
+box-shadow:0 0 20px rgba(255,0,0,.12);
+}
+
+.banner video,
+.banner img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(.45);
+}
+
+.banner::after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(transparent,rgba(0,0,0,.85));
+}
+
+.bannerText{
+position:absolute;
+left:20px;
+bottom:20px;
+z-index:2;
+}
+
+.bannerText h2{
+font-size:24px;
+letter-spacing:3px;
+}
+
+.bannerText p{
+margin-top:6px;
+font-size:11px;
+color:#ddd;
+letter-spacing:2px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:22px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 0 15px rgba(255,0,0,.08);
+}
+
+.title{
+font-size:13px;
+letter-spacing:3px;
+color:#ff6666;
+margin-bottom:15px;
+}
+
+.profileCard{
+display:flex;
+align-items:center;
+gap:15px;
+}
+
+.avatar{
+width:72px;
+height:72px;
+border-radius:50%;
+background:linear-gradient(180deg,#ff3030,#700);
+display:flex;
+justify-content:center;
+align-items:center;
+box-shadow:0 0 15px rgba(255,0,0,.35);
+}
+
+.avatar span{
+font-size:38px;
+color:#fff;
+}
+
+.info{
+flex:1;
+}
+
+.info h2{
+font-size:21px;
+margin-bottom:8px;
+}
+
+.role{
+display:inline-block;
+padding:6px 14px;
+border-radius:20px;
+background:#2b0000;
+border:1px solid #700;
+font-size:11px;
+letter-spacing:2px;
+color:#ff8080;
+}
+
+.expired{
+margin-top:12px;
+font-size:12px;
+color:#aaa;
+}
+
+.uid{
+margin-top:8px;
+font-size:10px;
+color:#666;
+word-break:break-all;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div class="logo">
+DEVONAX
+</div>
+
+<div class="profileBtn">
+
+<span class="material-symbols-outlined">
+
+account_circle
+
+</span>
+
+</div>
+
+</header>
+
+<div class="banner">
+
+<video id="bannerVideo" autoplay muted loop playsinline>
+
+<source src="video/banner.mp4" type="video/mp4">
+
+</video>
+
+<div class="bannerText">
+
+<h2 id="bannerTitle">
+
+MEMBER PANEL
+
+</h2>
+
+<p id="bannerDesc">
+
+WELCOME TO DEVONAX
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+PROFILE
+
+</div>
+
+<div class="profileCard">
+
+<div class="avatar">
+
+<span class="material-symbols-outlined">
+
+person
+
+</span>
+
+</div>
+
+<div class="info">
+
+<h2 id="username">
+
+Loading...
+
+</h2>
+
+<div class="role" id="role">
+
+MEMBER
+
+</div>
+
+<div class="expired" id="expired">
+
+Expired : -
+
+</div>
+
+<div class="uid" id="uid">
+
+UID : -
+
+</div>
+
+</div>
+
+</div>
+
+  </div>
+
+<div class="card">
+
+<div class="title">
+
+MENU
+
+</div>
+
+<div class="menuGrid">
+
+<div class="menuItem" onclick="location.href='profile.html'">
+
+<span class="material-symbols-outlined">
+
+person
+
+</span>
+
+<p>Profile</p>
+
+</div>
+
+<div class="menuItem" onclick="location.href='music.html'">
+
+<span class="material-symbols-outlined">
+
+music_note
+
+</span>
+
+<p>Music</p>
+
+</div>
+
+<div class="menuItem" onclick="location.href='announcement.html'">
+
+<span class="material-symbols-outlined">
+
+campaign
+
+</span>
+
+<p>Announcement</p>
+
+</div>
+
+<div class="menuItem logout" id="logoutBtn">
+
+<span class="material-symbols-outlined">
+
+logout
+
+</span>
+
+<p>Logout</p>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.menuGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.menuItem{
+
+height:120px;
+
+background:#171717;
+
+border:1px solid #333;
+
+border-radius:22px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.menuItem:hover{
+
+border-color:#ff2020;
+
+transform:translateY(-4px);
+
+box-shadow:0 0 20px rgba(255,0,0,.22);
+
+}
+
+.menuItem span{
+
+font-size:42px;
+
+color:#ff3030;
+
+margin-bottom:12px;
+
+}
+
+.menuItem p{
+
+font-size:12px;
+
+letter-spacing:1px;
+
+color:#fff;
+
+}
+
+.logout{
+
+background:#220000;
+
+border:1px solid #700;
+
+}
+
+.logout span,
+
+.logout p{
+
+color:#ff7070;
+
+}
+
+.bottomNav{
+
+position:fixed;
+
+left:15px;
+
+right:15px;
+
+bottom:15px;
+
+height:68px;
+
+background:#111;
+
+border:1px solid #333;
+
+border-radius:34px;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+box-shadow:0 0 20px rgba(255,0,0,.15);
+
+z-index:100;
+
+}
+
+.bottomNav a{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-decoration:none;
+
+color:#888;
+
+}
+
+.bottomNav a.active{
+
+color:#ff2020;
+
+}
+
+.bottomNav span{
+
+font-size:30px;
+
+}
+
+</style>
+
+<nav class="bottomNav">
+
+<a href="dashboard.html" class="active">
+
+<span class="material-symbols-outlined">
+
+home
+
+</span>
+
+</a>
+
+<a href="announcement.html">
+
+<span class="material-symbols-outlined">
+
+campaign
+
+</span>
+
+</a>
+
+<a href="profile.html">
+
+<span class="material-symbols-outlined">
+
+person
+
+</span>
+
+</a>
+
+  </nav>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+signOut
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+get,
+set,
+remove,
+onValue
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+let currentUser=null;
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+location.replace("../login.html");
+
+return;
+
+}
+
+currentUser=user;
+
+const snap=await get(ref(db,"users/"+user.uid));
+
+if(!snap.exists()){
+
+await signOut(auth);
+
+location.replace("../login.html");
+
+return;
+
+}
+
+const data=snap.val();
+
+if(data.role!=="Member"){
+
+alert("Akses ditolak.");
+
+await signOut(auth);
+
+location.replace("../login.html");
+
+return;
+
+}
+
+document.getElementById("username").textContent=data.username||"-";
+
+document.getElementById("role").textContent=data.role||"Member";
+
+document.getElementById("expired").textContent="Expired : "+(data.expired||"Unlimited");
+
+document.getElementById("uid").textContent="UID : "+user.uid;
+
+await set(ref(db,"online/"+user.uid),{
+
+username:data.username,
+
+role:data.role,
+
+time:Date.now(),
+
+device:navigator.userAgent
+
+});
+
+window.addEventListener("beforeunload",()=>{
+
+remove(ref(db,"online/"+user.uid));
+
+});
+
+});
+
+onValue(ref(db,"banner"),snap=>{
+
+if(!snap.exists()) return;
+
+const banner=snap.val();
+
+if(banner.title){
+
+document.getElementById("bannerTitle").textContent=banner.title;
+
+}
+
+if(banner.text){
+
+document.getElementById("bannerDesc").textContent=banner.text;
+
+}
+
+if(banner.video){
+
+const video=document.getElementById("bannerVideo");
+
+video.src=banner.video;
+
+video.load();
+
+video.play().catch(()=>{});
+
+}
+
+});
+
+document.getElementById("logoutBtn").onclick=async()=>{
+
+if(currentUser){
+
+await remove(ref(db,"online/"+currentUser.uid));
+
+}
+
+await signOut(auth);
+
+location.replace("../login.html");
+
+};
+
+</script>
+
+</body>
+</html>
