@@ -163,13 +163,40 @@ photo.src=s.val().imageUrl;
 
 });
 
-backBtn.onclick=()=>{
+backBtn.addEventListener("click", () => {
 
-location.href=role==="parent"
-?"dashboard.html"
-:"child_dashboard.html";
+    switch(role){
 
-};
+        case "developer":
+            location.href = "developer/dashboard.html";
+            break;
+
+        case "owner":
+            location.href = "owner/dashboard.html";
+            break;
+
+        case "reseller":
+            location.href = "reseller/dashboard.html";
+            break;
+
+        case "admin":
+            location.href = "admin/dashboard.html";
+            break;
+
+        case "vip":
+            location.href = "vip/dashboard.html";
+            break;
+
+        case "member":
+            location.href = "member/dashboard.html";
+            break;
+
+        default:
+            location.href = "dashboard.html";
+
+    }
+
+});
 
 refreshBtn.onclick=()=>{
 
