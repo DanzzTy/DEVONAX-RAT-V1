@@ -604,51 +604,48 @@ workspace_premium
 <style>
 
 .statsGrid{
-
+.statsGrid{
 display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:14px;
-
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:12px;
 }
 
 .statBox{
-
 display:flex;
-
+flex-direction:column;
+justify-content:center;
 align-items:center;
-
-gap:14px;
-
+text-align:center;
+padding:18px 10px;
+min-height:125px;
 background:#181818;
-
 border:1px solid #333;
-
 border-radius:20px;
-
-padding:16px;
-
-transition:.25s;
-
-cursor:pointer;
-
 }
 
-.statBox:hover{
+.statIcon{
+width:58px;
+height:58px;
+margin-bottom:12px;
+}
 
-transform:translateY(-3px);
+.statInfo{
+width:100%;
+}
 
-border-color:#ff2020;
+.statInfo h2{
+font-size:28px;
+margin-bottom:8px;
+}
 
-box-shadow:0 0 20px rgba(255,0,0,.25);
-
+.statInfo p{
+font-size:11px;
+line-height:15px;
 }
 
 .premium{
-
-grid-column:2/3;
-
+grid-column:auto;
+}
 background:linear-gradient(180deg,#181818,#111);
 
 }
