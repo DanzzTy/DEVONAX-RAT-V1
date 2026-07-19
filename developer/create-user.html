@@ -246,6 +246,29 @@ box-shadow:0 0 15px rgba(255,0,0,.2);
 
 }
 
+.passwordBox{
+position:relative;
+}
+
+.passwordBox input{
+padding-right:60px;
+}
+
+#togglePassword{
+position:absolute;
+right:18px;
+top:50%;
+transform:translateY(-50%);
+cursor:pointer;
+color:#888;
+transition:.25s;
+user-select:none;
+}
+
+#togglePassword:hover{
+color:var(--red);
+  }
+
 .infoBox{
 
 display:flex;
@@ -425,10 +448,18 @@ Password
 
 </label>
 
+<div class="passwordBox">
+
 <input
 type="password"
 id="password"
 placeholder="Minimal 6 karakter">
+
+<span id="togglePassword" class="material-symbols-outlined">
+visibility
+</span>
+
+</div>
 
 </div>
 
@@ -652,6 +683,25 @@ const db=getDatabase(app);
 const btn=document.getElementById("createBtn");
 
 const loading=document.getElementById("loading");
+
+const passwordInput=document.getElementById("password");
+const togglePassword=document.getElementById("togglePassword");
+
+togglePassword.onclick=()=>{
+
+if(passwordInput.type==="password"){
+
+passwordInput.type="text";
+togglePassword.textContent="visibility_off";
+
+}else{
+
+passwordInput.type="password";
+togglePassword.textContent="visibility";
+
+}
+
+};
 
 btn.onclick=async()=>{
 
