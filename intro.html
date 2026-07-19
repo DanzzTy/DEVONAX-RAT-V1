@@ -233,7 +233,6 @@ color:#aaa;
 <video
 id="video"
 autoplay
-muted
 playsinline>
 
 <source
@@ -330,6 +329,23 @@ const username=document.getElementById("username");
 const skip=document.getElementById("skip");
 
 const video=document.getElementById("video");
+
+const introAudio=document.getElementById("introAudio");
+
+window.addEventListener("load",async()=>{
+
+    try{
+
+        introAudio.currentTime=0;
+        await introAudio.play();
+
+    }catch(e){
+
+        console.log("Autoplay audio diblokir browser.");
+
+    }
+
+});
 
 onAuthStateChanged(auth,async(user)=>{
 
