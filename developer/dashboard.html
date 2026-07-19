@@ -1429,17 +1429,21 @@ let total=0;
 let active=0;
 let expired=0;
 
-const today=new Date().toISOString().split("T")[0];
+const now=new Date().getTime();
 
 if(snap.exists()){
 
-snap.forEach((child)=>{
+snap.forEach(user=>{
 
 total++;
 
-const d=child.val();
+const data=user.val();
 
-if(d.expired && d.expired>=today){
+if(data.expired){
+
+const exp=new Date(data.expired).getTime();
+
+if(exp>=now){
 
 active++;
 
@@ -1449,9 +1453,21 @@ expired++;
 
 }
 
+}else{
+
+active++;
+
+}
+
 });
 
 }
+
+totalUser.textContent=total;
+activeUser.textContent=active;
+expiredUser.textContent=expired;
+
+});
 
 document.getElementById("totalUser").textContent=total;
 
@@ -1467,11 +1483,19 @@ let online=0;
 
 if(snap.exists()){
 
-online=snap.size;
+onValue(ref(db,"online"), (snap) => {
+
+let online = 0;
+
+if (snap.exists()) {
+
+snap.forEach(() => {
+online++;
+});
 
 }
 
-document.getElementById("onlineUser").textContent=online;
+document.getElementById("onlineUser").textContent = online;
 
 });
 
