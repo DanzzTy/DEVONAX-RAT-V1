@@ -1626,115 +1626,149 @@ document.getElementById("serverStatus").style.color="#00ff66";
 </script>
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-
-import {
-getAuth,
-onAuthStateChanged,
-signOut
-} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-
 import {
 getDatabase,
 ref,
-get,
-onValue,
-set
+onValue
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
-const firebaseConfig={
+import {
+getApp
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 
-apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+const db = getDatabase(getApp());
 
-authDomain:"project-coding-gabut.firebaseapp.com",
+/* =========================
+   TOTAL USER / ACTIVE / EXPIRED
+========================= */
 
-databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+onValue(ref(db,"users"),(snap)=>{
 
-projectId:"project-coding-gabut",
+let total=0;
+let active=0;
+let expired=0;
 
-storageBucket:"project-coding-gabut.firebasestorage.app",
+const now = Date.now();
 
-messagingSenderId:"234910334669",
+if(snap.exists()){
 
-appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+snap.forEach(user=>{
 
-};
+const data=user.val();
 
-const app=initializeApp(firebaseConfig);
+total++;
 
-const auth=getAuth(app);
+if(data.expired){
 
-const db=getDatabase(app);
+const exp = new Date(data.expired).getTime();
 
-let currentUser=null;
+if(exp >= now){
+active++;
+}else{
+expired++;
+}
 
-onAuthStateChanged(auth,async(user)=>{
+}else{
 
-if(!user){
-
-location.replace("../login.html");
-
-return;
+active++;
 
 }
 
-currentUser=user;
-
-const snap=await get(ref(db,"users/"+user.uid));
-
-if(!snap.exists()){
-
-location.replace("../setup.html");
-
-return;
+});
 
 }
+
+document.getElementById("totalUser").textContent=total;
+document.getElementById("activeUser").textContent=active;
+document.getElementById("expiredUser").textContent=expired;
+
+});
+
+/* =========================
+   USER ONLINE
+========================= */
+
+onValue(ref(db,"online"),(snap)=>{
+
+let online=0;
+
+if(snap.exists()){
+
+snap.forEach(()=>{
+
+online++;
+
+});
+
+}
+
+document.getElementById("onlineUser").textContent=online;
+
+});
+
+/* =========================
+   BANNER 1
+========================= */
+
+onValue(ref(db,"banner/1"),(snap)=>{
+
+if(!snap.exists()) return;
 
 const d=snap.val();
 
-document.getElementById("username").textContent=d.username||user.email.split("@")[0];
+if(d.image)
+document.getElementById("banner1").src=d.image;
 
-document.getElementById("drawerName").textContent=d.username||user.email.split("@")[0];
+if(d.title)
+document.getElementById("bannerTitle1").textContent=d.title;
 
-document.getElementById("role").textContent=d.role||"User";
-
-document.getElementById("drawerRole").textContent=d.role||"User";
-
-document.getElementById("expired").textContent="Expired : "+(d.expired||"-");
-
-await set(ref(db,"online/"+user.uid),{
-
-username:d.username||user.email.split("@")[0],
-
-role:d.role||"User",
-
-time:Date.now()
+if(d.text)
+document.getElementById("bannerText1").textContent=d.text;
 
 });
 
-window.addEventListener("beforeunload",()=>{
+/* =========================
+   BANNER 2
+========================= */
 
-set(ref(db,"online/"+user.uid),null);
+onValue(ref(db,"banner/2"),(snap)=>{
+
+if(!snap.exists()) return;
+
+const d=snap.val();
+
+if(d.image)
+document.getElementById("banner2").src=d.image;
+
+if(d.title)
+document.getElementById("bannerTitle2").textContent=d.title;
+
+if(d.text)
+document.getElementById("bannerText2").textContent=d.text;
 
 });
 
+/* =========================
+   NOTIFICATION
+========================= */
+
+onValue(ref(db,"news"),(snap)=>{
+
+let jumlah=0;
+
+if(snap.exists()){
+
+snap.forEach(()=>{
+
+jumlah++;
+
 });
-
-document.getElementById("logoutBtn").onclick=async()=>{
-
-if(!confirm("Logout dari DEVONAX?")) return;
-
-if(currentUser){
-
-await set(ref(db,"online/"+currentUser.uid),null);
 
 }
 
-await signOut(auth);
+document.getElementById("notifCount").textContent=jumlah;
 
-location.replace("../login.html");
-
-};
+});
 
 </script>
 </body>
