@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1">
+
+<title>DEVONAX • Devices</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+
+}
+
+:root{
+
+--bg:#070707;
+--card:#141414;
+--card2:#1c1c1c;
+--border:#333;
+--red:#ff2020;
+--text:#fff;
+
+}
+
+body{
+
+background:var(--bg);
+color:#fff;
+padding:18px;
+padding-bottom:110px;
+overflow-x:hidden;
+
+}
+
+body::before{
+
+content:"";
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+background:
+
+radial-gradient(circle at top left,#ff000012,transparent 35%),
+
+radial-gradient(circle at bottom right,#ff000012,transparent 35%);
+
+}
+
+.grid{
+
+position:fixed;
+
+inset:0;
+
+opacity:.04;
+
+pointer-events:none;
+
+background-image:
+
+linear-gradient(#ff2020 1px,transparent 1px),
+
+linear-gradient(90deg,#ff2020 1px,transparent 1px);
+
+background-size:40px 40px;
+
+}
+
+header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:22px;
+
+}
+
+.backBtn,
+.profileBtn{
+
+width:56px;
+height:56px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:#171717;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+transition:.25s;
+
+cursor:pointer;
+
+}
+
+.backBtn:hover,
+.profileBtn:hover{
+
+border-color:var(--red);
+
+box-shadow:0 0 15px rgba(255,0,0,.25);
+
+}
+
+.logo{
+
+font-size:27px;
+
+font-weight:800;
+
+letter-spacing:5px;
+
+}
+
+.banner{
+
+height:190px;
+
+border-radius:26px;
+
+overflow:hidden;
+
+position:relative;
+
+border:1px solid #333;
+
+margin-bottom:22px;
+
+}
+
+.banner img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+filter:brightness(.30);
+
+}
+
+.banner::after{
+
+content:"";
+
+position:absolute;
+
+inset:0;
+
+background:
+
+linear-gradient(
+
+transparent,
+
+rgba(0,0,0,.20),
+
+rgba(0,0,0,.90)
+
+);
+
+}
+
+.bannerText{
+
+position:absolute;
+
+left:22px;
+
+bottom:22px;
+
+z-index:2;
+
+}
+
+.bannerText h2{
+
+font-size:28px;
+
+letter-spacing:3px;
+
+margin-bottom:8px;
+
+}
+
+.bannerText p{
+
+font-size:11px;
+
+letter-spacing:2px;
+
+color:#ddd;
+
+}
+
+.card{
+
+background:var(--card);
+
+border:1px solid #333;
+
+border-radius:24px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+box-shadow:0 0 18px rgba(255,0,0,.08);
+
+}
+
+.title{
+
+font-size:13px;
+
+letter-spacing:3px;
+
+color:#ff7070;
+
+margin-bottom:18px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div
+class="backBtn"
+id="backBtn">
+
+<span class="material-symbols-outlined">
+
+arrow_back
+
+</span>
+
+</div>
+
+<div class="logo">
+
+DEVICES
+
+</div>
+
+<div class="profileBtn">
+
+<span class="material-symbols-outlined">
+
+devices
+
+</span>
+
+</div>
+
+</header>
+
+<div class="banner">
+
+<img src="img/banner-device.jpg">
+
+<div class="bannerText">
+
+<h2>
+
+DEVICE CONTROL
+
+</h2>
+
+<p>
+
+REALTIME CONTROL DEVICE PANEL
+
+</p>
+
+</div>
+
+  </div>
+
+<div class="card">
+
+<div class="title">
+
+DEVICE INFORMATION
+
+</div>
+
+<div class="deviceCard">
+
+<div class="deviceIcon">
+
+<span class="material-symbols-outlined" id="deviceIcon">
+
+smartphone
+
+</span>
+
+</div>
+
+<div class="deviceInfo">
+
+<h3 id="deviceName">
+
+Loading...
+
+</h3>
+
+<p id="deviceModel">
+
+Unknown Device
+
+</p>
+
+<div class="online">
+
+<div class="dot" id="onlineDot"></div>
+
+<span id="deviceStatus">
+
+OFFLINE
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="infoGrid">
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+vpn_key
+
+</span>
+
+<h4>Pairing ID</h4>
+
+<p id="pairingId">
+
+Loading...
+
+</p>
+
+</div>
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+battery_full
+
+</span>
+
+<h4>Battery</h4>
+
+<p id="batteryLevel">
+
+0%
+
+</p>
+
+</div>
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+schedule
+
+</span>
+
+<h4>Last Online</h4>
+
+<p id="lastOnline">
+
+-
+
+</p>
+
+</div>
+
+<div class="infoBox">
+
+<span class="material-symbols-outlined">
+
+language
+
+</span>
+
+<h4>Platform</h4>
+
+<p id="platform">
+
+-
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+LAST ACTIVITY
+
+</div>
+
+<div class="activity">
+
+<div class="activityItem">
+
+<div class="activityLeft">
+
+<span class="material-symbols-outlined">
+
+sync
+
+</span>
+
+<div>
+
+<h4>Realtime Status</h4>
+
+<p id="syncStatus">
+
+Waiting...
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="activityItem">
+
+<div class="activityLeft">
+
+<span class="material-symbols-outlined">
+
+location_on
+
+</span>
+
+<div>
+
+<h4>Location</h4>
+
+<p id="lastLocation">
+
+No Data
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="activityItem">
+
+<div class="activityLeft">
+
+<span class="material-symbols-outlined">
+
+photo_camera
+
+</span>
+
+<div>
+
+<h4>Last Shared Photo</h4>
+
+<p id="photoStatus">
+
+No Photo
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.deviceCard{
+
+display:flex;
+
+align-items:center;
+
+gap:18px;
+
+background:var(--card2);
+
+border:1px solid #333;
+
+border-radius:20px;
+
+padding:18px;
+
+margin-bottom:18px;
+
+}
+
+.deviceIcon{
+
+width:72px;
+
+height:72px;
+
+border-radius:20px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+background:linear-gradient(180deg,#ff3030,#800);
+
+}
+
+.deviceIcon span{
+
+font-size:40px;
+
+color:#fff;
+
+}
+
+.deviceInfo{
+
+flex:1;
+
+}
+
+.deviceInfo h3{
+
+font-size:18px;
+
+margin-bottom:6px;
+
+}
+
+.deviceInfo p{
+
+font-size:11px;
+
+color:#aaa;
+
+margin-bottom:10px;
+
+}
+
+.online{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+}
+
+.dot{
+
+width:10px;
+
+height:10px;
+
+border-radius:50%;
+
+background:#666;
+
+}
+
+.infoGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.infoBox{
+
+background:var(--card2);
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:16px;
+
+text-align:center;
+
+}
+
+.infoBox span{
+
+font-size:32px;
+
+color:#ff4040;
+
+margin-bottom:10px;
+
+display:block;
+
+}
+
+.infoBox h4{
+
+font-size:12px;
+
+margin-bottom:8px;
+
+}
+
+.infoBox p{
+
+font-size:11px;
+
+color:#bbb;
+
+word-break:break-word;
+
+}
+
+.activity{
+
+display:flex;
+
+flex-direction:column;
+
+gap:14px;
+
+}
+
+.activityItem{
+
+background:var(--card2);
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:16px;
+
+}
+
+.activityLeft{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+}
+
+.activityLeft span{
+
+font-size:30px;
+
+color:#ff4040;
+
+}
+
+.activityLeft h4{
+
+font-size:13px;
+
+margin-bottom:5px;
+
+}
+
+.activityLeft p{
+
+font-size:11px;
+
+color:#aaa;
+
+}
+
+  </style>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+onValue,
+get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+let pairingId="";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+location.replace("../login.html");
+
+return;
+
+}
+
+const userSnap=await get(ref(db,"users/"+user.uid));
+
+if(!userSnap.exists()) return;
+
+const userData=userSnap.val();
+
+pairingId=userData.pairingId||"";
+
+document.getElementById("pairingId").textContent=pairingId;
+
+document.getElementById("backBtn").onclick=()=>{
+
+location.href="dashboard.html";
+
+};
+
+if(pairingId===""){
+
+document.getElementById("syncStatus").textContent="Pairing ID belum tersedia";
+
+return;
+
+}
+
+onValue(ref(db,"devices/"+pairingId),(snap)=>{
+
+if(!snap.exists()){
+
+document.getElementById("syncStatus").textContent="Device belum terhubung";
+
+return;
+
+}
+
+const d=snap.val();
+
+document.getElementById("syncStatus").textContent="Realtime Connected";
+
+document.getElementById("deviceName").textContent=
+
+d.deviceName||"Unknown";
+
+document.getElementById("deviceModel").textContent=
+
+d.model||navigator.userAgent;
+
+document.getElementById("batteryLevel").textContent=
+
+(d.battery??0)+" %";
+
+document.getElementById("platform").textContent=
+
+d.platform||"-";
+
+document.getElementById("lastOnline").textContent=
+
+d.lastOnline||"-";
+
+document.getElementById("lastLocation").textContent=
+
+d.location||"No Data";
+
+document.getElementById("photoStatus").textContent=
+
+d.lastPhoto?"Available":"No Photo";
+
+if(d.online){
+
+document.getElementById("deviceStatus").textContent="ONLINE";
+
+document.getElementById("onlineDot").style.background="#00ff66";
+
+}else{
+
+document.getElementById("deviceStatus").textContent="OFFLINE";
+
+document.getElementById("onlineDot").style.background="#777";
+
+}
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
