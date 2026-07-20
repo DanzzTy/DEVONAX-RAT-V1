@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DEVONAX • Create User</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+--bg:#070707;
+--card:#121212;
+--red:#ff2020;
+--text:#fff;
+--border:#2a2a2a;
+}
+
+body{
+background:var(--bg);
+color:#fff;
+padding:20px;
+padding-bottom:100px;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,#ff000018,transparent 35%),
+radial-gradient(circle at bottom right,#ff000018,transparent 35%);
+pointer-events:none;
+}
+
+.card{
+background:var(--card);
+border:1px solid #333;
+border-radius:22px;
+padding:18px;
+margin-bottom:18px;
+box-shadow:0 0 18px rgba(255,0,0,.08);
+}
+
+.title{
+font-size:16px;
+letter-spacing:3px;
+color:#ff5555;
+margin-bottom:18px;
+}
+
+input,select{
+width:100%;
+height:54px;
+margin-bottom:14px;
+padding:0 16px;
+border:none;
+outline:none;
+background:#181818;
+border:1px solid #333;
+border-radius:16px;
+color:#fff;
+font-size:14px;
+transition:.25s;
+}
+
+input:focus,
+select:focus{
+border-color:#ff2020;
+box-shadow:0 0 12px rgba(255,0,0,.25);
+}
+
+button{
+width:100%;
+height:56px;
+border:none;
+border-radius:18px;
+background:linear-gradient(180deg,#ff3030,#900);
+color:#fff;
+font-size:15px;
+font-weight:bold;
+cursor:pointer;
+transition:.25s;
+}
+
+button:hover{
+transform:scale(.98);
+box-shadow:0 0 18px rgba(255,0,0,.35);
+}
+
+.note{
+margin-top:15px;
+font-size:12px;
+color:#999;
+line-height:18px;
+}
+
+.header{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:20px;
+}
+
+.back{
+width:48px;
+height:48px;
+border-radius:15px;
+background:#151515;
+display:flex;
+justify-content:center;
+align-items:center;
+cursor:pointer;
+border:1px solid #333;
+}
+
+.back span{
+font-size:28px;
+}
+
+.logo{
+font-size:24px;
+font-weight:800;
+letter-spacing:4px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="back"
+onclick="history.back()">
+
+<span class="material-symbols-outlined">
+arrow_back
+</span>
+
+</div>
+
+<div class="logo">
+CREATE USER
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+ACCOUNT INFORMATION
+
+</div>
+
+<input
+id="username"
+type="text"
+placeholder="Username">
+
+<input
+id="email"
+type="email"
+placeholder="Email">
+
+<input
+id="password"
+type="password"
+placeholder="Password">
+
+<select id="role">
+
+<option value="Member">Member</option>
+
+<option value="VIP">VIP</option>
+
+<option value="Admin">Admin</option>
+
+</select>
+
+<input
+id="days"
+type="number"
+placeholder="Active Days (Example: 30)">
+
+<button id="createBtn">
+
+CREATE ACCOUNT
+
+</button>
+
+<div class="note">
+
+• Reseller hanya dapat membuat akun Member, VIP, dan Admin.<br>
+• Expired akan dihitung otomatis berdasarkan jumlah hari.
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+set,
+get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+let resellerEmail="";
+let resellerPassword="";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+location.replace("../login.html");
+
+return;
+
+}
+
+const snap=await get(ref(db,"users/"+user.uid));
+
+if(!snap.exists()){
+
+alert("Data reseller tidak ditemukan.");
+
+location.replace("dashboard.html");
+
+return;
+
+}
+
+const data=snap.val();
+
+if(data.role!=="Reseller"){
+
+alert("Akses ditolak.");
+
+location.replace("dashboard.html");
+
+return;
+
+}
+
+resellerEmail=user.email;
+
+resellerPassword=prompt("Masukkan password akun reseller untuk konfirmasi:");
+
+});
+
+document.getElementById("createBtn").onclick=createAccount;
+
+async function createAccount(){
+
+const username=username.value.trim();
+
+const email=document.getElementById("email").value.trim();
+
+const password=document.getElementById("password").value;
+
+const role=document.getElementById("role").value;
+
+const days=parseInt(document.getElementById("days").value);
+
+if(!username||!email||!password||!days){
+
+alert("Lengkapi semua data.");
+
+return;
+
+}
+
+const expired=new Date();
+
+expired.setDate(expired.getDate()+days);
+
+window.userData={
+
+username,
+
+role,
+
+expired:expired.toISOString().slice(0,10),
+
+created:Date.now()
+
+};
+
+window.email=email;
+
+window.password=password;
+
+}
+
+</script>
+
+<script type="module">
+
+async function finishCreate(){
+
+try{
+
+document.getElementById("createBtn").disabled=true;
+document.getElementById("createBtn").textContent="CREATING...";
+
+const result=await createUserWithEmailAndPassword(
+auth,
+window.email,
+window.password
+);
+
+const uid=result.user.uid;
+
+await set(ref(db,"users/"+uid),{
+
+username:window.userData.username,
+
+email:window.email,
+
+role:window.userData.role,
+
+expired:window.userData.expired,
+
+created:window.userData.created
+
+});
+
+alert("User berhasil dibuat.");
+
+await signInWithEmailAndPassword(
+
+auth,
+
+resellerEmail,
+
+resellerPassword
+
+);
+
+location.href="dashboard.html";
+
+}catch(err){
+
+alert(err.message);
+
+document.getElementById("createBtn").disabled=false;
+
+document.getElementById("createBtn").textContent="CREATE ACCOUNT";
+
+}
+
+}
+
+document.getElementById("createBtn").onclick=async()=>{
+
+await createAccount();
+
+if(window.userData){
+
+await finishCreate();
+
+}
+
+};
+
+</script>
+
+<script type="module">
+
+async function usernameExists(name){
+
+const snap=await get(ref(db,"users"));
+
+if(!snap.exists()) return false;
+
+let found=false;
+
+snap.forEach(user=>{
+
+const d=user.val();
+
+if((d.username||"").toLowerCase()==name.toLowerCase()){
+
+found=true;
+
+}
+
+});
+
+return found;
+
+}
+
+function randomUsername(){
+
+return "user"+Math.floor(Math.random()*999999);
+
+}
+
+const oldCreate=createAccount;
+
+createAccount=async()=>{
+
+if(document.getElementById("username").value.trim()==""){
+
+document.getElementById("username").value=randomUsername();
+
+}
+
+const used=await usernameExists(
+
+document.getElementById("username").value.trim()
+
+);
+
+if(used){
+
+alert("Username sudah digunakan.");
+
+return;
+
+}
+
+await oldCreate();
+
+};
+
+async function finishCreate(){
+
+try{
+
+const btn=document.getElementById("createBtn");
+
+btn.disabled=true;
+
+btn.textContent="PLEASE WAIT...";
+
+const result=await createUserWithEmailAndPassword(
+
+auth,
+
+window.email,
+
+window.password
+
+);
+
+await set(
+
+ref(db,"users/"+result.user.uid),
+
+window.userData
+
+);
+
+alert(
+
+"✅ User berhasil dibuat!\n\nRole : "+window.userData.role+
+
+"\nExpired : "+window.userData.expired
+
+);
+
+await signInWithEmailAndPassword(
+
+auth,
+
+resellerEmail,
+
+resellerPassword
+
+);
+
+document.getElementById("username").value="";
+
+document.getElementById("email").value="";
+
+document.getElementById("password").value="";
+
+document.getElementById("days").value="";
+
+document.getElementById("role").selectedIndex=0;
+
+btn.disabled=false;
+
+btn.textContent="CREATE ACCOUNT";
+
+}catch(e){
+
+alert(e.message);
+
+document.getElementById("createBtn").disabled=false;
+
+document.getElementById("createBtn").textContent="CREATE ACCOUNT";
+
+}
+
+}
+
+document.getElementById("createBtn").onclick=async()=>{
+
+await createAccount();
+
+if(window.userData){
+
+await finishCreate();
+
+}
+
+};
+
+</script>
+  
+</body>
+</html>
