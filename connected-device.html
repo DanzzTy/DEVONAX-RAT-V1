@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Connected Device</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Orbitron,sans-serif;
+}
+
+body{
+background:#070707;
+color:#fff;
+padding:20px;
+}
+
+.card{
+
+background:#111;
+border:1px solid #333;
+border-radius:22px;
+padding:18px;
+margin-bottom:18px;
+
+}
+
+.title{
+
+color:#ff4040;
+margin-bottom:15px;
+letter-spacing:2px;
+
+}
+
+.device{
+
+background:#181818;
+border-radius:18px;
+padding:15px;
+border:1px solid #333;
+cursor:pointer;
+transition:.25s;
+margin-bottom:12px;
+
+}
+
+.device:hover{
+
+border-color:#ff2020;
+
+}
+
+.row{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+.green{
+
+color:#00ff66;
+
+}
+
+.red{
+
+color:#ff4040;
+
+}
+
+.name{
+
+font-size:18px;
+
+}
+
+.small{
+
+font-size:12px;
+margin-top:6px;
+color:#999;
+
+}
+
+.back{
+
+height:55px;
+width:100%;
+border:none;
+border-radius:18px;
+background:#181818;
+color:white;
+font-size:16px;
+cursor:pointer;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+<div class="title">
+
+CONNECTED DEVICE
+
+</div>
+
+<div id="deviceList">
+
+<center>Loading...</center>
+
+</div>
+
+</div>
+
+<button class="back" onclick="history.back()">
+
+← Kembali
+
+</button>
+
+<script type="module">
+
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {getAuth,onAuthStateChanged}
+
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {getDatabase,ref,onValue}
+
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+onAuthStateChanged(auth,user=>{
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+onValue(ref(db,"devices/"+user.uid),snap=>{
+
+const list=document.getElementById("deviceList");
+
+if(!snap.exists()){
+
+list.innerHTML="<center>Tidak ada perangkat.</center>";
+
+return;
+
+}
+
+const d=snap.val();
+
+list.innerHTML=`
+
+<div class="device" onclick="openControl()">
+
+<div class="row">
+
+<div class="name">
+
+${d.deviceName||"Android"}
+
+</div>
+
+<div class="${d.online?'green':'red'}">
+
+${d.online?'ONLINE':'OFFLINE'}
+
+</div>
+
+</div>
+
+<div class="small">
+
+Android : ${d.android||"-"}
+
+</div>
+
+<div class="small">
+
+Battery : ${d.battery||0}%
+
+</div>
+
+<div class="small">
+
+Last Seen : ${d.lastSeen||"-"}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+});
+
+window.openControl=function(){
+
+location.href="device-control.html";
+
+}
+
+</script>
+
+</body>
+</html>
