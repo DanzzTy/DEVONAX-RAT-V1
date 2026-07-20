@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+.menuGrid{
+
+margin-top:18px;
+
+display:grid;
+
+grid-template-columns:1fr 1fr;
+
+gap:12px;
+
+}
+
+.menuCard{
+
+height:72px;
+
+background:#141414;
+
+border:1px solid rgba(255,43,79,.45);
+
+border-radius:18px;
+
+display:flex;
+
+flex-direction:column;
+
+justify-content:center;
+
+align-items:center;
+
+gap:6px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.menuCard:hover{
+
+border-color:#ff2b4f;
+
+box-shadow:0 0 18px rgba(255,0,0,.22);
+
+transform:translateY(-2px);
+
+}
+
+.menuCard span{
+
+font-size:24px;
+
+color:#ff4b6a;
+
+}
+
+.menuCard p{
+
+font-size:12px;
+
+color:#fff;
+
+}
+
+.feature{
+
+margin-top:14px;
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:16px;
+
+background:#141414;
+
+border:1px solid rgba(255,43,79,.45);
+
+border-radius:18px;
+
+transition:.25s;
+
+}
+
+.feature:hover{
+
+border-color:#ff2b4f;
+
+box-shadow:0 0 18px rgba(255,0,0,.15);
+
+}
+
+.feature span{
+
+font-size:30px;
+
+color:#ff2b4f;
+
+}
+
+.feature h3{
+
+font-size:14px;
+
+margin-bottom:4px;
+
+}
+
+.feature p{
+
+font-size:11px;
+
+color:#aaaaaa;
+
+line-height:18px;
+
+}
+
+.footer{
+
+margin-top:25px;
+
+text-align:center;
+
+font-size:10px;
+
+letter-spacing:2px;
+
+color:#666;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+
+--bg:#070707;
+--card:#141414;
+--red:#ff2b4f;
+--line:#343434;
+--text:#fff;
+--sub:#aaaaaa;
+
+}
+
+body{
+
+background:var(--bg);
+color:#fff;
+overflow-x:hidden;
+
+}
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(circle at top,#ff003020,transparent 40%),
+radial-gradient(circle at bottom,#ff003010,transparent 40%);
+
+pointer-events:none;
+
+}
+
+.grid{
+
+position:fixed;
+inset:0;
+
+opacity:.04;
+
+background-image:
+
+linear-gradient(#ff0020 1px,transparent 1px),
+linear-gradient(90deg,#ff0020 1px,transparent 1px);
+
+background-size:42px 42px;
+
+pointer-events:none;
+
+}
+
+.container{
+
+max-width:430px;
+margin:auto;
+padding:30px 18px 40px;
+
+position:relative;
+z-index:2;
+
+}
+
+/* LOGO */
+
+.logo{
+
+width:140px;
+height:140px;
+
+margin:auto;
+
+border-radius:50%;
+
+overflow:hidden;
+
+border:2px solid var(--red);
+
+background:#101010;
+
+box-shadow:
+
+0 0 30px rgba(255,0,0,.35),
+0 0 60px rgba(255,0,0,.18);
+
+}
+
+.logo img{
+
+width:100%;
+height:100%;
+object-fit:cover;
+
+}
+
+.title{
+
+margin-top:18px;
+
+text-align:center;
+
+font-size:28px;
+
+font-weight:800;
+
+letter-spacing:6px;
+
+text-shadow:0 0 18px rgba(255,0,0,.5);
+
+}
+
+.sub{
+
+text-align:center;
+
+font-size:11px;
+
+letter-spacing:2px;
+
+color:#b9b9b9;
+
+margin-top:8px;
+
+}
+
+/* INFO */
+
+.info{
+
+margin-top:18px;
+
+padding:14px;
+
+text-align:center;
+
+background:#191919;
+
+border:1px solid rgba(255,43,79,.5);
+
+border-radius:18px;
+
+font-size:12px;
+
+color:#d8d8d8;
+
+}
+
+/* BUTTON */
+
+.btn{
+
+width:100%;
+height:58px;
+
+margin-top:15px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:15px;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+.sign{
+
+background:linear-gradient(180deg,#ff3c5c,#b10022);
+
+color:#fff;
+
+box-shadow:
+
+0 0 25px rgba(255,0,0,.35);
+
+}
+
+.buy{
+
+background:#181818;
+
+border:1px solid rgba(255,43,79,.6);
+
+color:#ff7a8f;
+
+}
+
+.buy:hover{
+
+border-color:#ff2b4f;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<div class="container">
+
+<div class="logo">
+
+<img src="img/logo.png">
+
+</div>
+
+<h1 class="title">
+
+DEVONAX
+
+</h1>
+
+<p class="sub">
+
+Powered by DEVONAX
+
+</p>
+
+<div class="info">
+
+Please Log In or Buy Access to Continue
+
+</div>
+
+<button
+id="signBtn"
+class="btn sign">
+
+<span class="material-symbols-outlined">
+
+login
+
+</span>
+
+SIGN IN
+
+</button>
+
+<button
+id="buyBtn"
+class="btn buy">
+
+<span class="material-symbols-outlined">
+
+shopping_bag
+
+</span>
+
+BUY ACCESS
+
+  </button>
+
+<!-- MENU -->
+
+<div class="menuGrid">
+
+<div class="menuCard"
+onclick="window.open('https://t.me/Danzzsture','_blank')">
+
+<span class="material-symbols-outlined">
+send
+</span>
+
+<p>Telegram</p>
+
+</div>
+
+<div class="menuCard"
+onclick="location.href='mailto:danishcoding205@gmail.com'">
+
+<span class="material-symbols-outlined">
+mail
+</span>
+
+<p>Email</p>
+
+</div>
+
+<div class="menuCard"
+onclick="window.open('https://wa.me/6285113656295','_blank')">
+
+<span class="material-symbols-outlined">
+support_agent
+</span>
+
+<p>Support</p>
+
+</div>
+
+<div class="menuCard"
+onclick="location.href='about.html'">
+
+<span class="material-symbols-outlined">
+info
+</span>
+
+<p>About</p>
+
+</div>
+
+</div>
+
+<!-- FEATURE -->
+
+<div class="feature">
+
+<span class="material-symbols-outlined">
+shield
+</span>
+
+<div>
+
+<h3>Security</h3>
+
+<p>Protected authentication system.</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<span class="material-symbols-outlined">
+bolt
+</span>
+
+<div>
+
+<h3>Performance</h3>
+
+<p>Fast & Stable experience.</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<span class="material-symbols-outlined">
+workspace_premium
+</span>
+
+<div>
+
+<h3>Premium</h3>
+
+<p>High Quality Service.</p>
+
+</div>
+
+</div>
+
+<div class="feature">
+
+<span class="material-symbols-outlined">
+auto_awesome
+</span>
+
+<div>
+
+<h3>Experience</h3>
+
+<p>Modern Interface & Cyber Design.</p>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+© 2026 DEVONAX
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const signBtn=document.getElementById("signBtn");
+const buyBtn=document.getElementById("buyBtn");
+
+signBtn.onclick=()=>{
+
+signBtn.style.opacity=".7";
+signBtn.innerHTML="<span class='material-symbols-outlined'>hourglass_top</span>CHECKING...";
+
+onAuthStateChanged(auth,(user)=>{
+
+if(user){
+
+location.href="intro.html";
+
+}else{
+
+location.href="login.html";
+
+}
+
+});
+
+};
+
+buyBtn.onclick=()=>{
+
+window.open(
+
+"https://wa.me/6285113656295?text=Halo%20Admin,%20saya%20ingin%20membeli%20akses%20DEVONAX",
+
+"_blank"
+
+);
+
+};
+
+document.querySelectorAll(".menuCard").forEach(card=>{
+
+card.addEventListener("touchstart",()=>{
+
+card.style.transform="scale(.96)";
+
+});
+
+card.addEventListener("touchend",()=>{
+
+card.style.transform="scale(1)";
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
