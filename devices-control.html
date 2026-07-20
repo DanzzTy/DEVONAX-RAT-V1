@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Device Control</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Orbitron,sans-serif;
+}
+
+body{
+background:#070707;
+color:#fff;
+padding:20px;
+}
+
+.title{
+
+font-size:24px;
+margin-bottom:20px;
+text-align:center;
+
+}
+
+.grid{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+
+}
+
+.btn{
+
+background:#111;
+border:1px solid #333;
+border-radius:20px;
+padding:20px;
+text-align:center;
+cursor:pointer;
+transition:.25s;
+
+}
+
+.btn:hover{
+
+border-color:#ff2020;
+box-shadow:0 0 15px rgba(255,0,0,.25);
+
+}
+
+.btn span{
+
+font-size:42px;
+color:#ff3030;
+
+}
+
+.btn p{
+
+margin-top:10px;
+font-size:13px;
+
+}
+
+.back{
+
+margin-top:20px;
+width:100%;
+height:55px;
+
+background:#181818;
+
+border:none;
+border-radius:18px;
+
+color:white;
+font-size:16px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="title">
+
+DEVICE CONTROL
+
+</div>
+
+<div class="grid">
+
+<div class="btn" onclick="send('frontCamera')">
+<span class="material-symbols-outlined">photo_camera</span>
+<p>Front Camera</p>
+</div>
+
+<div class="btn" onclick="send('backCamera')">
+<span class="material-symbols-outlined">camera</span>
+<p>Back Camera</p>
+</div>
+
+<div class="btn" onclick="send('location')">
+<span class="material-symbols-outlined">location_on</span>
+<p>GPS</p>
+</div>
+
+<div class="btn" onclick="send('microphone')">
+<span class="material-symbols-outlined">mic</span>
+<p>Microphone</p>
+</div>
+
+<div class="btn" onclick="send('clipboard')">
+<span class="material-symbols-outlined">content_paste</span>
+<p>Clipboard</p>
+</div>
+
+<div class="btn" onclick="send('files')">
+<span class="material-symbols-outlined">folder</span>
+<p>Files</p>
+</div>
+
+<div class="btn" onclick="send('alarm')">
+<span class="material-symbols-outlined">notifications_active</span>
+<p>Alarm</p>
+</div>
+
+<div class="btn" onclick="send('vibrate')">
+<span class="material-symbols-outlined">vibration</span>
+<p>Vibrate</p>
+</div>
+
+<div class="btn" onclick="send('lock')">
+<span class="material-symbols-outlined">lock</span>
+<p>Lock Screen</p>
+</div>
+
+<div class="btn" onclick="send('info')">
+<span class="material-symbols-outlined">smartphone</span>
+<p>Device Info</p>
+</div>
+
+<div class="btn" onclick="send('battery')">
+<span class="material-symbols-outlined">battery_full</span>
+<p>Battery</p>
+</div>
+
+<div class="btn" onclick="send('screenshot')">
+<span class="material-symbols-outlined">screenshot</span>
+<p>Screenshot</p>
+</div>
+
+</div>
+
+<button class="back" onclick="history.back()">
+
+Kembali
+
+</button>
+
+<script type="module">
+
+import {initializeApp} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {getAuth,onAuthStateChanged}
+
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {getDatabase,ref,set}
+
+from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+let uid="";
+
+onAuthStateChanged(auth,user=>{
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+uid=user.uid;
+
+});
+
+window.send=async(cmd)=>{
+
+await set(ref(db,"devices/"+uid+"/command"),{
+
+action:cmd,
+
+time:Date.now()
+
+});
+
+alert("Perintah "+cmd+" berhasil dikirim.");
+
+};
+
+</script>
+
+</body>
+  </html>
