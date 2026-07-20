@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX • Create User</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+--bg:#070707;
+--card:#121212;
+--red:#ff2020;
+--border:#2d2d2d;
+--text:#fff;
+}
+
+body{
+background:var(--bg);
+color:var(--text);
+padding:18px;
+padding-bottom:100px;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left,#ff000015,transparent 40%),
+radial-gradient(circle at bottom right,#ff000015,transparent 40%);
+pointer-events:none;
+}
+
+.grid{
+position:fixed;
+inset:0;
+opacity:.04;
+background-image:
+linear-gradient(#ff0000 1px,transparent 1px),
+linear-gradient(90deg,#ff0000 1px,transparent 1px);
+background-size:40px 40px;
+pointer-events:none;
+}
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:22px;
+}
+
+.back{
+
+width:50px;
+height:50px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+border-radius:16px;
+
+background:#171717;
+
+border:1px solid #333;
+
+cursor:pointer;
+
+}
+
+.back span{
+font-size:28px;
+}
+
+.logo{
+
+font-size:24px;
+font-weight:800;
+letter-spacing:4px;
+
+}
+
+.card{
+
+background:var(--card);
+
+border:1px solid #333;
+
+border-radius:22px;
+
+padding:20px;
+
+box-shadow:0 0 18px rgba(255,0,0,.08);
+
+}
+
+.title{
+
+font-size:15px;
+
+letter-spacing:3px;
+
+color:#ff5555;
+
+margin-bottom:18px;
+
+}
+
+label{
+
+display:block;
+
+font-size:12px;
+
+margin-bottom:8px;
+
+color:#bbb;
+
+}
+
+input,select{
+
+width:100%;
+height:55px;
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:16px;
+
+padding:0 16px;
+
+margin-bottom:16px;
+
+outline:none;
+
+color:#fff;
+
+font-size:14px;
+
+transition:.25s;
+
+}
+
+input:focus,
+select:focus{
+
+border-color:#ff2020;
+
+box-shadow:0 0 12px rgba(255,0,0,.25);
+
+}
+
+button{
+
+width:100%;
+height:58px;
+
+border:none;
+
+border-radius:18px;
+
+background:linear-gradient(180deg,#ff3030,#900);
+
+color:#fff;
+
+font-size:15px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+button:hover{
+
+transform:scale(.98);
+
+}
+
+.note{
+
+margin-top:18px;
+
+padding:15px;
+
+background:#181818;
+
+border-radius:16px;
+
+border:1px solid #333;
+
+font-size:12px;
+
+line-height:20px;
+
+color:#999;
+
+}
+
+.infoCard{
+
+margin-top:18px;
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.box{
+
+background:#181818;
+
+border:1px solid #333;
+
+border-radius:18px;
+
+padding:18px;
+
+text-align:center;
+
+}
+
+.box span{
+
+font-size:34px;
+
+color:#ff3030;
+
+}
+
+.box h3{
+
+margin-top:10px;
+
+font-size:20px;
+
+}
+
+.box p{
+
+margin-top:6px;
+
+font-size:11px;
+
+color:#888;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div class="back" onclick="location.href='dashboard.html'">
+
+<span class="material-symbols-outlined">
+arrow_back
+</span>
+
+</div>
+
+<div class="logo">
+
+CREATE USER
+
+</div>
+
+</header>
+
+<div class="card">
+
+<div class="title">
+
+CREATE ACCOUNT
+
+</div>
+
+<label>Username</label>
+
+<input
+id="username"
+placeholder="Masukkan Username">
+
+<label>Email</label>
+
+<input
+id="email"
+type="email"
+placeholder="Masukkan Email">
+
+<label>Password</label>
+
+<input
+id="password"
+type="password"
+placeholder="Masukkan Password">
+
+<label>Role</label>
+
+<select id="role">
+
+<option value="Member">Member</option>
+
+<option value="VIP">VIP</option>
+
+<option value="Admin">Admin</option>
+
+</select>
+
+<label>Masa Aktif (Hari)</label>
+
+<input
+id="days"
+type="number"
+placeholder="30">
+
+<button id="createBtn">
+
+CREATE USER
+
+</button>
+
+<div class="note">
+
+✓ Reseller hanya dapat membuat akun Member, VIP, dan Admin.<br><br>
+
+✓ Masa aktif dihitung otomatis berdasarkan jumlah hari.
+
+</div>
+
+</div>
+
+<div class="infoCard">
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+
+groups
+
+</span>
+
+<h3 id="todayCreate">
+
+0
+
+</h3>
+
+<p>User Hari Ini</p>
+
+</div>
+
+<div class="box">
+
+<span class="material-symbols-outlined">
+
+verified_user
+
+</span>
+
+<h3>
+
+Reseller
+
+</h3>
+
+<p>Access</p>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+get
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+/* ========= FIREBASE ========= */
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+/* ========= USER ========= */
+
+let currentUser=null;
+
+let currentData=null;
+
+/* ========= LOGIN CHECK ========= */
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+location.href="../login.html";
+
+return;
+
+}
+
+currentUser=user;
+
+const snap=await get(ref(db,"users/"+user.uid));
+
+if(!snap.exists()){
+
+alert("User tidak ditemukan.");
+
+location.href="../login.html";
+
+return;
+
+}
+
+currentData=snap.val();
+
+/* hanya reseller */
+
+if(currentData.role!="Reseller"){
+
+alert("Akses ditolak.");
+
+location.href="dashboard.html";
+
+return;
+
+}
+
+/* statistik */
+
+loadTodayCreate();
+
+});
+
+/* ========= VALIDASI ========= */
+
+function calcExpired(days){
+
+let d=new Date();
+
+d.setDate(d.getDate()+Number(days));
+
+return d.toISOString();
+
+}
+
+function validateForm(){
+
+const username=document.getElementById("username").value.trim();
+
+const email=document.getElementById("email").value.trim();
+
+const password=document.getElementById("password").value;
+
+const role=document.getElementById("role").value;
+
+const days=document.getElementById("days").value;
+
+if(username==""){
+
+alert("Username kosong.");
+
+return null;
+
+}
+
+if(email==""){
+
+alert("Email kosong.");
+
+return null;
+
+}
+
+if(password.length<6){
+
+alert("Password minimal 6 karakter.");
+
+return null;
+
+}
+
+if(Number(days)<=0){
+
+alert("Durasi aktif salah.");
+
+return null;
+
+}
+
+return{
+
+username,
+
+email,
+
+password,
+
+role,
+
+expired:calcExpired(days)
+
+};
+
+}
+
+/* ========= STAT TODAY ========= */
+
+async function loadToday(){
+
+const snap=await get(ref(db,"users"));
+
+if(!snap.exists()) return;
+
+let total=0;
+
+const today=new Date().toDateString();
+
+snap.forEach(x=>{
+
+const d=x.val();
+
+if(d.created){
+
+if(new Date(d.created).toDateString()==today){
+
+total++;
+
+}
+
+}
+
+});
+
+document.getElementById("todayCreate").textContent=total;
+
+}
+
+/* alias */
+
+const loadTodayCreate=loadToday;
+
+window.validateForm=validateForm;
+
+window.db=db;
+window.auth=auth;
+window.currentUser=currentUser;
+
+</script>
