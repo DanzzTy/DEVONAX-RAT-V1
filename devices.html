@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX Device</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+
+--bg:#070707;
+--card:#111111;
+--red:#ff2020;
+--green:#00ff66;
+--border:#303030;
+--text:#ffffff;
+
+}
+
+body{
+
+background:var(--bg);
+color:var(--text);
+padding:20px;
+
+}
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(circle at top left,#ff000018,transparent 35%),
+
+radial-gradient(circle at bottom right,#ff000018,transparent 35%);
+
+pointer-events:none;
+
+}
+
+.container{
+
+max-width:600px;
+margin:auto;
+
+}
+
+.logo{
+
+font-size:28px;
+letter-spacing:4px;
+text-align:center;
+margin-bottom:25px;
+
+}
+
+.card{
+
+background:var(--card);
+border:1px solid var(--border);
+border-radius:22px;
+padding:18px;
+margin-bottom:18px;
+
+box-shadow:0 0 15px rgba(255,0,0,.08);
+
+}
+
+.title{
+
+font-size:14px;
+letter-spacing:2px;
+color:#ff5555;
+margin-bottom:15px;
+
+}
+
+.pairBox{
+
+display:flex;
+gap:10px;
+
+}
+
+#pairId{
+
+flex:1;
+height:55px;
+
+background:#181818;
+border:none;
+border-radius:16px;
+
+padding:0 15px;
+
+color:white;
+font-size:17px;
+
+}
+
+#copyBtn{
+
+width:55px;
+
+border:none;
+border-radius:16px;
+
+background:#1b1b1b;
+color:white;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+#copyBtn:hover{
+
+background:var(--red);
+
+}
+
+.status{
+
+display:flex;
+align-items:center;
+gap:15px;
+
+}
+
+#cableIcon{
+
+font-size:50px;
+
+}
+
+.red{
+
+color:var(--red);
+
+}
+
+.green{
+
+color:var(--green);
+
+}
+
+#statusText{
+
+font-size:18px;
+
+}
+
+#lastSeen{
+
+font-size:12px;
+margin-top:5px;
+color:#999;
+
+}
+
+.buttonGrid{
+
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+
+}
+
+.buttonGrid button{
+
+height:55px;
+
+background:#181818;
+color:white;
+
+border:1px solid #333;
+border-radius:16px;
+
+cursor:pointer;
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+
+transition:.25s;
+
+}
+
+.buttonGrid button:hover{
+
+border-color:var(--red);
+
+}
+
+.small{
+
+margin-top:10px;
+font-size:11px;
+color:#999;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="logo">
+
+DEVONAX DEVICE
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+PAIRING ID
+
+</div>
+
+<div class="pairBox">
+
+<input id="pairId" readonly>
+
+<button id="copyBtn">
+
+<span class="material-symbols-outlined">
+
+content_copy
+
+</span>
+
+</button>
+
+</div>
+
+<p class="small">
+
+Pairing ID bersifat permanen dan berbeda pada setiap akun.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+
+DEVICE CONNECTION
+
+</div>
+
+<div class="status">
+
+<span id="cableIcon"
+class="material-symbols-outlined red">
+
+cable
+
+</span>
+
+<div>
+
+<h3 id="statusText">
+
+Belum Terhubung
+
+</h3>
+
+<p id="lastSeen">
+
+Belum ada perangkat
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="buttonGrid">
+
+<button id="refreshBtn">
+
+<span class="material-symbols-outlined">
+
+refresh
+
+</span>
+
+Refresh
+
+</button>
+
+<button id="connectedBtn">
+
+<span class="material-symbols-outlined">
+
+devices
+
+</span>
+
+Connected Device
+
+</button>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain:"project-coding-gabut.firebaseapp.com",
+
+databaseURL:"https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId:"project-coding-gabut",
+
+storageBucket:"project-coding-gabut.firebasestorage.app",
+
+messagingSenderId:"234910334669",
+
+appId:"1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getDatabase(app);
+
+let uid="";
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+uid=user.uid;
+
+document.getElementById("pairId").value=uid;
+
+listenDevice();
+
+});
+
+function listenDevice(){
+
+onValue(ref(db,"devices/"+uid),(snap)=>{
+
+const icon=document.getElementById("cableIcon");
+
+const status=document.getElementById("statusText");
+
+const last=document.getElementById("lastSeen");
+
+if(!snap.exists()){
+
+icon.className="material-symbols-outlined red";
+
+icon.textContent="cable";
+
+status.textContent="Belum Terhubung";
+
+last.textContent="Menunggu perangkat...";
+
+return;
+
+}
+
+const d=snap.val();
+
+if(d.connected){
+
+icon.className="material-symbols-outlined green";
+
+icon.textContent="usb";
+
+status.textContent="Perangkat Terhubung";
+
+}else{
+
+icon.className="material-symbols-outlined red";
+
+icon.textContent="cable";
+
+status.textContent="Offline";
+
+}
+
+last.textContent="Terakhir aktif : "+(d.lastSeen||"-");
+
+});
+
+}
+
+document.getElementById("copyBtn").onclick=()=>{
+
+navigator.clipboard.writeText(uid);
+
+document.getElementById("copyBtn").innerHTML=
+
+'<span class="material-symbols-outlined">check</span>';
+
+setTimeout(()=>{
+
+document.getElementById("copyBtn").innerHTML=
+
+'<span class="material-symbols-outlined">content_copy</span>';
+
+},2000);
+
+};
+
+document.getElementById("refreshBtn").onclick=()=>{
+
+location.reload();
+
+};
+
+document.getElementById("connectedBtn").onclick=()=>{
+
+location.href="connected-device.html";
+
+};
+
+</script>
+
+</body>
+</html>
