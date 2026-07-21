@@ -326,51 +326,172 @@ box-shadow:
 }
 
 .title{
+
 margin-top:18px;
+
 font-size:31px;
+
 font-weight:800;
+
 letter-spacing:8px;
-text-align:center;
-color:#fff;
+
 text-transform:uppercase;
+
+text-align:center;
+
+color:#fff;
+
 position:relative;
 
-animation:textGlow 2s ease-in-out infinite alternate;
+animation:
+titleFloat 2.8s ease-in-out infinite,
+titleGlow 2s ease-in-out infinite alternate;
+
 text-shadow:
-0 0 5px #fff,
-0 0 15px rgba(255,255,255,.6),
-0 0 30px rgba(255,0,60,.35);
+0 0 8px #fff,
+0 0 20px rgba(255,255,255,.7),
+0 0 40px rgba(255,0,60,.5);
+
+}
+  
+.title::before,
+.title::after{
+
+content:"DEVONAX";
+
+position:absolute;
+
+left:0;
+top:0;
+
+width:100%;
+height:100%;
+
+pointer-events:none;
+
 }
 
 .title::before{
-content:"";
-position:absolute;
-left:50%;
-bottom:-8px;
-transform:translateX(-50%);
-width:78%;
-height:2px;
-background:linear-gradient(90deg,
-transparent,
-#ffffff,
-transparent);
-box-shadow:0 0 12px #fff;
+
+color:#00e5ff;
+
+opacity:.45;
+
+animation:glitch1 2.5s infinite;
+
 }
 
-@keyframes textGlow{
+.title::after{
+
+color:#ff003c;
+
+opacity:.45;
+
+animation:glitch2 2.5s infinite;
+
+}
+
+@keyframes titleFloat{
+
+0%,100%{
+
+transform:translateX(0);
+
+}
+
+25%{
+
+transform:translateX(-12px);
+
+}
+
+50%{
+
+transform:translateX(0);
+
+}
+
+75%{
+
+transform:translateX(12px);
+
+}
+
+}
+
+@keyframes titleGlow{
 
 0%{
-transform:scale(1);
-letter-spacing:8px;
+
+text-shadow:
+0 0 8px #fff,
+0 0 20px rgba(255,255,255,.5);
+
 }
 
 100%{
-transform:scale(1.03);
-letter-spacing:10px;
+
 text-shadow:
-0 0 10px #fff,
-0 0 25px #fff,
-0 0 40px rgba(255,0,80,.5);
+0 0 12px #fff,
+0 0 28px #fff,
+0 0 50px rgba(255,0,60,.6);
+
+}
+
+}
+
+@keyframes glitch1{
+
+0%,90%,100%{
+
+transform:translate(0);
+
+clip-path:none;
+
+}
+
+91%{
+
+transform:translate(-2px,-1px);
+
+clip-path:inset(10% 0 55% 0);
+
+}
+
+93%{
+
+transform:translate(2px,1px);
+
+clip-path:inset(55% 0 15% 0);
+
+}
+
+}
+
+@keyframes glitch2{
+
+0%,90%,100%{
+
+transform:translate(0);
+
+clip-path:none;
+
+}
+
+92%{
+
+transform:translate(2px,-1px);
+
+clip-path:inset(35% 0 30% 0);
+
+}
+
+95%{
+
+transform:translate(-2px,1px);
+
+clip-path:inset(65% 0 5% 0);
+
 }
 
   }
@@ -587,7 +708,7 @@ notifications_active
 </span>
 
 <span class="infoText">
-Please Log In or Buy Access to Continue
+Press Log In or Buy Access to Continue
 </span>
 
 </div>
