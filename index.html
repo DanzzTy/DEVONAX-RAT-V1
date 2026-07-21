@@ -326,18 +326,54 @@ box-shadow:
 }
 
 .title{
-
 margin-top:18px;
-
-font-size:27px;
-
+font-size:31px;
 font-weight:800;
-
-letter-spacing:5px;
-
+letter-spacing:8px;
 text-align:center;
+color:#fff;
+text-transform:uppercase;
+position:relative;
 
+animation:textGlow 2s ease-in-out infinite alternate;
+text-shadow:
+0 0 5px #fff,
+0 0 15px rgba(255,255,255,.6),
+0 0 30px rgba(255,0,60,.35);
 }
+
+.title::before{
+content:"";
+position:absolute;
+left:50%;
+bottom:-8px;
+transform:translateX(-50%);
+width:78%;
+height:2px;
+background:linear-gradient(90deg,
+transparent,
+#ffffff,
+transparent);
+box-shadow:0 0 12px #fff;
+}
+
+@keyframes textGlow{
+
+0%{
+transform:scale(1);
+letter-spacing:8px;
+}
+
+100%{
+transform:scale(1.03);
+letter-spacing:10px;
+text-shadow:
+0 0 10px #fff,
+0 0 25px #fff,
+0 0 40px rgba(255,0,80,.5);
+}
+
+  }
 
 .subtitle{
 
@@ -351,29 +387,98 @@ color:#bdbdbd;
 
 }
 
+.notifyIcon{
+
+font-size:23px;
+
+color:#ff2d55;
+
+animation:ring 1.1s infinite;
+
+text-shadow:
+0 0 10px red,
+0 0 20px red;
+
+}
+
+@keyframes ring{
+
+0%{transform:rotate(0deg);}
+20%{transform:rotate(-18deg);}
+40%{transform:rotate(18deg);}
+60%{transform:rotate(-12deg);}
+80%{transform:rotate(12deg);}
+100%{transform:rotate(0deg);}
+
+}
+
+.infoText{
+
+position:relative;
+
+animation:redGlow 1.8s infinite alternate;
+
+}
+
+@keyframes redGlow{
+
+0%{
+
+color:#ff7c8d;
+
+text-shadow:
+0 0 5px red;
+
+}
+
+100%{
+
+color:#fff;
+
+text-shadow:
+0 0 10px red,
+0 0 25px red,
+0 0 40px red;
+
+}
+
+}
+
 /* INFO */
 
 .info{
 
 margin-top:18px;
 
-padding:14px;
+height:56px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:10px;
+
+background:#181818;
+
+border:1px solid rgba(255,50,80,.5);
 
 border-radius:18px;
 
-background:#171717;
+color:#ff4d66;
 
-border:1px solid rgba(255,35,70,.45);
+font-size:12px;
 
-text-align:center;
+font-weight:600;
 
-font-size:11px;
+letter-spacing:.5px;
 
-line-height:20px;
+box-shadow:
+0 0 18px rgba(255,0,70,.18);
 
-color:#d0d0d0;
+overflow:hidden;
 
-}
+position:relative;
+
+  }
 
 /* BUTTON */
 
@@ -477,10 +582,16 @@ Powered by Danzz
 
 <div class="info">
 
+<span class="material-symbols-outlined notifyIcon">
+notifications_active
+</span>
+
+<span class="infoText">
 Please Log In or Buy Access to Continue
+</span>
 
 </div>
-
+  
 <button
 id="signBtn"
 class="btn signBtn">
