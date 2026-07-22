@@ -105,10 +105,31 @@ box-shadow:0 0 20px rgba(0,0,0,.35);
 }
 
 .hero{
-
 text-align:center;
-
+overflow:hidden;
 }
+
+.hero .icon{
+font-size:52px;
+margin-bottom:8px;
+}
+
+.hero h1{
+font-size:36px;
+line-height:1;
+color:#f6d36d;
+margin:6px 0;
+word-break:break-word;
+overflow:hidden;
+}
+
+.hero p{
+font-size:13px;
+line-height:1.5;
+color:#ddd;
+word-break:break-word;
+padding:0 10px;
+  }
 
 .hero .icon{
 
@@ -235,24 +256,16 @@ gap:14px;
 }
 
 .prayer{
-
-background:#16331e;
-
-border:1px solid #2d6940;
-
-border-radius:18px;
-
-padding:18px;
-
 display:flex;
-
 align-items:center;
-
 justify-content:space-between;
-
-transition:.3s;
-
-}
+gap:12px;
+padding:16px;
+background:#16331e;
+border:1px solid #2d6940;
+border-radius:18px;
+overflow:hidden;
+  }
 
 .prayer.active{
 
@@ -263,48 +276,34 @@ box-shadow:0 0 20px rgba(246,211,109,.25);
 }
 
 .left{
-
 display:flex;
-
 align-items:center;
-
 gap:12px;
-
-}
-
-.left span{
-
-font-size:34px;
-
-color:#f6d36d;
-
+flex:1;
+min-width:0;
 }
 
 .left h3{
-
-font-size:16px;
-
+font-size:15px;
+white-space:nowrap;
+overflow:hidden;
+text-overflow:ellipsis;
 }
 
 .left p{
-
-font-size:12px;
-
-color:#bbb;
-
-margin-top:3px;
-
+font-size:11px;
+color:#aaa;
 }
 
 .time{
-
-font-size:20px;
-
+font-size:18px;
 font-weight:700;
-
 color:#fff;
-
-}
+white-space:nowrap;
+text-align:right;
+min-width:70px;
+flex-shrink:0;
+  }
 
 .footer{
 
@@ -366,16 +365,10 @@ Jadwal Sholat
 
 </div>
 
-<h1>
+<h1 style="font-size:34px;">﷽</h1>
 
-﷽
-
-</h1>
-
-<p>
-
+<p style="font-size:12px;line-height:1.6;padding:0 14px;">
 بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-
 </p>
 
 <div id="clock" class="clock">
