@@ -133,22 +133,17 @@ text-shadow:
 }
 
 .banner{
-
 position:relative;
-
 height:200px;
-
 border-radius:24px;
-
 overflow:hidden;
-
 border:1px solid #333;
-
 margin-bottom:22px;
-
 box-shadow:0 0 20px rgba(255,0,0,.15);
 
-}
+touch-action:pan-y;
+user-select:none;
+  }
 
 .slide{
 
@@ -1380,31 +1375,78 @@ setInterval(updateClock,1000);
 
 updateClock();
 
+const banner=document.querySelector(".banner");
 const slides=document.querySelectorAll(".slide");
-
 const dots=document.querySelectorAll(".dot");
 
 let current=0;
+let autoSlide;
 
-setInterval(()=>{
+function showSlide(i){
 
 slides[current].classList.remove("active");
-
 dots[current].classList.remove("active");
 
-current++;
+current=i;
 
-if(current>=slides.length){
+if(current<0) current=slides.length-1;
+if(current>=slides.length) current=0;
 
-current=0;
+slides[current].classList.add("active");
+dots[current].classList.add("active");
 
 }
 
-slides[current].classList.add("active");
+function startAuto(){
 
-dots[current].classList.add("active");
+clearInterval(autoSlide);
+
+autoSlide=setInterval(()=>{
+
+showSlide(current+1);
 
 },5000);
+
+}
+
+startAuto();
+
+let startX=0;
+let endX=0;
+
+banner.addEventListener("touchstart",(e)=>{
+
+startX=e.touches[0].clientX;
+
+});
+
+banner.addEventListener("touchmove",(e)=>{
+
+endX=e.touches[0].clientX;
+
+});
+
+banner.addEventListener("touchend",()=>{
+
+const diff=startX-endX;
+
+if(Math.abs(diff)>50){
+
+if(diff>0){
+
+showSlide(current+1);
+
+}else{
+
+showSlide(current-1);
+
+}
+
+startAuto();
+
+}
+
+});
 
 </script>
 
