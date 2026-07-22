@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Jadwal Sholat | DEVONAX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+
+background:#07130a;
+color:#fff;
+padding:18px;
+overflow-x:hidden;
+
+}
+
+body::before{
+
+content:"";
+
+position:fixed;
+inset:0;
+
+background:
+
+radial-gradient(circle at top,#0f5d25 0%,transparent 40%),
+radial-gradient(circle at bottom,#b68b1d25 0%,transparent 45%);
+
+pointer-events:none;
+
+}
+
+header{
+
+display:flex;
+align-items:center;
+justify-content:space-between;
+
+margin-bottom:18px;
+
+}
+
+.back{
+
+width:48px;
+height:48px;
+
+border-radius:16px;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+background:#0d2111;
+
+border:1px solid #2d5d34;
+
+cursor:pointer;
+
+}
+
+.back span{
+
+font-size:28px;
+color:#f6d36d;
+
+}
+
+.title{
+
+font-size:20px;
+font-weight:700;
+color:#f6d36d;
+
+}
+
+.card{
+
+background:#102416;
+
+border:1px solid #285735;
+
+border-radius:25px;
+
+padding:20px;
+
+margin-bottom:18px;
+
+box-shadow:0 0 20px rgba(0,0,0,.35);
+
+}
+
+.hero{
+
+text-align:center;
+
+}
+
+.hero .icon{
+
+font-size:80px;
+color:#f6d36d;
+
+margin-bottom:10px;
+
+}
+
+.hero h1{
+
+font-family:Amiri,serif;
+
+font-size:38px;
+
+color:#f6d36d;
+
+}
+
+.hero p{
+
+margin-top:6px;
+
+font-size:13px;
+
+color:#cfcfcf;
+
+}
+
+.clock{
+
+font-size:40px;
+
+font-weight:700;
+
+margin-top:18px;
+
+color:#fff;
+
+}
+
+.date{
+
+margin-top:10px;
+
+font-size:14px;
+
+color:#ddd;
+
+}
+
+.location{
+
+margin-top:12px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+gap:6px;
+
+font-size:13px;
+
+color:#f6d36d;
+
+}
+
+.location span{
+
+font-size:20px;
+
+}
+
+.nextPrayer{
+
+margin-top:20px;
+
+background:#15331c;
+
+border:1px solid #396b45;
+
+border-radius:18px;
+
+padding:15px;
+
+text-align:center;
+
+}
+
+.nextPrayer h3{
+
+font-size:15px;
+
+color:#f6d36d;
+
+margin-bottom:6px;
+
+}
+
+.nextPrayer h2{
+
+font-size:28px;
+
+}
+
+.nextPrayer p{
+
+margin-top:4px;
+
+font-size:13px;
+
+color:#ccc;
+
+}
+
+.grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.prayer{
+
+background:#16331e;
+
+border:1px solid #2d6940;
+
+border-radius:18px;
+
+padding:18px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+transition:.3s;
+
+}
+
+.prayer.active{
+
+border-color:#f6d36d;
+
+box-shadow:0 0 20px rgba(246,211,109,.25);
+
+}
+
+.left{
+
+display:flex;
+
+align-items:center;
+
+gap:12px;
+
+}
+
+.left span{
+
+font-size:34px;
+
+color:#f6d36d;
+
+}
+
+.left h3{
+
+font-size:16px;
+
+}
+
+.left p{
+
+font-size:12px;
+
+color:#bbb;
+
+margin-top:3px;
+
+}
+
+.time{
+
+font-size:20px;
+
+font-weight:700;
+
+color:#fff;
+
+}
+
+.footer{
+
+margin-top:18px;
+
+text-align:center;
+
+font-size:12px;
+
+color:#999;
+
+}
+
+.loading{
+
+text-align:center;
+
+padding:25px;
+
+font-size:15px;
+
+color:#ddd;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="back" onclick="goBack()">
+
+<span class="material-symbols-outlined">
+
+arrow_back
+
+</span>
+
+</div>
+
+<div class="title">
+
+Jadwal Sholat
+
+</div>
+
+<div style="width:48px"></div>
+
+</header>
+
+<div class="card hero">
+
+<div class="icon">
+
+🕌
+
+</div>
+
+<h1>
+
+﷽
+
+</h1>
+
+<p>
+
+بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+
+</p>
+
+<div id="clock" class="clock">
+
+00:00:00
+
+</div>
+
+<div id="date" class="date">
+
+Loading...
+
+</div>
+
+<div class="location">
+
+<span class="material-symbols-outlined">
+
+location_on
+
+</span>
+
+<div id="city">
+
+Mengambil lokasi...
+
+</div>
+
+</div>
+
+<div class="nextPrayer">
+
+<h3>
+
+Sholat Berikutnya
+
+</h3>
+
+<h2 id="nextName">
+
+-
+
+</h2>
+
+<p id="nextTime">
+
+-
+
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="grid">
+
+<div class="prayer" id="Fajr">
+
+<div class="left">
+
+<span class="material-symbols-outlined">
+
+dark_mode
+
+</span>
+
+<div>
+
+<h3>Subuh</h3>
+
+<p>Fajr</p>
+
+</div>
+
+</div>
+
+<div class="time" id="timeFajr">--:--</div>
+
+</div>
+
+<div class="prayer" id="Dhuhr">
+
+<div class="left">
+
+<span class="material-symbols-outlined">
+
+wb_sunny
+
+</span>
+
+<div>
+
+<h3>Dzuhur</h3>
+
+<p>Dhuhr</p>
+
+</div>
+
+</div>
+
+<div class="time" id="timeDhuhr">--:--</div>
+
+</div>
+
+<div class="prayer" id="Asr">
+
+<div class="left">
+
+<span class="material-symbols-outlined">
+
+partly_cloudy_day
+
+</span>
+
+<div>
+
+<h3>Ashar</h3>
+
+<p>Asr</p>
+
+</div>
+
+</div>
+
+<div class="time" id="timeAsr">--:--</div>
+
+</div>
+
+<div class="prayer" id="Maghrib">
+
+<div class="left">
+
+<span class="material-symbols-outlined">
+
+brightness_4
+
+</span>
+
+<div>
+
+<h3>Maghrib</h3>
+
+<p>Maghrib</p>
+
+</div>
+
+</div>
+
+<div class="time" id="timeMaghrib">--:--</div>
+
+</div>
+
+<div class="prayer" id="Isha">
+
+<div class="left">
+
+<span class="material-symbols-outlined">
+
+bedtime
+
+</span>
+
+<div>
+
+<h3>Isya</h3>
+
+<p>Isha</p>
+
+</div>
+
+</div>
+
+<div class="time" id="timeIsha">--:--</div>
+
+</div>
+
+<div class="prayer">
+
+<div class="left">
+
+<span class="material-symbols-outlined">
+
+calendar_month
+
+</span>
+
+<div>
+
+<h3>Tanggal Hijriah</h3>
+
+<p>Islamic Date</p>
+
+</div>
+
+</div>
+
+<div class="time" id="hijri">
+
+-
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+DEVONAX • Prayer Time API
+
+</div>
+
+<script>
+  
+function updateClock(){
+const now=new Date();
+
+document.getElementById("clock").textContent=
+now.toLocaleTimeString("id-ID");
+
+document.getElementById("date").textContent=
+now.toLocaleDateString("id-ID",{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
+});
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+function goBack(){
+history.back();
+}
+
+function nextPrayer(data){
+
+const list=[
+["Subuh","Fajr"],
+["Dzuhur","Dhuhr"],
+["Ashar","Asr"],
+["Maghrib","Maghrib"],
+["Isya","Isha"]
+];
+
+document.querySelectorAll(".prayer").forEach(e=>{
+e.classList.remove("active");
+});
+
+const now=new Date();
+const minuteNow=now.getHours()*60+now.getMinutes();
+
+for(let i=0;i<list.length;i++){
+
+const t=data[list[i][1]].split(":");
+const minute=(+t[0])*60+(+t[1]);
+
+if(minuteNow<minute){
+
+document.getElementById("nextName").textContent=list[i][0];
+document.getElementById("nextTime").textContent=data[list[i][1]];
+
+const el=document.getElementById(list[i][1]);
+if(el) el.classList.add("active");
+
+return;
+}
+
+}
+
+document.getElementById("nextName").textContent="Subuh";
+document.getElementById("nextTime").textContent=data.Fajr;
+
+document.getElementById("Fajr").classList.add("active");
+}
+
+async function loadPrayer(lat,lon){
+
+try{
+
+const res=await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lon}&method=11`);
+const json=await res.json();
+
+const t=json.data.timings;
+
+timeFajr.textContent=t.Fajr;
+timeDhuhr.textContent=t.Dhuhr;
+timeAsr.textContent=t.Asr;
+timeMaghrib.textContent=t.Maghrib;
+timeIsha.textContent=t.Isha;
+
+hijri.textContent=
+json.data.date.hijri.day+" "+
+json.data.date.hijri.month.en+" "+
+json.data.date.hijri.year;
+
+nextPrayer(t);
+
+}catch(e){
+
+city.textContent="Gagal mengambil jadwal sholat";
+
+}
+
+}
+
+function loadLocation(){
+
+navigator.geolocation.getCurrentPosition(async(pos)=>{
+
+const lat=pos.coords.latitude;
+const lon=pos.coords.longitude;
+
+loadPrayer(lat,lon);
+
+try{
+
+const geo=await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`);
+
+const data=await geo.json();
+
+city.textContent=
+data.address.city||
+data.address.town||
+data.address.county||
+data.address.village||
+"Indonesia";
+
+}catch{
+
+city.textContent="Indonesia";
+
+}
+
+},()=>{
+
+city.textContent="Lokasi tidak diizinkan";
+
+});
+
+}
+
+loadLocation();
+
+setInterval(loadLocation,600000);
+</script>
+
+</body>
+</html>
