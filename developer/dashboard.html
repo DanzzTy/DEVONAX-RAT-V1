@@ -689,6 +689,106 @@ gap:14px;
 
 }
 
+.serverStatus{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+margin-top:10px;
+font-size:15px;
+font-weight:700;
+transition:.3s;
+}
+
+.dot{
+width:9px;
+height:9px;
+border-radius:50%;
+display:block;
+}
+
+.pulse{
+animation:pulse .9s infinite;
+}
+
+@keyframes pulse{
+
+0%{
+transform:scale(.8);
+opacity:.5;
+}
+
+50%{
+transform:scale(1.4);
+opacity:1;
+}
+
+100%{
+transform:scale(.8);
+opacity:.5;
+}
+
+}
+
+.serverStatus.online{
+color:#00ff66;
+}
+
+.serverStatus.online .dot{
+background:#00ff66;
+box-shadow:0 0 12px #00ff66;
+}
+
+.serverStatus.offline{
+color:#ff3030;
+}
+
+.serverStatus.offline .dot{
+background:#ff3030;
+box-shadow:0 0 12px #ff3030;
+}
+
+.serverStatus.overload{
+color:#ffb000;
+}
+
+.serverStatus.overload .dot{
+background:#ffb000;
+box-shadow:0 0 12px #ffb000;
+animation:pulse .35s infinite;
+}
+
+.serverStatus.noconnection{
+color:#9a9a9a;
+}
+
+.serverStatus.noconnection .dot{
+background:#9a9a9a;
+animation:none;
+box-shadow:none;
+}
+
+.serverStatus.error,
+.serverStatus.panelerror{
+
+color:#ff3030;
+
+}
+
+.serverStatus.error .dot,
+.serverStatus.panelerror .dot{
+
+display:none;
+
+}
+
+#serverIcon{
+
+font-weight:bold;
+font-size:18px;
+
+  }
+
 .box{
 
 background:#181818;
@@ -1245,11 +1345,15 @@ wifi
 
 </span>
 
-<h3 id="serverStatus">
+<div id="serverStatus" class="serverStatus online">
 
-ONLINE
+<div class="dot pulse"></div>
 
-</h3>
+<span id="serverIcon"></span>
+
+<span id="serverText">ONLINE</span>
+
+</div>
 
 <p>Server</p>
 
@@ -1597,6 +1701,64 @@ document.body.style.opacity="1";
 },100);
 
 });
+
+const status=document.getElementById("serverStatus");
+const text=document.getElementById("serverText");
+const icon=document.getElementById("serverIcon");
+
+function updateServerStatus(){
+
+if(!navigator.onLine){
+
+status.className="serverStatus offline";
+text.textContent="OFFLINE";
+icon.textContent="";
+
+return;
+
+}
+
+fetch("https://www.gstatic.com/generate_204",{cache:"no-store"})
+
+.then(()=>{
+
+status.className="serverStatus online";
+text.textContent="ONLINE";
+icon.textContent="";
+
+})
+
+.catch(()=>{
+
+status.className="serverStatus noconnection";
+text.textContent="NO CONNECTION";
+icon.textContent="";
+
+});
+
+}
+
+window.addEventListener("online",updateServerStatus);
+window.addEventListener("offline",updateServerStatus);
+
+window.addEventListener("error",()=>{
+
+status.className="serverStatus panelerror";
+text.textContent="PANEL ERROR";
+icon.textContent="✖";
+
+});
+
+window.addEventListener("unhandledrejection",()=>{
+
+status.className="serverStatus error";
+text.textContent="ERROR";
+icon.textContent="✖";
+
+});
+
+setInterval(updateServerStatus,3000);
+updateServerStatus();
 
 document.addEventListener("visibilitychange",()=>{
 
