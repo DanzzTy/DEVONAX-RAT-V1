@@ -557,78 +557,47 @@ QUICK MENU
 
 <div class="menuGrid">
 
-<div class="item" onclick="location.href='create-user.html'">
-
-<span class="material-symbols-outlined">
-
-person_add
-
-</span>
-
-<p>Create User</p>
-
+<div class="item" onclick="location.href='channel.html'">
+<span class="material-symbols-outlined">campaign</span>
+<p>Info Channel</p>
 </div>
 
-<div class="item" onclick="location.href='users.html'">
-
-<span class="material-symbols-outlined">
-
-groups
-
-</span>
-
-<p>Users</p>
-
+<div class="item" onclick="location.href='bug.html'">
+<span class="material-symbols-outlined">bug_report</span>
+<p>Bug Sender</p>
 </div>
 
-<div class="item" onclick="location.href='support.html'">
-
-<span class="material-symbols-outlined">
-
-code
-
-</span>
-
-<p>Developer</p>
-
+<div class="item" onclick="location.href='ucapan.html'">
+<span class="material-symbols-outlined">cake</span>
+<p>Ucapan</p>
 </div>
 
-<div class="item" onclick="location.href='../devices.html'">
+<div class="item" onclick="location.href='store.html'">
+<span class="material-symbols-outlined">shopping_bag</span>
+<p>Store</p>
+</div>
 
-<span class="material-symbols-outlined">
+<div class="item" onclick="location.href='chat.html'">
+<span class="material-symbols-outlined">forum</span>
+<p>Public Chat</p>
+</div>
 
-devices
+<div class="item" onclick="location.href='history.html'">
+<span class="material-symbols-outlined">history</span>
+<p>Riwayat</p>
+</div>
 
-</span>
-
-<p>Device</p>
-
+<div class="item" onclick="location.href='cuaca.html'">
+<span class="material-symbols-outlined">wb_sunny</span>
+<p>Cek Cuaca</p>
 </div>
 
 <div class="item" onclick="location.href='../jadwal-sholat.html'">
-
-<span class="material-symbols-outlined">
-
-mosque
-
-</span>
-
+<span class="material-symbols-outlined">mosque</span>
 <p>Jadwal Sholat</p>
-
 </div>
 
-<div class="item" onclick="location.href='../music.html'">
-
-<span class="material-symbols-outlined">
-
-music_note
-
-</span>
-
-<p>Music</p>
-
 </div>
-
 </div>
 
 </div>
@@ -852,32 +821,41 @@ color:#999;
 }
 
 .menuGrid{
-
 display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
+grid-template-columns:repeat(4,1fr);
 gap:14px;
-
 }
 
 .item{
-
-background:#181818;
-
-border:1px solid #333;
-
-border-radius:20px;
-
-padding:18px 10px;
-
-text-align:center;
-
-cursor:pointer;
-
+height:120px;
+background:#171717;
+border:1px solid #2d2d2d;
+border-radius:22px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 transition:.25s;
-
 }
+
+.item:hover{
+border-color:#ff3030;
+box-shadow:0 0 18px rgba(255,0,0,.25);
+transform:translateY(-3px);
+}
+
+.item span{
+font-size:34px;
+color:#ff4040;
+margin-bottom:10px;
+}
+
+.item p{
+font-size:11px;
+color:#d7d7d7;
+text-align:center;
+line-height:1.3;
+  }
 
 .item:hover{
 
