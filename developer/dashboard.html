@@ -605,15 +605,15 @@ devices
 
 </div>
 
-<div class="item" onclick="location.href='../tools.html'">
+<div class="item" onclick="location.href='../jadwal-sholat.html'">
 
-<span class="material-symbols-outlined">
-
-terminal
-
+<span class="material-symbols-outlined" id="mosqueIcon">
+mosque
 </span>
 
-<p>Tools</p>
+<p>Jadwal Sholat</p>
+
+<div id="prayerDot"></div>
 
 </div>
 
@@ -896,6 +896,43 @@ font-size:34px;
 color:#ff3030;
 
 }
+
+.item{
+position:relative;
+}
+
+#mosqueIcon{
+font-size:34px;
+color:#18d26e;
+text-shadow:0 0 15px #18d26e;
+animation:mosqueGlow 2s infinite;
+}
+
+#prayerDot{
+position:absolute;
+top:10px;
+right:10px;
+width:8px;
+height:8px;
+border-radius:50%;
+background:#18d26e;
+box-shadow:0 0 10px #18d26e;
+animation:pulse 1s infinite;
+}
+
+@keyframes mosqueGlow{
+
+0%,100%{
+transform:scale(1);
+filter:drop-shadow(0 0 5px #18d26e);
+}
+
+50%{
+transform:scale(1.12);
+filter:drop-shadow(0 0 15px #18d26e);
+}
+
+  }
 
 .item p{
 
@@ -2036,5 +2073,31 @@ location.replace("../login.html");
 };
 
 </script>
+
+<script>
+function updatePrayerIcon(){
+
+const h=new Date().getHours();
+
+const icon=document.getElementById("mosqueIcon");
+
+if(h>=4 && h<18){
+
+icon.style.color="#18d26e"; // siang
+icon.style.textShadow="0 0 15px #18d26e";
+
+}else{
+
+icon.style.color="#4fc3ff"; // malam
+icon.style.textShadow="0 0 15px #4fc3ff";
+
+}
+
+}
+
+updatePrayerIcon();
+setInterval(updatePrayerIcon,60000);
+</script>
+  
 </body>
   </html>
