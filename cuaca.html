@@ -488,105 +488,74 @@ loadWeather();
 
 <script>
 
+const logo=document.querySelector(".logo");
+
 function greeting(){
 
 const h=new Date().getHours();
 
 let text="";
+let icon="";
+let color="";
 
 if(h>=4 && h<11){
 
-text="🌤️ Selamat Pagi";
+text="Selamat Pagi";
+icon="light_mode";
+color="#FFD54F";
 
 }else if(h>=11 && h<15){
 
-text="☀️ Selamat Siang";
+text="Selamat Siang";
+icon="wb_sunny";
+color="#FFC107";
 
 }else if(h>=15 && h<18){
 
-text="🌇 Selamat Sore";
+text="Selamat Sore";
+icon="sunny";
+color="#FF9800";
 
 }else{
 
-text="🌙 Selamat Malam";
+text="Selamat Malam";
+icon="nights_stay";
+color="#90CAF9";
 
 }
 
-document.querySelector(".logo").textContent=
-"DEVONAX • "+text;
+logo.innerHTML=`
+<span class="material-symbols-outlined"
+style="
+font-size:24px;
+color:${color};
+vertical-align:middle;
+margin-right:6px;
+animation:spinIcon 6s linear infinite;">
+${icon}
+</span>
+<span style="
+font-size:17px;
+font-weight:700;
+letter-spacing:1px;
+vertical-align:middle;">
+${text}
+</span>
+`;
 
 }
 
 greeting();
 setInterval(greeting,60000);
 
-setInterval(loadWeather,300000);
-
-const hero=document.querySelector(".hero");
-
-hero.animate([
-
-{
-transform:"translateY(8px)",
-opacity:.92
-},
-
-{
-transform:"translateY(0)",
-opacity:1
+const style=document.createElement("style");
+style.innerHTML=`
+@keyframes spinIcon{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
 }
-
-],{
-
-duration:1200,
-iterations:Infinity,
-direction:"alternate",
-easing:"ease-in-out"
-
-});
-
-const icon=document.getElementById("weatherIcon");
-
-function animateIcon(){
-
-icon.animate([
-
-{
-transform:"scale(1) rotate(0deg)"
-},
-
-{
-transform:"scale(1.08) rotate(5deg)"
-},
-
-{
-transform:"scale(1) rotate(0deg)"
-}
-
-],{
-
-duration:2200,
-iterations:1
-
-});
-
-}
-
-animateIcon();
-
-setInterval(animateIcon,2500);
-
-window.addEventListener("online",()=>{
-
-condition.textContent+=" • Online";
-
-});
-
-window.addEventListener("offline",()=>{
-
-condition.textContent="Tidak ada koneksi internet";
-
-});
+`;
+document.head.appendChild(style);
 
 </script>
 
