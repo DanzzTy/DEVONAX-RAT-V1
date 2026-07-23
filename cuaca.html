@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX | Cek Cuaca</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Orbitron',sans-serif;
+}
+
+:root{
+--bg:#081018;
+--card:#131d28;
+--blue:#3ea6ff;
+--text:#fff;
+--border:#284055;
+}
+
+body{
+background:var(--bg);
+color:#fff;
+padding:18px;
+overflow-x:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+background:
+radial-gradient(circle at top,#3ea6ff22,transparent 35%),
+radial-gradient(circle at bottom,#00d4ff15,transparent 40%);
+}
+
+.grid{
+position:fixed;
+inset:0;
+opacity:.04;
+background-image:
+linear-gradient(#3ea6ff 1px,transparent 1px),
+linear-gradient(90deg,#3ea6ff 1px,transparent 1px);
+background-size:40px 40px;
+pointer-events:none;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.back{
+
+width:50px;
+height:50px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:#16202c;
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+cursor:pointer;
+
+}
+
+.back span{
+
+font-size:28px;
+color:var(--blue);
+
+}
+
+.logo{
+
+font-size:22px;
+font-weight:800;
+letter-spacing:4px;
+color:#fff;
+
+}
+
+.hero{
+
+background:linear-gradient(180deg,#17283b,#121b28);
+
+border:1px solid var(--border);
+
+border-radius:28px;
+
+padding:26px;
+
+text-align:center;
+
+margin-bottom:20px;
+
+}
+
+.weatherIcon{
+
+font-size:90px;
+
+color:#ffd54a;
+
+margin-bottom:10px;
+
+}
+
+#temperature{
+
+font-size:48px;
+
+font-weight:800;
+
+margin-top:10px;
+
+}
+
+#condition{
+
+font-size:15px;
+
+margin-top:6px;
+
+color:#d7d7d7;
+
+}
+
+#city{
+
+margin-top:12px;
+
+font-size:13px;
+
+color:#8ed0ff;
+
+}
+
+.card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:22px;
+
+padding:18px;
+
+}
+
+.title{
+
+color:#6ec8ff;
+
+font-size:14px;
+
+letter-spacing:3px;
+
+margin-bottom:16px;
+
+}
+
+.infoGrid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:14px;
+
+}
+
+.box{
+
+background:#1a2635;
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:18px;
+
+text-align:center;
+
+}
+
+.box span{
+
+font-size:32px;
+
+color:#6ec8ff;
+
+}
+
+.box h2{
+
+margin-top:10px;
+
+font-size:22px;
+
+}
+
+.box p{
+
+margin-top:8px;
+
+font-size:11px;
+
+color:#aaa;
+
+}
+
+.refresh{
+
+margin-top:22px;
+
+height:55px;
+
+border-radius:18px;
+
+background:#2094ff;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:10px;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+.refresh span{
+
+font-size:24px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div class="back" onclick="history.back()">
+<span class="material-symbols-outlined">
+arrow_back
+</span>
+</div>
+
+<div class="logo">
+DEVONAX
+</div>
+
+<div style="width:50px"></div>
+
+</header>
+
+<div class="hero">
+
+<span id="weatherIcon" class="material-symbols-outlined weatherIcon">
+partly_cloudy_day
+</span>
+
+<h1 id="temperature">
+--°
+</h1>
+
+<div id="condition">
+Memuat cuaca...
+</div>
+
+<div id="city">
+Mengambil lokasi...
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+DETAIL CUACA
+</div>
+
+<div class="infoGrid">
+
+<div class="box">
+<span class="material-symbols-outlined">
+thermostat
+</span>
+<h2 id="feels">
+--
+</h2>
+<p>Feels Like</p>
+</div>
+
+<div class="box">
+<span class="material-symbols-outlined">
+humidity_percentage
+</span>
+<h2 id="humidity">
+--
+</h2>
+<p>Humidity</p>
+</div>
+
+<div class="box">
+<span class="material-symbols-outlined">
+air
+</span>
+<h2 id="wind">
+--
+</h2>
+<p>Wind</p>
+</div>
+
+<div class="box">
+<span class="material-symbols-outlined">
+visibility
+</span>
+<h2 id="visibility">
+--
+</h2>
+<p>Visibility</p>
+</div>
+
+</div>
+
+<div class="refresh" onclick="location.reload()">
+
+<span class="material-symbols-outlined">
+refresh
+</span>
+
+Refresh Cuaca
+
+</div>
+
+  </div>
+
+<script>
+
+const weatherCode = {
+0:["Sunny","clear_day"],
+1:["Mostly Clear","partly_cloudy_day"],
+2:["Partly Cloudy","partly_cloudy_day"],
+3:["Cloudy","cloud"],
+45:["Fog","foggy"],
+48:["Fog","foggy"],
+51:["Light Drizzle","rainy"],
+53:["Drizzle","rainy"],
+55:["Heavy Drizzle","rainy"],
+56:["Freezing Drizzle","weather_mix"],
+57:["Freezing Drizzle","weather_mix"],
+61:["Light Rain","rainy"],
+63:["Rain","rainy"],
+65:["Heavy Rain","rainy_heavy"],
+66:["Freezing Rain","weather_mix"],
+67:["Freezing Rain","weather_mix"],
+71:["Light Snow","weather_snowy"],
+73:["Snow","weather_snowy"],
+75:["Heavy Snow","weather_snowy"],
+77:["Snow","weather_snowy"],
+80:["Rain Shower","rainy"],
+81:["Heavy Shower","rainy_heavy"],
+82:["Extreme Shower","rainy_heavy"],
+85:["Snow Shower","weather_snowy"],
+86:["Snow Shower","weather_snowy"],
+95:["Thunderstorm","thunderstorm"],
+96:["Thunderstorm","thunderstorm"],
+99:["Severe Thunderstorm","thunderstorm"]
+};
+
+function loadWeather(){
+
+if(!navigator.geolocation){
+
+city.textContent="GPS tidak didukung";
+
+return;
+
+}
+
+navigator.geolocation.getCurrentPosition(success,error);
+
+}
+
+async function success(pos){
+
+const lat=pos.coords.latitude;
+const lon=pos.coords.longitude;
+
+try{
+
+const geo=await fetch(
+`https://geocoding-api.open-meteo.com/v1/reverse?latitude=${lat}&longitude=${lon}&language=id`
+);
+
+const geoData=await geo.json();
+
+if(geoData.results && geoData.results.length){
+
+city.textContent=
+geoData.results[0].name+", "+
+geoData.results[0].country;
+
+}
+
+}catch{
+
+city.textContent="Lokasi Anda";
+
+}
+
+try{
+
+const cuaca=await fetch(
+`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,visibility`
+);
+
+const json=await cuaca.json();
+
+const c=json.current;
+
+temperature.textContent=Math.round(c.temperature_2m)+"°C";
+
+feels.textContent=Math.round(c.apparent_temperature)+"°C";
+
+humidity.textContent=c.relative_humidity_2m+"%";
+
+wind.textContent=Math.round(c.wind_speed_10m)+" km/h";
+
+visibility.textContent=
+Math.round(c.visibility/1000)+" km";
+
+const info=
+weatherCode[c.weather_code] ||
+["Unknown","cloud"];
+
+condition.textContent=info[0];
+
+weatherIcon.textContent=info[1];
+
+}catch{
+
+condition.textContent="Gagal mengambil data cuaca";
+
+}
+
+}
+
+function error(){
+
+city.textContent="Lokasi ditolak";
+
+condition.textContent="Aktifkan GPS untuk melihat cuaca.";
+
+}
+
+loadWeather();
+
+</script>
+
+<script>
+
+function greeting(){
+
+const h=new Date().getHours();
+
+let text="";
+
+if(h>=4 && h<11){
+
+text="🌤️ Selamat Pagi";
+
+}else if(h>=11 && h<15){
+
+text="☀️ Selamat Siang";
+
+}else if(h>=15 && h<18){
+
+text="🌇 Selamat Sore";
+
+}else{
+
+text="🌙 Selamat Malam";
+
+}
+
+document.querySelector(".logo").textContent=
+"DEVONAX • "+text;
+
+}
+
+greeting();
+setInterval(greeting,60000);
+
+setInterval(loadWeather,300000);
+
+const hero=document.querySelector(".hero");
+
+hero.animate([
+
+{
+transform:"translateY(8px)",
+opacity:.92
+},
+
+{
+transform:"translateY(0)",
+opacity:1
+}
+
+],{
+
+duration:1200,
+iterations:Infinity,
+direction:"alternate",
+easing:"ease-in-out"
+
+});
+
+const icon=document.getElementById("weatherIcon");
+
+function animateIcon(){
+
+icon.animate([
+
+{
+transform:"scale(1) rotate(0deg)"
+},
+
+{
+transform:"scale(1.08) rotate(5deg)"
+},
+
+{
+transform:"scale(1) rotate(0deg)"
+}
+
+],{
+
+duration:2200,
+iterations:1
+
+});
+
+}
+
+animateIcon();
+
+setInterval(animateIcon,2500);
+
+window.addEventListener("online",()=>{
+
+condition.textContent+=" • Online";
+
+});
+
+window.addEventListener("offline",()=>{
+
+condition.textContent="Tidak ada koneksi internet";
+
+});
+
+</script>
+
+</body>
+</html>
