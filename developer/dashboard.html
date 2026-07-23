@@ -1927,21 +1927,19 @@ return;
 
 const d=snap.val();
 
-if (d.expired) {
+const expiredTime = Number(d.expiredAt || 0);
 
-    const expiredTime = new Date(d.expired).getTime();
+if(expiredTime && Date.now() >= expiredTime){
 
-    if (Date.now() > expiredTime) {
+alert("Durasi akun telah habis!");
 
-        alert("Masa aktif akun telah habis!");
+await set(ref(db,"online/"+user.uid),null);
 
-        await signOut(auth);
+await signOut(auth);
 
-        location.replace("../login.html");
+location.replace("../login.html");
 
-        return;
-
-    }
+return;
 
   }
 
@@ -1965,29 +1963,31 @@ time:Date.now()
 
 });
 
-setInterval(async () => {
+setInterval(async()=>{
 
-    if (!currentUser) return;
+if(!currentUser) return;
 
-    const snap = await get(ref(db, "users/" + currentUser.uid));
+const snap=await get(ref(db,"users/"+currentUser.uid));
 
-    if (!snap.exists()) return;
+if(!snap.exists()) return;
 
-    const d = snap.val();
+const d=snap.val();
 
-    if (d.expired && Date.now() > new Date(d.expired).getTime()) {
+const expiredTime=Number(d.expiredAt||0);
 
-        alert("Masa aktif akun telah habis!");
+if(expiredTime && Date.now()>=expiredTime){
 
-        await set(ref(db, "online/" + currentUser.uid), null);
+alert("Masa aktif akun telah habis!");
 
-        await signOut(auth);
+await set(ref(db,"online/"+currentUser.uid,null));
 
-        location.replace("../login.html");
+await signOut(auth);
 
-    }
+location.replace("../login.html");
 
-}, 60000);
+}
+
+},1000);
 
 window.addEventListener("beforeunload",()=>{
 
