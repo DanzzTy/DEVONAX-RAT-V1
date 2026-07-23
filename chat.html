@@ -236,6 +236,27 @@ text-align:right;
 
 }
 
+<div id="clearBtn" class="online">
+
+<span class="material-symbols-outlined">
+delete
+</span>
+
+</div>
+
+<div id="replyBox" style="display:none;background:#1b1b1b;border-left:4px solid #ff2020;padding:10px;border-radius:12px;margin-top:10px;">
+<div id="replyUser" style="font-size:12px;color:#ff6666;"></div>
+<div id="replyMsg" style="font-size:11px;color:#bbb;"></div>
+
+<div style="margin-top:8px">
+<button onclick="cancelReply()"
+style="background:#ff2020;border:none;padding:6px 14px;border-radius:8px;color:#fff;">
+Batal
+</button>
+</div>
+
+</div>
+
 .inputArea{
 
 display:flex;
@@ -563,7 +584,8 @@ push,
 get,
 query,
 limitToLast,
-onChildAdded
+onChildAdded,
+remove
 } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
 const firebaseConfig={
@@ -634,6 +656,21 @@ d.uid===myUid
 :
 "bubble";
 
+bubble.onclick=()=>{
+
+replyData={
+
+username:d.username,
+message:d.message
+
+};
+
+replyBox.style.display="block";
+replyUser.innerText="Balas "+d.username;
+replyMsg.innerText=d.message;
+
+};
+
 bubble.innerHTML=`
 
 <div class="name">
@@ -644,6 +681,25 @@ bubble.innerHTML=`
 
 </div>
 
+${d.reply?`
+
+<div style="
+background:#222;
+padding:8px;
+border-left:3px solid #ff2020;
+border-radius:10px;
+margin-bottom:8px;
+font-size:11px;
+">
+
+<b>${d.reply.username}</b><br>
+
+${escapeHtml(d.reply.message)}
+
+</div>
+
+`:''}
+
 <div class="msg">
 
 ${escapeHtml(d.message)}
@@ -653,11 +709,8 @@ ${escapeHtml(d.message)}
 <div class="time">
 
 ${new Date(d.time).toLocaleTimeString("id-ID",{
-
 hour:"2-digit",
-
 minute:"2-digit"
-
 })}
 
 </div>
@@ -692,11 +745,14 @@ role:myRole,
 
 message:text,
 
+reply:replyData,
+
 time:Date.now()
 
 });
 
 input.value="";
+cancelReply();
 
 }catch(e){
 
@@ -722,6 +778,24 @@ e.preventDefault();
 
 sendMessage();
 
+document.getElementById("clearBtn").onclick=async()=>{
+
+if(myRole!=="Developer" && myRole!=="Owner"){
+
+alert("Hanya Developer/Owner.");
+
+return;
+
+}
+
+if(!confirm("Hapus seluruh chat?")) return;
+
+await remove(ref(db,"globalChat"));
+
+chatBox.innerHTML="";
+
+};
+
 }
 
 });
@@ -741,6 +815,13 @@ return str
 .replace(/'/g,"&#039;");
 
 }
+
+function cancelReply(){
+
+replyData=null;
+replyBox.style.display="none";
+
+  }
 
 </script>
 
