@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Jadwal Sholat | DEVONAX</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Orbitron,sans-serif;
+}
+
+:root{
+
+--bg:#07120b;
+--card:#122016;
+--gold:#f6d36d;
+--green:#2e6b4b;
+--border:#28523a;
+--text:#ffffff;
+
+}
+
+body{
+
+background:var(--bg);
+color:#fff;
+padding:18px;
+overflow-x:hidden;
+
+}
+
+body::before{
+
+content:"";
+position:fixed;
+inset:0;
+pointer-events:none;
+
+background:
+radial-gradient(circle at top,#1d5b3718,transparent 40%),
+radial-gradient(circle at bottom,#d4af3715,transparent 45%);
+
+}
+
+.grid{
+
+position:fixed;
+inset:0;
+opacity:.04;
+
+background-image:
+linear-gradient(#d4af37 1px,transparent 1px),
+linear-gradient(90deg,#d4af37 1px,transparent 1px);
+
+background-size:42px 42px;
+
+pointer-events:none;
+
+}
+
+header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+
+}
+
+.back{
+
+width:50px;
+height:50px;
+
+display:flex;
+justify-content:center;
+align-items:center;
+
+background:#132419;
+
+border:1px solid var(--border);
+
+border-radius:16px;
+
+cursor:pointer;
+
+}
+
+.back span{
+
+font-size:28px;
+color:var(--gold);
+
+}
+
+.logo{
+
+font-size:22px;
+font-weight:800;
+letter-spacing:4px;
+color:var(--gold);
+
+}
+
+.hero{
+
+background:linear-gradient(180deg,#173622,#102116);
+
+border:1px solid var(--border);
+
+border-radius:28px;
+
+padding:28px 20px;
+
+text-align:center;
+
+margin-bottom:20px;
+
+overflow:hidden;
+
+box-shadow:0 0 20px rgba(212,175,55,.08);
+
+}
+
+.heroIcon{
+
+display:block;
+
+font-size:90px;
+
+color:var(--gold);
+
+margin-bottom:18px;
+
+text-shadow:0 0 20px rgba(246,211,109,.4);
+
+}
+
+.heroTitle{
+
+font-size:15px;
+
+letter-spacing:2px;
+
+margin-bottom:18px;
+
+color:#e9e9e9;
+
+}
+
+#clock{
+
+font-size:36px;
+
+font-weight:700;
+
+letter-spacing:2px;
+
+margin-bottom:8px;
+
+}
+
+#date{
+
+font-size:13px;
+
+color:#cfcfcf;
+
+margin-bottom:16px;
+
+}
+
+.location{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:6px;
+
+font-size:13px;
+
+margin-bottom:20px;
+
+}
+
+.location span{
+
+color:var(--gold);
+
+}
+
+.nextPrayer{
+
+background:#1b3927;
+
+border:1px solid var(--border);
+
+border-radius:18px;
+
+padding:15px;
+
+}
+
+.nextPrayer small{
+
+display:block;
+
+font-size:12px;
+
+color:#cfcfcf;
+
+margin-bottom:6px;
+
+}
+
+.nextPrayer h2{
+
+font-size:24px;
+
+color:var(--gold);
+
+margin-bottom:5px;
+
+}
+
+.nextPrayer p{
+
+font-size:17px;
+
+}
+
+.card{
+
+background:var(--card);
+
+border:1px solid var(--border);
+
+border-radius:24px;
+
+padding:18px;
+
+}
+
+.title{
+
+font-size:14px;
+
+letter-spacing:3px;
+
+color:var(--gold);
+
+margin-bottom:18px;
+
+}
+
+.prayerList{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="grid"></div>
+
+<header>
+
+<div class="back" onclick="history.back()">
+
+<span class="material-symbols-outlined">
+arrow_back
+</span>
+
+</div>
+
+<div class="logo">
+DEVONAX
+</div>
+
+<div style="width:50px"></div>
+
+</header>
+
+<div class="hero">
+
+<span class="material-symbols-outlined heroIcon">
+mosque
+</span>
+
+<div class="heroTitle">
+JADWAL SHOLAT HARI INI
+</div>
+
+<h1 id="clock">
+00:00:00
+</h1>
+
+<div id="date">
+Loading...
+</div>
+
+<div class="location">
+
+<span class="material-symbols-outlined">
+location_on
+</span>
+
+<span id="city">
+Mengambil lokasi...
+</span>
+
+</div>
+
+<div class="nextPrayer">
+
+<small>SHOLAT BERIKUTNYA</small>
+
+<h2 id="nextName">
+-
+</h2>
+
+<p id="nextTime">
+--:--
+</p>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="title">
+JADWAL SHOLAT
+</div>
+
+<div id="prayerList" class="prayerList">
+
+<div class="prayerItem">
+    <div class="left">
+        <span class="material-symbols-outlined">dark_mode</span>
+        <div>
+            <h3>Imsak</h3>
+            <small>Persiapan Sahur</small>
+        </div>
+    </div>
+    <div class="time" id="imsak">--:--</div>
+</div>
+
+<div class="prayerItem">
+    <div class="left">
+        <span class="material-symbols-outlined">light_mode</span>
+        <div>
+            <h3>Subuh</h3>
+            <small>Fajr</small>
+        </div>
+    </div>
+    <div class="time" id="fajr">--:--</div>
+</div>
+
+<div class="prayerItem">
+    <div class="left">
+        <span class="material-symbols-outlined">wb_sunny</span>
+        <div>
+            <h3>Dzuhur</h3>
+            <small>Dhuhr</small>
+        </div>
+    </div>
+    <div class="time" id="dhuhr">--:--</div>
+</div>
+
+<div class="prayerItem">
+    <div class="left">
+        <span class="material-symbols-outlined">partly_cloudy_day</span>
+        <div>
+            <h3>Ashar</h3>
+            <small>Asr</small>
+        </div>
+    </div>
+    <div class="time" id="asr">--:--</div>
+</div>
+
+<div class="prayerItem">
+    <div class="left">
+        <span class="material-symbols-outlined">sunset</span>
+        <div>
+            <h3>Maghrib</h3>
+            <small>Maghrib</small>
+        </div>
+    </div>
+    <div class="time" id="maghrib">--:--</div>
+</div>
+
+<div class="prayerItem">
+    <div class="left">
+        <span class="material-symbols-outlined">nights_stay</span>
+        <div>
+            <h3>Isya</h3>
+            <small>Isha</small>
+        </div>
+    </div>
+    <div class="time" id="isha">--:--</div>
+</div>
+
+</div>
+
+</div>
+
+<style>
+
+.prayerItem{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+background:#183122;
+
+border:1px solid #2d5d42;
+
+border-radius:18px;
+
+padding:15px 18px;
+
+margin-bottom:12px;
+
+transition:.25s;
+
+}
+
+.prayerItem:hover{
+
+border-color:#f6d36d;
+
+box-shadow:0 0 15px rgba(246,211,109,.15);
+
+transform:translateY(-2px);
+
+}
+
+.left{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+}
+
+.left span{
+
+font-size:30px;
+
+color:#f6d36d;
+
+}
+
+.left h3{
+
+font-size:15px;
+margin-bottom:3px;
+
+}
+
+.left small{
+
+font-size:11px;
+color:#bdbdbd;
+
+}
+
+.time{
+
+font-size:18px;
+font-weight:700;
+color:#ffffff;
+
+}
+
+.activePrayer{
+
+border-color:#f6d36d!important;
+
+background:linear-gradient(90deg,#20452f,#29553b);
+
+box-shadow:0 0 18px rgba(246,211,109,.25);
+
+}
+
+      </style>
+
+<script>
+
+let prayerTimes={};
+
+function updateClock(){
+
+const now=new Date();
+
+document.getElementById("clock").textContent=
+now.toLocaleTimeString("id-ID",{hour12:false});
+
+document.getElementById("date").textContent=
+now.toLocaleDateString("id-ID",{
+weekday:"long",
+day:"numeric",
+month:"long",
+year:"numeric"
+});
+
+checkPrayer();
+
+}
+
+setInterval(updateClock,1000);
+updateClock();
+
+function setPrayer(data){
+
+prayerTimes=data;
+
+imsak.textContent=data.Imsak;
+fajr.textContent=data.Fajr;
+dhuhr.textContent=data.Dhuhr;
+asr.textContent=data.Asr;
+maghrib.textContent=data.Maghrib;
+isha.textContent=data.Isha;
+
+checkPrayer();
+
+}
+
+function checkPrayer(){
+
+if(Object.keys(prayerTimes).length===0)return;
+
+const now=new Date();
+
+const current=
+now.getHours()*60+
+now.getMinutes();
+
+const list=[
+
+{
+name:"Imsak",
+time:prayerTimes.Imsak,
+id:"imsak"
+},
+
+{
+name:"Subuh",
+time:prayerTimes.Fajr,
+id:"fajr"
+},
+
+{
+name:"Dzuhur",
+time:prayerTimes.Dhuhr,
+id:"dhuhr"
+},
+
+{
+name:"Ashar",
+time:prayerTimes.Asr,
+id:"asr"
+},
+
+{
+name:"Maghrib",
+time:prayerTimes.Maghrib,
+id:"maghrib"
+},
+
+{
+name:"Isya",
+time:prayerTimes.Isha,
+id:"isha"
+}
+
+];
+
+document
+.querySelectorAll(".prayerItem")
+.forEach(e=>e.classList.remove("activePrayer"));
+
+let next=list[0];
+
+for(let i=0;i<list.length;i++){
+
+const t=list[i].time.split(":");
+
+const m=
+parseInt(t[0])*60+
+parseInt(t[1]);
+
+if(current<=m){
+
+next=list[i];
+
+break;
+
+}
+
+if(i===list.length-1){
+
+next=list[0];
+
+}
+
+}
+
+document.getElementById("nextName").textContent=next.name;
+document.getElementById("nextTime").textContent=next.time;
+
+document
+.getElementById(next.id)
+.parentElement.parentElement
+.classList.add("activePrayer");
+
+}
+
+if("Notification" in window){
+
+Notification.requestPermission();
+
+}
+
+let notified="";
+
+function notifyPrayer(){
+
+if(Object.keys(prayerTimes).length===0)return;
+
+const now=new Date();
+
+const jam=
+String(now.getHours()).padStart(2,"0")+
+":"+
+String(now.getMinutes()).padStart(2,"0");
+
+const nama={
+
+Fajr:"Subuh",
+Dhuhr:"Dzuhur",
+Asr:"Ashar",
+Maghrib:"Maghrib",
+Isha:"Isya"
+
+};
+
+for(const k in nama){
+
+if(prayerTimes[k]===jam && notified!==jam){
+
+notified=jam;
+
+if(Notification.permission==="granted"){
+
+new Notification("🕌 Waktu Sholat",{
+
+body:"Telah masuk waktu "+nama[k]
+
+});
+
+}
+
+}
+
+}
+
+}
+
+setInterval(notifyPrayer,30000);
+
+navigator.geolocation.getCurrentPosition(async(pos)=>{
+
+const lat=pos.coords.latitude;
+const lon=pos.coords.longitude;
+
+try{
+
+const geo=await fetch(
+`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`
+);
+
+const place=await geo.json();
+
+city.textContent=
+place.address.city||
+place.address.town||
+place.address.county||
+place.address.state||
+"Lokasi Anda";
+
+}catch{
+
+city.textContent="Lokasi Anda";
+
+}
+
+const today=new Date();
+
+const d=
+today.getDate()+"-"+
+(today.getMonth()+1)+"-"+
+today.getFullYear();
+
+const res=await fetch(
+
+`https://api.aladhan.com/v1/timings/${d}?latitude=${lat}&longitude=${lon}&method=11`
+
+);
+
+const json=await res.json();
+
+setPrayer(json.data.timings);
+
+},()=>{
+
+city.textContent="Lokasi tidak diizinkan";
+
+alert("Izinkan akses lokasi agar jadwal sholat sesuai daerah Anda.");
+
+});
+
+</script>
+
+</div>
+
+</body>
+</html>
