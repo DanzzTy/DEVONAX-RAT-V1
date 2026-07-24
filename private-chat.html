@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEVONAX • Private Chat</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500;700;800&display=swap" rel="stylesheet">
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Oxanium',sans-serif;
+}
+
+body{
+background:#060606;
+color:#fff;
+height:100vh;
+display:flex;
+flex-direction:column;
+overflow:hidden;
+}
+
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top,#ff000025,transparent 60%),
+radial-gradient(circle at bottom,#ff000015,transparent 60%);
+z-index:-1;
+}
+
+header{
+height:65px;
+background:#111;
+border-bottom:1px solid #ff222230;
+display:flex;
+align-items:center;
+padding:0 15px;
+gap:15px;
+}
+
+.back{
+width:42px;
+height:42px;
+border-radius:12px;
+background:#191919;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.back .material-symbols-outlined{
+color:#ff2d2d;
+}
+
+.avatar{
+width:45px;
+height:45px;
+border-radius:50%;
+background:linear-gradient(135deg,#ff0000,#700000);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:20px;
+font-weight:700;
+}
+
+.info{
+flex:1;
+}
+
+.info h3{
+font-size:17px;
+}
+
+.status{
+font-size:12px;
+color:#6dff6d;
+margin-top:3px;
+}
+
+.menu{
+width:42px;
+height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#191919;
+border-radius:12px;
+}
+
+.menu span{
+color:#fff;
+}
+
+.chat-area{
+flex:1;
+overflow:auto;
+padding:20px;
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.msg{
+max-width:78%;
+padding:12px 14px;
+border-radius:15px;
+font-size:14px;
+line-height:1.5;
+word-break:break-word;
+}
+
+.me{
+align-self:flex-end;
+background:linear-gradient(135deg,#ff2323,#b10000);
+}
+
+.other{
+align-self:flex-start;
+background:#181818;
+border:1px solid #ff222220;
+}
+
+.time{
+font-size:10px;
+opacity:.7;
+margin-top:6px;
+text-align:right;
+}
+
+.bottom{
+padding:15px;
+background:#111;
+border-top:1px solid #ff222220;
+display:flex;
+gap:10px;
+align-items:center;
+}
+
+.input{
+flex:1;
+height:50px;
+background:#181818;
+border:none;
+outline:none;
+border-radius:15px;
+padding:0 15px;
+color:#fff;
+font-size:14px;
+}
+
+.send{
+width:50px;
+height:50px;
+border:none;
+border-radius:15px;
+background:linear-gradient(135deg,#ff2a2a,#9b0000);
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+}
+
+.send span{
+color:#fff;
+}
+
+::-webkit-scrollbar{
+width:4px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#ff2d2d;
+border-radius:20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="back">
+<span class="material-symbols-outlined">
+arrow_back
+</span>
+</div>
+
+<div class="avatar">
+D
+</div>
+
+<div class="info">
+<h3 id="chatName">Loading...</h3>
+<div class="status" id="chatStatus">
+Online
+</div>
+</div>
+
+<div class="menu">
+<span class="material-symbols-outlined">
+more_vert
+</span>
+</div>
+
+</header>
+
+<div class="chat-area" id="chatArea">
+
+<div class="msg other">
+Halo, selamat datang di DEVONAX.
+<div class="time">12:00</div>
+</div>
+
+<div class="msg me">
+Halo juga.
+<div class="time">12:01</div>
+</div>
+
+</div>
+
+<div class="bottom">
+
+<input
+type="text"
+id="messageInput"
+class="input"
+placeholder="Tulis pesan..."
+autocomplete="off">
+
+<button id="sendBtn" class="send">
+<span class="material-symbols-outlined">
+send
+</span>
+</button>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+import {
+getDatabase,
+ref,
+onValue
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+/* ===========================
+   FIREBASE CONFIG
+   Isi dengan config sebelumnya
+=========================== */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyAV5qFI5J0cZd0eg2Q6mhEZ0KEiR1URv1c",
+
+authDomain: "project-coding-gabut.firebaseapp.com",
+
+databaseURL: "https://project-coding-gabut-default-rtdb.asia-southeast1.firebasedatabase.app",
+
+projectId: "project-coding-gabut",
+
+storageBucket: "project-coding-gabut.firebasestorage.app",
+
+messagingSenderId: "234910334669",
+
+appId: "1:234910334669:web:5203c9e9ce22a596f2b384"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getDatabase(app);
+
+/* ===========================
+   ELEMENT
+=========================== */
+
+const chatArea = document.getElementById("chatArea");
+const chatName = document.getElementById("chatName");
+const chatStatus = document.getElementById("chatStatus");
+
+let currentUser = null;
+
+/* ===========================
+   PARAMETER CHAT
+=========================== */
+
+const params = new URLSearchParams(location.search);
+
+const chatId = params.get("chat");
+
+/* ===========================
+   LOGIN
+=========================== */
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+location.href="login.html";
+
+return;
+
+}
+
+currentUser=user;
+
+loadChat();
+
+});
+
+/* ===========================
+   LOAD CHAT
+=========================== */
+
+function loadChat(){
+
+if(!chatId) return;
+
+const chatRef = ref(db,"privateChats/"+chatId+"/messages");
+
+onValue(chatRef,(snapshot)=>{
+
+chatArea.innerHTML="";
+
+if(!snapshot.exists()) return;
+
+snapshot.forEach((item)=>{
+
+const data=item.val();
+
+const box=document.createElement("div");
+
+box.className=
+data.uid===currentUser.uid
+?
+"msg me"
+:
+"msg other";
+
+box.innerHTML=`
+
+${data.message}
+
+<div class="time">
+${data.time || ""}
+</div>
+
+`;
+
+chatArea.appendChild(box);
+
+});
+
+chatArea.scrollTop=chatArea.scrollHeight;
+
+});
+
+}
+
+/* ===========================
+   LOAD INFO
+=========================== */
+
+const infoRef=ref(db,"privateChats/"+chatId+"/info");
+
+onValue(infoRef,(snapshot)=>{
+
+if(!snapshot.exists()) return;
+
+const info=snapshot.val();
+
+chatName.textContent=info.name || "Private Chat";
+
+chatStatus.textContent=info.status || "Offline";
+
+});
+
+</script>
+
+<script type="module">
+
+import {
+ref,
+push,
+set,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+/* ===========================
+   ELEMENT
+=========================== */
+
+const input = document.getElementById("messageInput");
+const sendBtn = document.getElementById("sendBtn");
+
+/* ===========================
+   KIRIM PESAN
+=========================== */
+
+function sendMessage(){
+
+const text = input.value.trim();
+
+if(text === "") return;
+
+const msgRef = push(
+ref(db, "privateChats/" + chatId + "/messages")
+);
+
+set(msgRef,{
+
+uid: currentUser.uid,
+
+message: text,
+
+time: new Date().toLocaleTimeString("id-ID",{
+hour:"2-digit",
+minute:"2-digit"
+}),
+
+timestamp: Date.now()
+
+});
+
+input.value = "";
+
+}
+
+/* Tombol Kirim */
+
+sendBtn.onclick = sendMessage;
+
+/* Enter */
+
+input.addEventListener("keypress",(e)=>{
+
+if(e.key==="Enter"){
+
+e.preventDefault();
+
+sendMessage();
+
+}
+
+});
+
+</script>
+
+<script type="module">
+
+import {
+ref,
+set,
+get,
+onValue,
+onDisconnect,
+remove
+} from "https://www.gstatic.com/firebasejs/12.6.0/firebase-database.js";
+
+/* ==========================
+   STATUS ONLINE
+========================== */
+
+const statusRef = ref(db, "users/" + currentUser.uid + "/status");
+
+set(statusRef, "online");
+
+onDisconnect(statusRef).set("offline");
+
+/* ==========================
+   TYPING INDICATOR
+========================== */
+
+const typingRef = ref(
+    db,
+    "privateChats/" + chatId + "/typing/" + currentUser.uid
+);
+
+input.addEventListener("input", () => {
+
+    if (input.value.trim() !== "") {
+
+        set(typingRef, true);
+
+    } else {
+
+        remove(typingRef);
+
+    }
+
+});
+
+const otherTypingRef = ref(
+    db,
+    "privateChats/" + chatId + "/typing"
+);
+
+onValue(otherTypingRef, (snapshot) => {
+
+    let typing = false;
+
+    snapshot.forEach((item) => {
+
+        if (item.key !== currentUser.uid) {
+
+            typing = true;
+
+        }
+
+    });
+
+    chatStatus.textContent = typing
+        ? "Sedang mengetik..."
+        : "Online";
+
+});
+
+/* ==========================
+   HAPUS STATUS TYPING
+========================== */
+
+const oldSend = sendMessage;
+
+sendMessage = function () {
+
+    oldSend();
+
+    remove(typingRef);
+
+};
+
+/* ==========================
+   AUTO BUAT INFO CHAT
+========================== */
+
+const infoRef = ref(
+    db,
+    "privateChats/" + chatId + "/info"
+);
+
+get(infoRef).then((snap) => {
+
+    if (!snap.exists()) {
+
+        set(infoRef, {
+
+            name: "Private Chat",
+
+            status: "Online",
+
+            createdAt: Date.now()
+
+        });
+
+    }
+
+});
+
+/* ==========================
+   AUTO SCROLL
+========================== */
+
+const observer = new MutationObserver(() => {
+
+    chatArea.scrollTo({
+
+        top: chatArea.scrollHeight,
+
+        behavior: "smooth"
+
+    });
+
+});
+
+observer.observe(chatArea, {
+
+    childList: true
+
+});
+
+</script>
+  
+</body>
+  </html>
